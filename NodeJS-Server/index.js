@@ -22,11 +22,11 @@ app.get('/', (request, response) => {
     });
 });
 
-app.get('/users', database.getUsers);
-app.get('/users/:id', database.getUserById);
-app.post('/users', database.createUser);
-app.put('/users/:id', database.updateUser);
-app.delete('/users/:id', database.deleteUser);
+app.get('/users', cors(), database.getUsers);
+app.get('/users/:id', cors(), database.getUserById);
+app.post('/users', cors(), database.createUser);
+app.put('/users/:id', cors(), database.updateUser);
+app.delete('/users/:id', cors(), database.deleteUser);
 
 // Start NodeJS server and list on port 3000 for requests
 app.listen(port, () => {
