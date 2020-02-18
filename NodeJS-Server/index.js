@@ -1,12 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const database = require('./db_queries');
+const cors = require('cors');
 const app = express();
 const port = 3000;
 
 // Use CORS to accept a request coming from any browser
-const isProduction = false;
-const origin = { origin: isProduction ? 'Deployed web server ip address here' : '*' };
+app.options('*', cors());
 
 app.use(bodyParser.json());
 app.use(
@@ -14,7 +14,6 @@ app.use(
         extended: true
     })
 );
-app.use(cors(origin));
 
 // Application endpoints
 app.get('/', (request, response) => {
