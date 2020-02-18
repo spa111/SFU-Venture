@@ -12,12 +12,12 @@ export class UsersService {
     private http: HttpClient) {
   }
 
-  getAll(): Observable<any> {
-    return this.http.get(SERVER_BASE_URL + '/users');
+  getAll(): Promise<any> {
+    return this.http.get(SERVER_BASE_URL + '/users').toPromise();
   }
 
-  getById(id: any): Observable<any> {
-    return this.http.get(SERVER_BASE_URL + '/users/' + id);
+  getById(id: any): Promise<any> {
+    return this.http.get(SERVER_BASE_URL + '/users/' + id).toPromise();
   }
 
   addNewUser(newUserJSON: any): Promise<any> {
