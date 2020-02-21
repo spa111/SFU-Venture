@@ -31,6 +31,7 @@ app.delete('/api/users/:id', cors(), database.deleteUser);
 
 app.post('/api/signup', cors(), (request, response) => {
 
+    // Email details
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -44,7 +45,7 @@ app.post('/api/signup', cors(), (request, response) => {
     
     var mailOptions = {
         from: 'sfuventure470@gmail.com',
-        to: 'sparm30@gmail.com',
+        to: 'EXAMPLE-EMAIL@gmail.com',
         subject: 'Sending Email using Node.js',
         text: 'That was easy!'
     };
