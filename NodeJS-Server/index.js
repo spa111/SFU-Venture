@@ -7,8 +7,8 @@ const app = express();
 const port = 3000;
 
 // Use CORS to accept a request coming from any browser
-app.options('*', cors());
 
+app.use(cors({ origin: '*' }));
 app.use(bodyParser.json());
 app.use(
     bodyParser.urlencoded({
@@ -16,7 +16,9 @@ app.use(
     })
 );
 
-app.use(expressJwt({secret: 'sfuventure_jwt_token_string'}).unless({path: ['/api/signup', '/api/signin', '/api/verify-user-email']}));
+app.use(expressJwt({ secret: 'sfuventure_jwt_token_string' }).unless({
+    path: ['/api/signup', '/api/signin', '/api/verify-user-email']
+}));
 
 // Application endpoints
 app.get('/', (request, response) => {

@@ -47,21 +47,21 @@ const getUserById = (request, response) => {
 
 const createUser = (request, response) => {
     const { fullname, password, email, is_student, is_faculty } = request.body;
-    
+
     var username = email.split("@")[0];
     var is_email_verified = false;
     var is_admin = false;
     var hashed_password = generatePasswordHash(password);
 
+    // Need to add another check in the db to make it so that the admin is the only one who verifies whether a user is faculty or not
     database.query(
-        'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty) values ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', 
-        [fullname, hashed_password, email, username, is_email_verified, is_admin, is_student, is_faculty], 
+        'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty) values ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', [fullname, hashed_password, email, username, is_email_verified, is_admin, is_student, is_faculty],
         (error, results) => {
             if (error) {
                 throw error;
             }
 
-            var verification_token = jwt.sign({userId: results.rows[0].id}, TOKEN_STRING, {expiresIn: '1d'});
+            var verification_token = jwt.sign({ userId: results.rows[0].id }, TOKEN_STRING, { expiresIn: '1d' });
             sendEmail(email, verification_token);
             response.status(201).send(`User added`);
         }
@@ -72,14 +72,13 @@ const verifyUserEmail = (request, response) => {
     try {
         const token_details = jwt.verify(request.body.token, TOKEN_STRING);
         database.query(
-            'update users set is_email_verified = $1 where id = $2',
-            [true, token_details.userId],
-            
+            'update users set is_email_verified = $1 where id = $2', [true, token_details.userId],
+
             (error, results) => {
                 if (error) {
                     throw error;
                 }
-    
+
                 console.log(`User: ${token_details.userId} has been verified`);
                 response.status(200).send('User verified');
             }
@@ -91,7 +90,7 @@ const verifyUserEmail = (request, response) => {
 
 const loginUser = (request, response) => {
     const { username, password } = request.body;
-    
+
     database.query('select * from users where username = $1', [username], (error, results) => {
         if (error) {
             throw error;
@@ -102,23 +101,24 @@ const loginUser = (request, response) => {
             if (user.is_email_verified) {
                 if (validPassword(password, user.password)) {
                     // Return a vaid web token and the user details
-                    var token = jwt.sign({userID: user.id}, TOKEN_STRING, {expiresIn: '1d'});
-                    response.status(201).send({token, user});
+                    var token = jwt.sign({ userID: user.id }, TOKEN_STRING, { expiresIn: '1d' });
+                    console.log("User: " + user.id + ": " + token);
+                    response.status(201).send({ token, user });
 
                 } else {
-                    response.status(401).send("Invalid username or password combination.");
+                    response.status(401).send("Invalid username and password combination.");
                 }
 
             } else {
                 response.status(401).send("User email is not verified. Please validate email using the link that has been sent to your email again.");
-                
+
                 // Resend the token to verify the email
-                var verification_token = jwt.sign({userId: user.id}, TOKEN_STRING, {expiresIn: '1d'});
+                var verification_token = jwt.sign({ userId: user.id }, TOKEN_STRING, { expiresIn: '1d' });
                 sendEmail(user.email, verification_token);
             }
-            
+
         } else {
-            response.status(401).send("User does not exist.");
+            response.status(401).send("Invalid username and password combination.");
         }
     });
 };
@@ -130,9 +130,8 @@ const updateUser = (request, response) => {
     var hashed_password = generatePasswordHash(password);
 
     database.query(
-        'update users set name = $1, password = $2 where id = $3',
-        [fullname, hashed_password, id],
-        
+        'update users set name = $1, password = $2 where id = $3', [fullname, hashed_password, id],
+
         (error, results) => {
             if (error) {
                 throw error;
@@ -180,7 +179,7 @@ const sendEmail = function(end_user_email, verification_token) {
             <p>This link will only be valid for 1 day.</p>
         `
     };
-    
+
     transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
             console.log(error);
