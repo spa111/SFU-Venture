@@ -107,14 +107,18 @@ export class LoginPageComponent implements AfterViewInit {
 
         // If there was an error, display red box
         if (server_reply.status == 401) {
+
           let message = server_reply.error;
           $(".signup-alert .message")[0].innerHTML = message;
           $(".signup-alert")[0].style.backgroundColor = "#FF4B2B";
+          $(".signup-alert")[0].style.color = "white";
         } else {
+
           // Display success box
           let message = server_reply.error.text;
           $(".signup-alert .message")[0].innerHTML = message;
-          $(".signup-alert")[0].style.backgroundColor = "#4CAF50";
+          $(".signup-alert")[0].style.backgroundColor = "lightgrey";
+          $(".signup-alert")[0].style.color = "black";
         }
       });
     }
