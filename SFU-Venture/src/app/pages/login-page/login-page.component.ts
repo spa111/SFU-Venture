@@ -46,6 +46,9 @@ export class LoginPageComponent implements AfterViewInit {
         this.createUser();
       });
     });
+
+    $(".login-alert")[0].style.display = "none";
+    $(".signup-alert")[0].style.display = "none";
   }
 
   loginUser() {
@@ -63,14 +66,16 @@ export class LoginPageComponent implements AfterViewInit {
         console.log("Login Successful");
         localStorage.setItem("access_token", result.token);
         localStorage.setItem("user", result.user);
-        
         this.router.navigate(['']);
+
       }).catch(err => {
         console.log(err);
+        let error_msg = err.error;
 
+        // Display the login-alert box
+        $(".login-alert")[0].style.display = "";
+        $(".login-alert .message")[0].innerHTML = error_msg;
       });
-    } else {
-
     }
   }
 
@@ -94,11 +99,34 @@ export class LoginPageComponent implements AfterViewInit {
     if (fullname && email && password) {
       this.usersService.addNewUser(details).then((result) => {
         console.log(result);
-      }).catch(err => {
-        console.log(err);
-      })
-    } else {
+      }).catch(server_reply => {
+        console.log(server_reply);
 
+        // Display the signup-alert box
+        $(".signup-alert")[0].style.display = "";
+
+        // If there was an error, display red box
+        if (server_reply.status == 401) {
+          let message = server_reply.error;
+          $(".signup-alert .message")[0].innerHTML = message;
+          $(".signup-alert")[0].style.backgroundColor = "#FF4B2B";
+        } else {
+          // Display success box
+          let message = server_reply.error.text;
+          $(".signup-alert .message")[0].innerHTML = message;
+          $(".signup-alert")[0].style.backgroundColor = "#4CAF50";
+        }
+      });
     }
+  }
+
+  removeSignUpErrorMsg() {
+    $(".signup-alert .message")[0].innerHTML = "";
+    $(".signup-alert")[0].style.display = "none";
+  }
+
+  removeSignInErrorMsg() {
+    $(".login-alert .message")[0].innerHTML = "";
+    $(".login-alert")[0].style.display = "none";
   }
 }

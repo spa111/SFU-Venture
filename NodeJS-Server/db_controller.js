@@ -26,10 +26,10 @@ const validPassword = function(input_password, database_password) {
 const getUsers = (request, response) => {
     database.query('select * from users order by ID ASC', (error, results) => {
         if (error) {
-            throw error;
+            console.log(error);
+        } else {
+            response.status(200).json(results.rows);
         }
-
-        response.status(200).json(results.rows);
     });
 };
 
@@ -38,10 +38,10 @@ const getUserById = (request, response) => {
 
     database.query('select * from users where id = $1', [id], (error, results) => {
         if (error) {
-            throw error;
+            console.log(error);
+        } else {
+            response.status(200).json(results.rows);
         }
-
-        response.status(200).json(results.rows);
     });
 };
 
@@ -58,34 +58,31 @@ const createUser = (request, response) => {
         'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty) values ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', [fullname, hashed_password, email, username, is_email_verified, is_admin, is_student, is_faculty],
         (error, results) => {
             if (error) {
-                throw error;
+                console.log(error);
+                response.status(401).send(`Error, email is currently in use`);
+            } else {
+                var verification_token = jwt.sign({ userId: results.rows[0].id }, TOKEN_STRING, { expiresIn: '1d' });
+                sendEmail(email, verification_token);
+                response.status(201).send(`Please verify your email using the link sent to your email`);
             }
-
-            var verification_token = jwt.sign({ userId: results.rows[0].id }, TOKEN_STRING, { expiresIn: '1d' });
-            sendEmail(email, verification_token);
-            response.status(201).send(`User added`);
         }
     );
 };
 
 const verifyUserEmail = (request, response) => {
-    try {
-        const token_details = jwt.verify(request.body.token, TOKEN_STRING);
-        database.query(
-            'update users set is_email_verified = $1 where id = $2', [true, token_details.userId],
+    const token_details = jwt.verify(request.body.token, TOKEN_STRING);
+    database.query(
+        'update users set is_email_verified = $1 where id = $2', [true, token_details.userId],
 
-            (error, results) => {
-                if (error) {
-                    throw error;
-                }
-
+        (error, results) => {
+            if (error) {
+                console.log(error);
+            } else {
                 console.log(`User: ${token_details.userId} has been verified`);
                 response.status(200).send('User verified');
             }
-        );
-    } catch (error) {
-        throw error;
-    }
+        }
+    );
 };
 
 const loginUser = (request, response) => {
@@ -93,32 +90,32 @@ const loginUser = (request, response) => {
 
     database.query('select * from users where username = $1', [username], (error, results) => {
         if (error) {
-            throw error;
-        }
+            console.log(error);
+        } else {
+            var user = results.rows[0];
+            if (user) {
+                if (user.is_email_verified) {
+                    if (validPassword(password, user.password)) {
+                        // Return a vaid web token and the user details
+                        var token = jwt.sign({ userID: user.id }, TOKEN_STRING, { expiresIn: '1d' });
+                        console.log("User: " + user.id + ": " + token);
+                        response.status(201).send({ token, user });
 
-        var user = results.rows[0];
-        if (user) {
-            if (user.is_email_verified) {
-                if (validPassword(password, user.password)) {
-                    // Return a vaid web token and the user details
-                    var token = jwt.sign({ userID: user.id }, TOKEN_STRING, { expiresIn: '1d' });
-                    console.log("User: " + user.id + ": " + token);
-                    response.status(201).send({ token, user });
+                    } else {
+                        response.status(401).send("Invalid username and password combination");
+                    }
 
                 } else {
-                    response.status(401).send("Invalid username and password combination.");
+                    response.status(401).send("Please validate your account using the link that was been sent to your email.");
+
+                    // Resend the token to verify the email
+                    var verification_token = jwt.sign({ userId: user.id }, TOKEN_STRING, { expiresIn: '1d' });
+                    sendEmail(user.email, verification_token);
                 }
 
             } else {
-                response.status(401).send("User email is not verified. Please validate email using the link that has been sent to your email again.");
-
-                // Resend the token to verify the email
-                var verification_token = jwt.sign({ userId: user.id }, TOKEN_STRING, { expiresIn: '1d' });
-                sendEmail(user.email, verification_token);
+                response.status(401).send("Invalid username and password combination.");
             }
-
-        } else {
-            response.status(401).send("Invalid username and password combination.");
         }
     });
 };
@@ -134,7 +131,7 @@ const updateUser = (request, response) => {
 
         (error, results) => {
             if (error) {
-                throw error;
+                console.log(error);
             }
 
             response.status(200).send('User modified with ID: ${id}');
@@ -147,7 +144,7 @@ const deleteUser = (request, response) => {
 
     database.query('delete from users where id = $1', [id], (error, results) => {
         if (error) {
-            throw error;
+            console.log(error);
         }
 
         response.status(200).send('User deleted with ID: ${id}');
