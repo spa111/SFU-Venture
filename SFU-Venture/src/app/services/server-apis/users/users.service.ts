@@ -34,6 +34,10 @@ export class UsersService {
     return this.http.post(SERVER_BASE_URL + "/api/signup", newUserJSON).toPromise();
   }
 
+  verifyUserAccount(token: any): Promise<any> {
+    return this.http.post(SERVER_BASE_URL + "/api/verify-user-email", token).toPromise();
+  }
+
   update(id: any, patchJSON: any): Promise<any> {
     return this.http.put(SERVER_BASE_URL + '/api/users/' + id + '/update-account', patchJSON, this.httpOptions).toPromise();
   }

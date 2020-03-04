@@ -70,16 +70,24 @@ const createUser = (request, response) => {
 };
 
 const verifyUserEmail = (request, response) => {
-    const token_details = jwt.verify(request.body.token, TOKEN_STRING);
+    var token_details = "";
+    try {
+        token_details = jwt.verify(request.body.token, TOKEN_STRING);
+    } catch (err) {
+        response.status(401).send("Error, JSON web token is invalid. Please try to login in. It will generate a new link and send it to your email");
+        return;
+    }
+
     database.query(
         'update users set is_email_verified = $1 where id = $2', [true, token_details.userId],
 
         (error, results) => {
             if (error) {
                 console.log(error);
+                response.status(401).send("Error, JSON web token is invalid. Please try to login in. It will generate a new link and send it to your email");
             } else {
                 console.log(`User: ${token_details.userId} has been verified`);
-                response.status(200).send('User verified');
+                response.status(200).send('Your account has been verified. Enjoy SFU Venture.');
             }
         }
     );

@@ -29,7 +29,7 @@ const routes: Routes = [
       component: LogoutComponent
     },
     {
-      path: 'verify-email',
+      path: 'verify-email/:token',
       pathMatch: 'full',
       component: VerifyEmailPageComponent
     }
