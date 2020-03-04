@@ -1,3 +1,19 @@
 <div id="body">
-    <img class="spinner" *ngIf="loading" src="../../../../assets/Infinity-loading-spinner.svg" />
+    <div class="container" id="container">
+        <div id="overlay">
+            <div id="content">
+                <div [@ActivationWaitingChanged]="waitingState" id="waitingActivation">
+                    <h1>Activating your account. Please be patient.</h1>
+                    <img class="spinner" src="../../../../assets/Infinity-loading-spinner-white.svg" />
+                </div>
+
+                <div [@accountActivationState]="attemptingState">
+                    <div class="message">
+                        <h2></h2>
+                        <h3>Redirecting back to login in 5 seconds</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

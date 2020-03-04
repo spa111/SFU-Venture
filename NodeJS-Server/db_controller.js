@@ -74,20 +74,18 @@ const verifyUserEmail = (request, response) => {
     try {
         token_details = jwt.verify(request.body.token, TOKEN_STRING);
     } catch (err) {
-        response.status(401).send("Error, JSON web token is invalid. Please try to login in. It will generate a new link and send it to your email");
+        response.status(401).send("Error, your authentication token is invalid. Please try logging in to regenerate another email with a new authentication token.");
         return;
     }
 
     database.query(
-        'update users set is_email_verified = $1 where id = $2', [true, token_details.userId],
-
-        (error, results) => {
+        'update users set is_email_verified = $1 where id = $2', [true, token_details.userId], (error, results) => {
             if (error) {
                 console.log(error);
-                response.status(401).send("Error, JSON web token is invalid. Please try to login in. It will generate a new link and send it to your email");
+                response.status(401).send("Error, your authentication token is invalid. Please try logging in to regenerate another email with a new authentication token.");
             } else {
                 console.log(`User: ${token_details.userId} has been verified`);
-                response.status(200).send('Your account has been verified. Enjoy SFU Venture.');
+                response.status(200).send({ 'response': 'Your account has been verified. Enjoy SFU Venture.' });
             }
         }
     );
