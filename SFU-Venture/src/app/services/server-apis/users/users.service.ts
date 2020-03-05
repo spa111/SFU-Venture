@@ -38,6 +38,14 @@ export class UsersService {
     return this.http.post(SERVER_BASE_URL + "/api/verify-user-email", token).toPromise();
   }
 
+  forgotPassword(email: any): Promise<any> {
+    return this.http.post(SERVER_BASE_URL + "/api/forgot-password", email).toPromise();
+  }
+
+  changeForgottenPassword(newPasswordJSON: any): Promise<any> {
+    return this.http.post(SERVER_BASE_URL + "/api/change-forgotten-password", newPasswordJSON).toPromise();
+  }
+
   update(id: any, patchJSON: any): Promise<any> {
     return this.http.put(SERVER_BASE_URL + '/api/users/' + id + '/update-account', patchJSON, this.httpOptions).toPromise();
   }

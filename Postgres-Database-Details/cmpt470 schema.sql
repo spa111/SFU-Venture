@@ -8,6 +8,7 @@ CREATE  TABLE users (
 	is_admin             bool DEFAULT false  ,
 	is_student           bool DEFAULT false  ,
 	is_faculty           bool DEFAULT false  ,
+	is_faculty_verified  bool DEFAULT false  ,
 	CONSTRAINT pk_users_id PRIMARY KEY ( id ),
 	CONSTRAINT unique_email UNIQUE ( email ) ,
 	CONSTRAINT unique_username UNIQUE ( username ) 

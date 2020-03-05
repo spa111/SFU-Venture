@@ -50,20 +50,34 @@ const createUser = (request, response) => {
 
     var username = email.split("@")[0];
     var is_email_verified = false;
+    var is_faculty_verified = false;
     var is_admin = false;
     var hashed_password = generatePasswordHash(password);
 
     // Need to add another check in the db to make it so that the admin is the only one who verifies whether a user is faculty or not
     database.query(
-        'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty) values ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', [fullname, hashed_password, email, username, is_email_verified, is_admin, is_student, is_faculty],
+        'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', 
+        [fullname, hashed_password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified],
         (error, results) => {
             if (error) {
                 console.log(error);
                 response.status(401).send(`Error, email is currently in use`);
             } else {
                 var verification_token = jwt.sign({ userId: results.rows[0].id }, TOKEN_STRING, { expiresIn: '1d' });
-                sendEmail(email, verification_token);
-                response.status(201).send(`Please verify your email using the link sent to your email`);
+                var url = `http://localhost:4200/verify-email/${verification_token}`;
+
+                var mailOptions = {
+                    from: 'sfuventure470@gmail.com',
+                    to: email,
+                    subject: 'Please confirm your email',
+                    html: `
+                        <h4>Please click this link to confirm to verify your email: <a href="${url}">${url}</a></h4>
+                        <p>This link will only be valid for 1 day.</p>
+                    `
+                };
+
+                sendEmail(mailOptions);
+                response.status(201).send(`Please check your email for instructions to activate your account`);
             }
         }
     );
@@ -116,7 +130,18 @@ const loginUser = (request, response) => {
 
                     // Resend the token to verify the email
                     var verification_token = jwt.sign({ userId: user.id }, TOKEN_STRING, { expiresIn: '1d' });
-                    sendEmail(user.email, verification_token);
+                    var url = `http://localhost:4200/verify-email/${verification_token}`;
+                    var mailOptions = {
+                        from: 'sfuventure470@gmail.com',
+                        to: user.email,
+                        subject: 'Please confirm your email',
+                        html: `
+                            <h4>Please click this link to confirm to verify your email: <a href="${url}">${url}</a></h4>
+                            <p>This link will only be valid for 1 day.</p>
+                        `
+                    };
+
+                    sendEmail(mailOptions);
                 }
 
             } else {
@@ -126,6 +151,63 @@ const loginUser = (request, response) => {
     });
 };
 
+const forgotPasswordCheckEmail = (request, response) => {
+    const { email } = request.body;
+
+    database.query(
+        'select * from users where email = $1', [email], 
+        (error, results) => {
+            if (error) {
+                console.log(error);
+                response.status(401).send(`Error, email doesn't exist`);
+            } else {
+                if (results.rows[0] && results.rows[0].id) {
+                    var verification_token = jwt.sign({ userId: results.rows[0].id }, TOKEN_STRING, { expiresIn: '1d' });
+                    var url = `http://localhost:4200/change-forgotten-password/${verification_token}`;
+    
+                    var mailOptions = {
+                        from: 'sfuventure470@gmail.com',
+                        to: email,
+                        subject: 'Password Reset',
+                        html: `
+                            <h4>Please click this link to reset your password: <a href="${url}">${url}</a></h4>
+                            <p>This link will only be valid for 1 day. If this wasn't you, please consider changing your password.</p>
+                        `
+                    };
+    
+                    sendEmail(mailOptions);
+                    response.status(201).send({ 'response': `Please check your email for reset instructions`});
+                } else {
+                    response.status(401).send(`Error, email doesn't exist`);
+                }
+            }
+        }
+    );
+};
+
+const changeForgottenPassword = (request, response) => {
+    const { token, newPassword } = request.body;
+
+    var token_details = "";
+    try {
+        token_details = jwt.verify(token, TOKEN_STRING);
+    } catch (err) {
+        response.status(401).send("Error, your authentication token is invalid. Please try the process of resetting your password again.");
+        return;
+    }
+
+    const hashed_password = generatePasswordHash(newPassword);
+    database.query(
+        'update users set password = $1 where id = $2', [hashed_password, token_details.userId], (error, results) => {
+            if (error) {
+                console.log(error);
+                response.status(401).send("Error, your authentication token is invalid. Please try the process of resetting your password again.");
+            } else {
+                response.status(200).send({ 'response': 'Your account password has been changed. Enjoy SFU Venture.' });
+            }
+        }
+    );
+};
 
 const updateUser = (request, response) => {
     const id = parseInt(request.params.id);
@@ -157,8 +239,7 @@ const deleteUser = (request, response) => {
     });
 };
 
-const sendEmail = function(end_user_email, verification_token) {
-    var url = `http://localhost:4200/verify-email/${verification_token}`;
+const sendEmail = function(mailOptions) {
 
     // Email details
     var transporter = nodemailer.createTransport({
@@ -171,17 +252,6 @@ const sendEmail = function(end_user_email, verification_token) {
             rejectUnauthorized: false
         }
     });
-
-    // Message details
-    var mailOptions = {
-        from: 'sfuventure470@gmail.com',
-        to: end_user_email,
-        subject: 'Please confirm your email',
-        html: `
-            <h4>Please click this link to confirm to verify your email: <a href="${url}">${url}</a></h4>
-            <p>This link will only be valid for 1 day.</p>
-        `
-    };
 
     transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
@@ -200,5 +270,7 @@ module.exports = {
     updateUser,
     deleteUser,
     loginUser,
-    verifyUserEmail
+    verifyUserEmail,
+    forgotPasswordCheckEmail,
+    changeForgottenPassword
 };

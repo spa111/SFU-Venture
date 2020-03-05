@@ -13,6 +13,8 @@ import { AuthGuard } from './services/auth-guard/auth.guard';
 import { LoginGuard } from './services/login-guard/login.guard'; 
 import { LogoutComponent } from './pages/logout/logout.component';
 import { VerifyEmailPageComponent } from './pages/verify-page/verify-email-page/verify-email-page.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ChangeForgottenPasswordComponent } from './pages/change-forgotten-password/change-forgotten-password.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -25,7 +27,9 @@ export function tokenGetter() {
     NavBarComponent,
     LoginPageComponent,
     LogoutComponent,
-    VerifyEmailPageComponent
+    VerifyEmailPageComponent,
+    ForgotPasswordComponent,
+    ChangeForgottenPasswordComponent
   ],
   imports: [
     BrowserModule,

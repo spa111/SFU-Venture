@@ -6,6 +6,9 @@ import { AuthGuard } from '../app/services/auth-guard/auth.guard';
 import { LogoutComponent } from '../app/pages/logout/logout.component';
 import { VerifyEmailPageComponent } from '../app/pages/verify-page/verify-email-page/verify-email-page.component';
 import { LoginGuard } from '../app/services/login-guard/login.guard';
+import { ForgotPasswordComponent } from '../app/pages/forgot-password/forgot-password.component';
+import { ChangeForgottenPasswordComponent } from '../app/pages/change-forgotten-password/change-forgotten-password.component';
+
 // Each route to an object is encased in a separate object
 // path - The URL path to the HTML component
 // pathMatch - Entire path name must be typed in to match a route specified
@@ -32,6 +35,16 @@ const routes: Routes = [
       path: 'verify-email/:token',
       pathMatch: 'full',
       component: VerifyEmailPageComponent
+    },
+    {
+      path: 'forgot-password',
+      pathMatch: 'full',
+      component: ForgotPasswordComponent
+    },
+    {
+      path: 'change-forgotten-password/:token',
+      pathMatch: 'full',
+      component: ChangeForgottenPasswordComponent
     }
 ];
 
