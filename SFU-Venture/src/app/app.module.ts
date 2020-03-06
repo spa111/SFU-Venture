@@ -10,6 +10,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AuthService } from './services/auth/auth.service';
 import { AuthGuard } from './services/auth-guard/auth.guard';
 import { LogoutComponent } from './pages/logout/logout.component';
+import { MainMarketDisplayComponent } from './pages/main-market-display/main-market-display.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -21,7 +22,8 @@ export function tokenGetter() {
     HomePageComponent,
     NavBarComponent,
     LoginPageComponent,
-    LogoutComponent
+    LogoutComponent,
+    MainMarketDisplayComponent
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@ import { HomePageComponent } from '../app/pages/home-page/home-page.component';
 import { LoginPageComponent } from '../app/pages/login-page/login-page.component';
 import { AuthGuard } from '../app/services/auth-guard/auth.guard';
 import { LogoutComponent } from '../app/pages/logout/logout.component';
+import { MainMarketDisplayComponent } from './pages/main-market-display/main-market-display.component';
 
 // Each route to an object is encased in a separate object
 // path - The URL path to the HTML component
@@ -25,6 +26,11 @@ const routes: Routes = [
       path: 'logout',
       pathMatch: 'full',
       component: LogoutComponent
+    },
+    {
+      path: 'market',
+      pathMatch: 'full',
+      component: MainMarketDisplayComponent
     }
 ];
 
