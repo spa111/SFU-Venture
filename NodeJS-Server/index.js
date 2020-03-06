@@ -7,8 +7,8 @@ const app = express();
 const port = 3000;
 
 // Use CORS to accept a request coming from any browser
-app.options('*', cors());
 
+app.use(cors({ origin: '*' }));
 app.use(bodyParser.json());
 app.use(
     bodyParser.urlencoded({
@@ -16,7 +16,9 @@ app.use(
     })
 );
 
-app.use(expressJwt({secret: 'sfuventure_jwt_token_string'}).unless({path: ['/api/signup', '/api/signin', '/api/verify-user-email']}));
+app.use(expressJwt({ secret: 'sfuventure_jwt_token_string' }).unless({
+    path: ['/api/signup', '/api/signin', '/api/verify-user-email', '/api/forgot-password', '/api/change-forgotten-password']
+}));
 
 // Application endpoints
 app.get('/', (request, response) => {
@@ -29,6 +31,8 @@ app.get('/', (request, response) => {
 app.post('/api/signup', cors(), database.createUser);
 app.post('/api/signin', cors(), database.loginUser);
 app.post('/api/verify-user-email', cors(), database.verifyUserEmail);
+app.post('/api/forgot-password', cors(), database.forgotPasswordCheckEmail);
+app.post('/api/change-forgotten-password', cors(), database.changeForgottenPassword);
 
 // USER Data manipulation API's
 app.get('/api/users', cors(), database.getUsers);
