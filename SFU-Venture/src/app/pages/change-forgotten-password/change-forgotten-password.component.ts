@@ -18,9 +18,9 @@ declare var $: any;
     ]),
     trigger('passwordUpdateState', [
       state('waitingSave', style({ opacity: 0 })),
-      state('attemptingSaveComplete', style({ opacity: 1 })),
-      transition('waitingSave => attemptingSaveComplete', animate('600ms')),
-      transition('attemptingSaveComplete => waitingSave', animate('600ms'))
+      state('saveComplete', style({ opacity: 1 })),
+      transition('waitingSave => saveComplete', animate('600ms')),
+      transition('saveComplete => waitingSave', animate('600ms'))
     ])
   ]
 })
@@ -29,6 +29,10 @@ export class ChangeForgottenPasswordComponent implements OnInit {
   token: any;
   changingState: string = "changing";
   savingState: string = "waitingSave";
+  countdownTimer = 5;
+
+  // changeSuccess: boolean = false;
+  serverResponse: string = "";
 
   constructor(private userService: UsersService, private router: Router, private route: ActivatedRoute) {
     this.token = this.route.snapshot.params['token'];
@@ -60,6 +64,44 @@ export class ChangeForgottenPasswordComponent implements OnInit {
   }
 
   changePassword() {
+    let password = $("#password1")[0].value;
+    let payload = {
+      "token" : this.token,
+      "password" : password
+    };
 
+    this.userService.changeForgottenPassword(payload).then((result) => {
+      // this.changeSuccess = true;
+      this.changingState = "changingComplete";
+      this.serverResponse = result.response;
+      this.handleAnimation();
+
+    }).catch(err => {
+      // this.changeSuccess = false;
+      this.changingState = "changingComplete";
+      this.serverResponse = err.error;
+      this.handleAnimation();
+
+    });
+  }
+
+  handleAnimation() {
+    setTimeout(() => {
+      $("#waitingChange")[0].style.display = "none";
+      this.savingState = "saveComplete";
+      $("h2")[0].innerText = this.serverResponse;
+    
+      // This setInterval displays a countdown timer that redirects back to the login page 
+      var interval = setInterval(() => {
+
+        $(".message h3")[0].innerText = `Redirecting back to login in ${this.countdownTimer} seconds`;
+        if (this.countdownTimer == 0) {
+            clearInterval(interval);
+            this.router.navigate(['login']);
+        }
+        this.countdownTimer--;
+
+      }, 1000);
+    }, 600);
   }
 }
