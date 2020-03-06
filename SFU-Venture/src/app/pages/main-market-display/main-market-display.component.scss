@@ -1,148 +1,41 @@
-// @media only screen and (min-width: 480px) .grid .result-row {
-//     margin-left: 1em;
-// }
-.grid .result-row {
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    display: -moz-inline-stack;
-    display: inline-block;
-    *display: inline;
-    *zoom: 1;
-    -webkit-box-shadow: 0 0 7px 0 #ddd;
-    -moz-box-shadow: 0 0 7px 0 #ddd;
-    box-shadow: 0 0 7px 0 #ddd;
-    border: 1px solid #ccc;
-    height: 290px;
-    line-height: 1.3em;
-    max-width: 300px;
-    max-height: 290px;
-    margin: 4px 0 12px 8px;
-    overflow: hidden;
-    padding: 0;
-    position: relative;
-    width: 300px;
-    white-space: normal;
-    vertical-align: top;
-}
-
-.result-row {
-    background-color: transparent;
-    overflow: hidden;
-    padding: 0 10px 20px;
-    position: relative;
+* {
+    box-sizing: border-box;
 }
 
 html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-
-user agent stylesheet li {
-    display: list-item;
-    text-align: -webkit-match-parent;
-}
-
-ul {
-    list-style: none;
-}
-
-user agent stylesheet ul {
-    list-style-type: disc;
-}
-
-button,
-select,
-input,
-fieldset,
-form,
-label,
-legend {
-    font-family: "Arial", sans-serif;
-}
-
 body {
-    background: white;
-    color: #222;
-    font-family: "Arial", sans-serif;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    font-family: "Calibri";
+    font-weight: 400;
+}
+
+.marketItem {
+    width: 25%;
+    padding-left: 40px;
+    padding-bottom: 40px;
+}
+
+.marketItemInner {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ebebeb;
+    ;
+    &:hover {
+        background-color: #fafafa;
+        border-bottom-color: #32a1d0;
+        ;
+    }
+}
+
+.marketItemImg {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 180px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 user agent stylesheet html {
@@ -152,7 +45,7 @@ user agent stylesheet html {
 .filter {
     width: 20%;
     background-color:#f4f4f4;
-    height: 100vh;
+    height: 100%;
     overflow-y: auto;
     color: #696969;
     box-shadow: 0px 5px 10px 3px #bdbdbd;
@@ -191,4 +84,26 @@ h5 {
     margin: 0 auto;
     text-align: center;
     display: none;
+
+}
+
+.marketItemLabel {
+    position: relative;
+    padding-left: 28px;
+    font-size: 12px;
+    font-weight: 300;
+    color: #bfbfbf;
+    &:before {
+        top: 50%;
+        left: 10px;
+        width: 8px;
+        height: 8px;
+        background-color: transparent;
+        border: 2px solid transparent;
+        border-radius: 50%;
+    }
+}
+
+.wrapper-container {
+    display: inline-flex;
 }
