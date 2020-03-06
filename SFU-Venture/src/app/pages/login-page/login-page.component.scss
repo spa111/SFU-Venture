@@ -162,6 +162,7 @@ input {
     background: #FF416C;
     background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
     background: linear-gradient(to right, #FF4B2B, #FF416C);
+    // background: #FF4B2B;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 0;
@@ -282,4 +283,76 @@ input {
     span {
         display: inline;
     }
+}
+
+#sign-up-form {
+    width: 100%;
+    height: fit-content;
+}
+
+.signup-top-container {
+    height: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.signup-bottom-container {
+    height: 20%;
+    margin-top: 5%;
+}
+
+.signup-alert {
+    padding: 20px;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-radius: 10px 10px 10px 10px;
+}
+
+#sign-in-form {
+    width: 100%;
+    height: fit-content;
+}
+
+.login-top-container {
+    height: 65%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.login-bottom-container {
+    height: 30%;
+    margin-top: 5%;
+}
+
+.login-alert {
+    padding: 20px;
+    background-color: #ff4d4d;
+    color: white;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.login-alert .message,
+.signup-alert .message {
+    text-align: center;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
 }

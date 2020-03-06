@@ -1,57 +1,75 @@
 <div id="body">
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form id="sign-up-form">
-                <h1>Create Account</h1>
-                <input type="text" placeholder="Full Name" id="new_acc_name" />
-                <input type="email" placeholder="Email" id="new_acc_email" />
-                <input type="password" placeholder="Password" id="new_acc_password" />
+            <div class="signup-top-container">
+                <form id="sign-up-form">
+                    <h1>Create Account</h1>
+                    <input type="text" placeholder="Full Name" id="new_acc_name" required/>
+                    <input type="email" placeholder="Email" id="new_acc_email" required/>
+                    <input type="password" placeholder="Password" id="new_acc_password" required/>
 
-                <div class="cntr">
-                    <p id="radio-info">Please select what kind of user you will be</p>
-                    <label for="rdo-1" class="btn-radio">
-                        <input type="radio" id="rdo-1" name="radio-grp" checked>
-                        <svg width="20px" height="20px" viewBox="0 0 20 20">
-                            <circle cx="10" cy="10" r="9"></circle>
-                            <path d="M10,7 C8.34314575,7 7,8.34314575 7,10 C7,11.6568542 8.34314575,13 10,13 C11.6568542,13 13,11.6568542 13,10 C13,8.34314575 11.6568542,7 10,7 Z" class="inner"></path>
-                            <path d="M10,1 L10,1 L10,1 C14.9705627,1 19,5.02943725 19,10 L19,10 L19,10 C19,14.9705627 14.9705627,19 10,19 L10,19 L10,19 C5.02943725,19 1,14.9705627 1,10 L1,10 L1,10 C1,5.02943725 5.02943725,1 10,1 L10,1 Z" class="outer"></path>
-                        </svg>
-                        <span>&nbsp;Student</span>
-                    </label>
-                    <label for="rdo-2" class="btn-radio">
-                        <input type="radio" id="rdo-2" name="radio-grp">
-                        <svg width="20px" height="20px" viewBox="0 0 20 20">
-                            <circle cx="10" cy="10" r="9"></circle>
-                            <path d="M10,7 C8.34314575,7 7,8.34314575 7,10 C7,11.6568542 8.34314575,13 10,13 C11.6568542,13 13,11.6568542 13,10 C13,8.34314575 11.6568542,7 10,7 Z" class="inner"></path>
-                            <path d="M10,1 L10,1 L10,1 C14.9705627,1 19,5.02943725 19,10 L19,10 L19,10 C19,14.9705627 14.9705627,19 10,19 L10,19 L10,19 C5.02943725,19 1,14.9705627 1,10 L1,10 L1,10 C1,5.02943725 5.02943725,1 10,1 L10,1 Z" class="outer"></path>
-                        </svg>
-                        <span>&nbsp;Faculty</span>
-                    </label>
+                    <div class="cntr">
+                        <p id="radio-info">Please select what kind of user you will be</p>
+                        <label for="rdo-1" class="btn-radio">
+                            <input type="radio" id="rdo-1" name="radio-grp" checked>
+                            <svg width="20px" height="20px" viewBox="0 0 20 20">
+                                <circle cx="10" cy="10" r="9"></circle>
+                                <path d="M10,7 C8.34314575,7 7,8.34314575 7,10 C7,11.6568542 8.34314575,13 10,13 C11.6568542,13 13,11.6568542 13,10 C13,8.34314575 11.6568542,7 10,7 Z" class="inner"></path>
+                                <path d="M10,1 L10,1 L10,1 C14.9705627,1 19,5.02943725 19,10 L19,10 L19,10 C19,14.9705627 14.9705627,19 10,19 L10,19 L10,19 C5.02943725,19 1,14.9705627 1,10 L1,10 L1,10 C1,5.02943725 5.02943725,1 10,1 L10,1 Z" class="outer"></path>
+                            </svg>
+                            <span>&nbsp;Student</span>
+                        </label>
+                        <label for="rdo-2" class="btn-radio">
+                            <input type="radio" id="rdo-2" name="radio-grp">
+                            <svg width="20px" height="20px" viewBox="0 0 20 20">
+                                <circle cx="10" cy="10" r="9"></circle>
+                                <path d="M10,7 C8.34314575,7 7,8.34314575 7,10 C7,11.6568542 8.34314575,13 10,13 C11.6568542,13 13,11.6568542 13,10 C13,8.34314575 11.6568542,7 10,7 Z" class="inner"></path>
+                                <path d="M10,1 L10,1 L10,1 C14.9705627,1 19,5.02943725 19,10 L19,10 L19,10 C19,14.9705627 14.9705627,19 10,19 L10,19 L10,19 C5.02943725,19 1,14.9705627 1,10 L1,10 L1,10 C1,5.02943725 5.02943725,1 10,1 L10,1 Z" class="outer"></path>
+                            </svg>
+                            <span>&nbsp;Faculty</span>
+                        </label>
+                    </div>
+
+                    <button>Sign Up</button>
+                </form>
+            </div>
+
+            <div class="signup-bottom-container">
+                <div class="signup-alert">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <div class="message"></div>
                 </div>
-
-                <button>Sign Up</button>
-            </form>
+            </div>
         </div>
         <div class="form-container sign-in-container">
-            <form id="sign-in-form">
-                <h1>Sign in</h1>
-                <input type="text" placeholder="SFU Username" id="login_name" />
-                <input type="password" placeholder="Password" id="login_password" />
-                <a href="#">Forgot your password?</a>
-                <button>Sign In</button>
-            </form>
+            <div class="login-top-container">
+                <form id="sign-in-form">
+                    <h1>Sign in</h1>
+                    <input type="text" placeholder="SFU Username" id="login_name" required/>
+                    <input type="password" placeholder="Password" id="login_password" required/>
+                    <a href="forgot-password">Forgot your password?</a>
+                    <button>Sign In</button>
+                </form>
+            </div>
+
+            <div class="login-bottom-container">
+                <div class="login-alert">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <div class="message"></div>
+                </div>
+            </div>
         </div>
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
                     <h1>Welcome Back!</h1>
                     <p>To enjoy the benefits of SFU Venture please login with your personal info</p>
-                    <button class="ghost" id="signIn">Sign In</button>
+                    <button class="ghost" id="signIn" (click)="removeSignUpErrorMsg()">Sign In</button>
                 </div>
                 <div class="overlay-panel overlay-right">
                     <h1 id="sfu-venture">SFU Venture</h1>
                     <p>Enter your personal details and start journey with SFU Venture</p>
-                    <button class="ghost" id="signUp">Sign Up</button>
+                    <button class="ghost" id="signUp" (click)="removeSignInErrorMsg()">Sign Up</button>
                 </div>
             </div>
         </div>
