@@ -36,6 +36,7 @@ const routes: Routes = [
       path: 'market',
       pathMatch: 'full',
       component: MainMarketDisplayComponent
+    },{
       path: 'verify-email/:token',
       pathMatch: 'full',
       component: VerifyEmailPageComponent

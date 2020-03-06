@@ -28,7 +28,7 @@ export function tokenGetter() {
     NavBarComponent,
     LoginPageComponent,
     LogoutComponent,
-    MainMarketDisplayComponent
+    MainMarketDisplayComponent,
     VerifyEmailPageComponent,
     ForgotPasswordComponent,
     ChangeForgottenPasswordComponent
