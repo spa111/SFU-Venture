@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 const expressJwt = require('express-jwt');
 const cors = require('cors');
 const database = require('./db_controller');
+const login_endpoint = require('./end_point_handler/login_endpoint')
+const userdata_endpoint = require('./end_point_handler/user_data_endpoint')
+
 const app = express();
 const port = 3000;
 
@@ -28,17 +31,11 @@ app.get('/', (request, response) => {
 });
 
 // Login API's
-app.post('/api/signup', cors(), database.createUser);
-app.post('/api/signin', cors(), database.loginUser);
-app.post('/api/verify-user-email', cors(), database.verifyUserEmail);
-app.post('/api/forgot-password', cors(), database.forgotPasswordCheckEmail);
-app.post('/api/change-forgotten-password', cors(), database.changeForgottenPassword);
+app.use(login_endpoint)
+
 
 // USER Data manipulation API's
-app.get('/api/users', cors(), database.getUsers);
-app.get('/api/users/:id', cors(), database.getUserById);
-app.put('/api/users/:id', cors(), database.updateUser);
-app.delete('/api/users/:id', cors(), database.deleteUser);
+app.use(userdata_endpoint)
 
 // Start NodeJS server and list on port 3000 for requests
 app.listen(port, () => {
