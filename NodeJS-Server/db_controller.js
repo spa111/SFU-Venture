@@ -56,8 +56,7 @@ const createUser = (request, response) => {
 
     // Need to add another check in the db to make it so that the admin is the only one who verifies whether a user is faculty or not
     database.query(
-        'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', 
-        [fullname, hashed_password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified],
+        'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', [fullname, hashed_password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified],
         (error, results) => {
             if (error) {
                 console.log(error);
@@ -155,7 +154,7 @@ const forgotPasswordCheckEmail = (request, response) => {
     const { email } = request.body;
 
     database.query(
-        'select * from users where email = $1', [email], 
+        'select * from users where email = $1', [email],
         (error, results) => {
             if (error) {
                 console.log(error);
@@ -164,7 +163,7 @@ const forgotPasswordCheckEmail = (request, response) => {
                 if (results.rows[0] && results.rows[0].id) {
                     var verification_token = jwt.sign({ userId: results.rows[0].id }, TOKEN_STRING, { expiresIn: '1d' });
                     var url = `http://localhost:4200/change-forgotten-password/${verification_token}`;
-    
+
                     var mailOptions = {
                         from: 'sfuventure470@gmail.com',
                         to: email,
@@ -174,9 +173,9 @@ const forgotPasswordCheckEmail = (request, response) => {
                             <p>This link will only be valid for 1 day. If this wasn't you, please consider changing your password.</p>
                         `
                     };
-    
+
                     sendEmail(mailOptions);
-                    response.status(201).send({ 'response': `Please check your email for reset instructions`});
+                    response.status(201).send({ 'response': `Please check your email for reset instructions` });
                 } else {
                     response.status(401).send(`Error, email doesn't exist`);
                 }
@@ -186,7 +185,7 @@ const forgotPasswordCheckEmail = (request, response) => {
 };
 
 const changeForgottenPassword = (request, response) => {
-    const { token, newPassword } = request.body;
+    const { token, password } = request.body;
 
     var token_details = "";
     try {
@@ -196,7 +195,7 @@ const changeForgottenPassword = (request, response) => {
         return;
     }
 
-    const hashed_password = generatePasswordHash(newPassword);
+    const hashed_password = generatePasswordHash(password);
     database.query(
         'update users set password = $1 where id = $2', [hashed_password, token_details.userId], (error, results) => {
             if (error) {
