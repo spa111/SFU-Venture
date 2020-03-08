@@ -16,12 +16,13 @@ body, app-root {
     // padding-left: 40px;
     // padding-bottom: 40px;
     // display: inline-flex;
+    overflow: hidden;
 }
 
 .marketItemInner {
-    // width: 250px;
-    margin: 20px;
-    padding: 20px;
+    width: 30%;
+    margin: 10px;
+    padding: 10px;
     background-color: #726d6d;
     padding-bottom: 15px;
     border-bottom: 1px solid #ebebeb;
