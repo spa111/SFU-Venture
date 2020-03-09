@@ -24,33 +24,33 @@ export class MainMarketDisplayComponent implements OnInit {
           faculty : "CMPT",
           price: "10",
           postDate : "August 23",
-          imageUrl : "https://picsum.photos/200"
+          imageUrl : "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRdMSTfBunrwHpZlh146YZtHiH5ax1spAZKQEii9l9TJ92VrDQR"
       },
       {
-        textbookName : "Operatding System Concepsts, 9th Edition, Silberschatz, Galvin, Gagne, 2012",
-          course : "300",
+        textbookName : "Programming: Principles and Practice Using C++",
+          course : "130",
           faculty : "CMPT",
-          price: "10",
-          postDate : "August 23",
-          imageUrl : "https://picsum.photos/200"
+          price: "50",
+          postDate : "August 14",
+          imageUrl : "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRtVJT34n352gqhS5KZcW4IEjR0JqWSi2WFl95-hz5iEnu4T4Ey"
 
       },
       {
-        textbookName : "Opedrating System Concepts, 9th Edition, Silberschatz, Galvin, Gagne, 2012",
-        course : "300",
+        textbookName : "C++ Primer (5th Edition)",
+        course : "135",
         faculty : "CMPT",
-        price: "10",
-        postDate : "August 23",
-        imageUrl : "https://picsum.photos/200"
+        price: "15",
+        postDate : "July 3",
+        imageUrl : "https://image.ebooks.com/previews/001/001436/001436169/001436169.jpg"
 
       },
       {
-        textbookName : "Operating System Conceptss, 9th Edition, Silberschatz, Galvin, Gagne, 2012",
-        course : "300",
+        textbookName : "Data Structures and Algorithms in C++",
+        course : "225",
         faculty : "CMPT",
-        price: "10",
-        postDate : "August 23",
-        imageUrl : "https://picsum.photos/200"
+        price: "1",
+        postDate : "Feburary 14",
+        imageUrl : "https://images-na.ssl-images-amazon.com/images/I/61pHgCDCgqL.jpg"
       }]
   };
 

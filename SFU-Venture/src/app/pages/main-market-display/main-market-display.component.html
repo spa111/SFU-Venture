@@ -27,20 +27,16 @@
     </div>
     <div class="display">
         <div class="row">
-            <div class="marketItemInner " *ngFor="let textbookName of textbooks; let i = index">
-
+            <div class="marketItem " *ngFor="let post of textbooks; let i = index">
                 <div class="marketItemImg" style=" background-repeat: no-repeat;">
-                    <div class="marketItemImg " [ngStyle]="{'background-image': 'url(' + textbookName.imageUrl + ')'}" style="background-repeat: no-repeat; background-size: auto;">
-                        <span class="feed__itm__prc ">$120</span>
-
+                    <div class="marketItemImg " [ngStyle]="{'background-image': 'url(' + post.imageUrl + ')'}" style="background-repeat: no-repeat; background-size:contain;">
+                        <div class="marketItemLabel">
+                            <span>${{post.price}}</span>
+                        </div>
                     </div>
-
-                    <tr>
-                        <td>{{textbookName.photoURL}}</td>
-                        <td>{{textbookName.course}}</td>
-                        <td>{{textbookName.price}}</td>
-                        <td>{{textbookName.postDate}}</td>
-                    </tr>
+                    <h5 class="feed__itm__ttl ">{{post.textbookName}}
+                    </h5>
+                    <p class="lbl--1 ">{{post.faculty}}</p>
                 </div>
 
             </div>
