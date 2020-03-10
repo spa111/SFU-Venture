@@ -1,3 +1,4 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <div class="wrapper-container">
     <div class="filter">
         <h2 class="filter-title">Filter</h2>
@@ -27,20 +28,30 @@
     </div>
     <div class="display">
         <div class="row">
-            <div class="marketItem rcorners" *ngFor="let post of textbooks; let i = index">
-                <div class="marketItemLabel">
-                    <span>${{post.price}}</span>
-                </div>
-
-                <div class="marketItemImg" style=" background-repeat: no-repeat;">
-                    <div class="marketItemImg " [ngStyle]="{'background-image': 'url(' + post.imageUrl + ')'}" style="background-repeat: no-repeat; background-size:contain;">
-
+            <div class="marketItemsArea">
+                <div class="marketItem rcorners" *ngFor="let post of textbooks; let i = index">
+                    <div class="marketItemLabel">
+                        <span>${{post.price}}</span>
                     </div>
-                    <h5 class="marketItemName">{{post.textbookName}}
-                    </h5>
-                </div>
+                    <div class="marketItemImg" style=" background-repeat: no-repeat;">
+                        <div class="marketItemImg " [ngStyle]="{'background-image': 'url(' + post.imageUrl + ')'}" style="background-repeat: no-repeat; background-size:contain;">
 
+                        </div>
+                        <h5 class="marketItemName">{{post.textbookName}}
+                        </h5>
+                    </div>
+                </div>
             </div>
+            <div class="endRow">
+                <a href="#" class="button seeMore">
+                    <i class="material-icons">
+                        add
+                    </i>
+                </a>
+            </div>
+        </div>
+
+        <div>
         </div>
     </div>
 </div>
