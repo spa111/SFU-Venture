@@ -16,11 +16,13 @@ export class MainMarketDisplayComponent implements OnInit {
   }
 
   textbooks: any;
+  faculties: any;
 
   constructor(private userService: UsersService) {
 
     this.userService.getDept().then((result) => {
       console.log(result);
+      this.faculties = result;
     })
     .catch((err) => {
       console.log(err);

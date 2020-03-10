@@ -38,12 +38,17 @@ user agent stylesheet html {
     left: 300px;
     bottom: 1%;
     width: 75%;
-    overflow-y: auto;
     background-color: lightgray;
-    border-radius: 5%;
+    border-radius: 2%;
     border-style: ridge;
     border-color: gray;
-    overflow: hidden;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
 }
 
 .filter-title {
@@ -165,7 +170,7 @@ h5 {
     padding-left: 10%;
     padding-top: 5%;
     padding-bottom: 5%;
-    border-radius: 10rem;
+    border-radius: 160px 0 0 160px;
     color: #fff;
     &:after {
         content: '';
@@ -175,7 +180,7 @@ h5 {
         width: 100%;
         height: 100%;
         background-color: rgb(160, 11, 11);
-        border-radius: 10rem;
+        border-radius: 160px 0 0 160px;
         z-index: -2;
     }
     &:before {
@@ -187,8 +192,8 @@ h5 {
         width: 0%;
         height: 100%;
         background-color: darken(rgb(160, 11, 11), 15%);
+        border-radius: 160px 0 0 160px;
         transition: all .5s;
-        border-radius: 10rem;
     }
     &:hover {
         color: #fff;
@@ -200,13 +205,14 @@ h5 {
 
 .marketItemsArea {
     width: 90%;
+    height: 80%;
     display: flex;
 }
 
 .row {
-    padding-left: 20px;
-    padding-bottom: 20px;
-    padding-top: 10px;
+    margin: 2%;
+    border-radius: 10px;
+    padding-top: 5px;
     width: auto;
     height: 35%;
     background-color: darken($color: lightgray, $amount: 20);
@@ -215,4 +221,15 @@ h5 {
 
 .endRow {
     width: 10%;
+}
+
+.section-splitter {
+    font-size: 16pt;
+    font-weight: bold;
+    margin-left: 1%;
+    margin-top: 1%;
+    width: 100%;
+    height: .01%;
+    border-bottom: 1px solid rgb(0, 0, 0);
+    text-transform: uppercase;
 }

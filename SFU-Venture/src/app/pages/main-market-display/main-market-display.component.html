@@ -27,7 +27,9 @@
         </div>
     </div>
     <div class="display">
-        <div class="row">
+        <div class="row" *ngFor="let dept of faculties;">
+            <div id="department" class="section-splitter"> {{dept.value}} </div>
+
             <div class="marketItemsArea">
                 <div class="marketItem rcorners" *ngFor="let post of textbooks; let i = index">
                     <div class="marketItemLabel">
