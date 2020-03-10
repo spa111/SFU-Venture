@@ -30,6 +30,12 @@ export class UsersService {
     return this.http.get(SERVER_BASE_URL + '/api/users/' + id, this.httpOptions).toPromise();
   }
 
+  getDept(): Promise<any> {
+    return this.http.get('http://www.sfu.ca/bin/wcm/academic-calendar?2020/summer/courses', this.httpOptions).toPromise();
+  }
+
+
+
   addNewUser(newUserJSON: any): Promise<any> {
     return this.http.post(SERVER_BASE_URL + "/api/signup", newUserJSON).toPromise();
   }
