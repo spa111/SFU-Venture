@@ -27,16 +27,17 @@
     </div>
     <div class="display">
         <div class="row">
-            <div class="marketItem " *ngFor="let post of textbooks; let i = index">
+            <div class="marketItem rcorners" *ngFor="let post of textbooks; let i = index">
+                <div class="marketItemLabel">
+                    <span>${{post.price}}</span>
+                </div>
+
                 <div class="marketItemImg" style=" background-repeat: no-repeat;">
                     <div class="marketItemImg " [ngStyle]="{'background-image': 'url(' + post.imageUrl + ')'}" style="background-repeat: no-repeat; background-size:contain;">
-                        <div class="marketItemLabel">
-                            <span>${{post.price}}</span>
-                        </div>
+
                     </div>
                     <h5 class="marketItemName">{{post.textbookName}}
                     </h5>
-                    <p>{{post.faculty}}</p>
                 </div>
 
             </div>
