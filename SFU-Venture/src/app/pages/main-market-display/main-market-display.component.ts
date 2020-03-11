@@ -41,6 +41,13 @@ export class MainMarketDisplayComponent implements OnInit {
     }
   }
 
+  reset(){
+    this.facultiesDOM = JSON.parse(JSON.stringify(this.faculties));
+    $('#filterDept')[0].value = $('#filterDept')[0][0].value;
+    console.log($('#filterDept')[0].value);
+
+  }
+
   constructor(private userService: UsersService) {
 
     
