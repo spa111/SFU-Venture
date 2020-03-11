@@ -120,16 +120,17 @@ h5 {
     height: 110px;
     display: block;
     z-index: 3;
-    position: fixed;
+    position: absolute;
     overflow: hidden;
 }
 
 .marketItemLabel span {
     margin: auto;
     display: block;
-    position: relative;
+    position: absolute;
     top: 10%;
     left: -25%;
+    width: 100%;
     overflow: hidden;
     background: rgb(160, 11, 11);
     color: #333;
