@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../services/server-apis/users/users.service'
+declare var $:any;
 
 @Component({
   selector: 'app-main-market-display',
@@ -10,23 +11,39 @@ import { UsersService } from '../../services/server-apis/users/users.service'
 
 
 export class MainMarketDisplayComponent implements OnInit {
-
-
+  
+  
   ngOnInit() {
-  }
-
-  textbooks: any;
-  faculties: any;
-
-  constructor(private userService: UsersService) {
-
     this.userService.getDept().then((result) => {
       console.log(result);
       this.faculties = result;
+      this.facultiesDOM = result;
     })
     .catch((err) => {
       console.log(err);
     })
+  }
+  
+  textbooks: any;
+  faculties: any;
+  facultiesDOM: any;
+  
+  sortByDept(){
+    console.log($('#filterDept')[0].value);
+    let filter_value = $('#filterDept')[0].value;
+
+    if (filter_value == "choose") {
+      this.facultiesDOM = JSON.parse(JSON.stringify(this.faculties));
+    } else {
+      this.facultiesDOM = this.facultiesDOM.filter(filter => {
+        return filter.value == filter_value; 
+      });
+    }
+  }
+
+  constructor(private userService: UsersService) {
+
+    
 
     this.textbooks = [{
       textbookName: "Operating System Concepts, 9th Edition, Silberschatz, Galvin, Gagne, 2012",

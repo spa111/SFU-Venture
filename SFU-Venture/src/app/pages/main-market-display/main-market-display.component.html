@@ -14,20 +14,19 @@
             <br/>
             <div class="filter-dept">
                 Dept:
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select id="filterDept" class="custom-select" style="text-transform: uppercase;">
+                    <option selected value="choose">Choose...</option>
+                    <option *ngFor="let dept of faculties; let i = index" ngValue="dept.value" style="text-transform: uppercase;" >{{dept.value}}</option>
+        
                   </select>
             </div>
         </div>
         <div class="search">
-            <button type="button" class="btn btn-primary">Search</button>
+            <button class="btn btn-primary" (click)="sortByDept()">Search</button>
         </div>
     </div>
     <div class="display">
-        <div class="row" *ngFor="let dept of faculties;">
+        <div class="row" *ngFor="let dept of facultiesDOM;">
             <div id="department" class="section-splitter"> {{dept.value}} </div>
 
             <div class="marketItemsArea">
