@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors');
-const database = require('../db_controller');
+const database = require('../db_handler/db_controller');
 
 
 const router = express.Router()

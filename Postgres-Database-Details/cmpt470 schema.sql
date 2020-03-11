@@ -13,6 +13,17 @@ CREATE  TABLE users (
 	CONSTRAINT unique_email UNIQUE ( email ) ,
 	CONSTRAINT unique_username UNIQUE ( username ) 
  );
+ 
+ CREATE TABLE textbooks (
+	id                bigserial  NOT NULL ,
+	txt_book_name     text  NOT NULL ,
+	course_name       text  NOT NULL ,
+	faculty_name      text  NOT NULL ,
+	price             money DEFAULT 0 NOT NULL ,
+	post_date         date NOT NULL DEFAULT current_timestamp,
+	img_url           text  NOT NULL,
+	CONSTRAINT pk_txtbook_id PRIMARY KEY ( id )
+);
 
 CREATE  TABLE marketplace ( 
 	id                   bigserial  NOT NULL ,
