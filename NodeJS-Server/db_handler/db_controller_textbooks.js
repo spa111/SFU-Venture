@@ -16,13 +16,38 @@ const getTextBooks = (request, response) => {
         if (error) {
             console.log(error);
         } else {
-            console.log(results.rows)
             response.status(200).json(results.rows);
         }
     });
 };
 
+const getTextBookById = (request, response) => {
+    const id = parseInt(request.params.id);
+
+    database.query('select * from textbooks where id = $1', [id], (error, results) => {
+        if (error) {
+            console.log(error);
+        } else {
+            response.status(200).json(results.rows);
+        }
+    });
+};
+
+const deleteTextBook = (request, response) => {
+    const id = parseInt(request.params.id);
+
+    database.query('delete from textbooks where id = $1', [id], (error, results) => {
+        if (error) {
+            console.log(error);
+        }
+
+        response.status(200).send('textbooks deleted with ID: ${id}');
+    });
+};
 
 module.exports = {
-    getTextBooks
+    getTextBooks,
+    getTextBookById,
+    // updateTextBook,
+    deleteTextBook
 };
