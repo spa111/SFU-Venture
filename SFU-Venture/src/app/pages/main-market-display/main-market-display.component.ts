@@ -39,9 +39,9 @@ export class MainMarketDisplayComponent implements OnInit {
         this.faculties = result;
 
         this.faculties.forEach(faculty => {
-          faculty.textbooks = this.textbooks.filter(textbook => {
+          faculty.textbooks = this.textbooks && this.textbooks.length > 0 ? this.textbooks.filter(textbook => {
             return textbook.faculty_name.toLocaleLowerCase() == faculty.value;
-          });
+          }) : [];
         });
 
         this.facultiesDOM = JSON.parse(JSON.stringify(this.faculties));
