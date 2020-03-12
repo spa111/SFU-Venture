@@ -31,15 +31,15 @@
             <div id="department" class="section-splitter"> {{dept.value}} </div>
 
             <div class="marketItemsArea">
-                <div class="marketItem rcorners" *ngFor="let post of textbooks; let i = index">
+                <div class="marketItem rcorners" [(ngModel)]="dept" *ngFor="let post of textbooksDOM; let i = index">
                     <div class="marketItemLabel">
-                        <span>${{post.price}}</span>
+                        <span>{{post.price}}</span>
                     </div>
                     <div class="marketItemImg" style=" background-repeat: no-repeat;">
-                        <div class="marketItemImg " [ngStyle]="{'background-image': 'url(' + post.imageUrl + ')'}" style="background-repeat: no-repeat; background-size:contain;">
+                        <div class="marketItemImg " [ngStyle]="{'background-image': 'url(' + post.img_url + ')'}" style="background-repeat: no-repeat; background-size:contain;">
 
                         </div>
-                        <h5 class="marketItemName">{{post.textbookName}}
+                        <h5 class="marketItemName">{{post.txt_book_name}}
                         </h5>
                     </div>
                 </div>
