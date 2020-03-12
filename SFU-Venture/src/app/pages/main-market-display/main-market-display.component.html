@@ -20,7 +20,7 @@
                 <div class="filter-dept">
                     Dept:
                     <select id="filterDept" class="custom-select" style="text-transform: uppercase;">
-                        <option selected value="choose">Choose...</option>
+                        <option selected value="All">All</option>
                         <option *ngFor="let dept of faculties; let i = index" ngValue="dept.value" style="text-transform: uppercase;" >{{dept.value}}</option>
                         
                     </select>

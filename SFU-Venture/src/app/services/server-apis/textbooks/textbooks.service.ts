@@ -34,9 +34,10 @@ export class TextbooksService {
   //   return this.http.get(SERVER_BASE_URL + '/api/textbooks/' + id, this.httpOptions).toPromise();
   // }
 
-  // addNewTextbook(newTextbookJSON: any): Promise<any> {
-  //   return this.http.post(SERVER_BASE_URL + "/api/signup", newTextbookJSON).toPromise();
-  // }
+  addNewTextbook(newTextbookJSON: any): Promise<any> {
+    this.generateHeaders();
+    return this.http.post(SERVER_BASE_URL + "/api/createTextbook", newTextbookJSON, this.httpOptions).toPromise();
+  }
 
   // update(id: any, patchJSON: any): Promise<any> {
   //   return this.http.put(SERVER_BASE_URL + '/api/textbooks/' + id + '/update-textbook-post', patchJSON, this.httpOptions).toPromise();

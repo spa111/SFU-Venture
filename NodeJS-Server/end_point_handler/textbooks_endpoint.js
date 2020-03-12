@@ -3,11 +3,10 @@ const cors = require('cors');
 const database = require('../db_handler/db_controller_textbooks');
 
 
-
-
 const router = express.Router()
 
 router.get('/api/textbooks', cors(), database.getTextBooks);
+router.post('/api/createTextbook', cors(), database.createTextBook);
 router.get('/api/textbooks/:id', cors(), database.getTextBookById);
 // router.put('/api/textbooks/:id', cors(), database.updateTextBook);
 router.delete('/api/textbooks/:id', cors(), database.deleteTextBook);

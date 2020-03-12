@@ -59,7 +59,7 @@ export class MainMarketDisplayComponent implements OnInit {
     console.log($("#filterDept")[0].value);
     let filter_value = $("#filterDept")[0].value;
 
-    if (filter_value == "choose") {
+    if (filter_value == "All") {
       this.reset();
     } else {
       this.facultiesDOM = JSON.parse(JSON.stringify(this.faculties));

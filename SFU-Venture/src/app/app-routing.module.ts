@@ -36,12 +36,16 @@ const routes: Routes = [
     {
       path: 'market',
       pathMatch: 'full',
-      component: MainMarketDisplayComponent
+      component: MainMarketDisplayComponent,
+      canActivate: [AuthGuard]
+
     },
     {
       path: 'add-post',
       pathMatch: 'full',
-      component: AddPostComponent
+      component: AddPostComponent,
+      canActivate: [AuthGuard]
+
     },{
       path: 'verify-email/:token',
       pathMatch: 'full',

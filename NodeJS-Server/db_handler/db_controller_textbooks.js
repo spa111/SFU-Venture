@@ -45,9 +45,27 @@ const deleteTextBook = (request, response) => {
     });
 };
 
+const createTextBook = (request, response) => {
+    const { txt_book_name, course_name, faculty_name, price, post_date, img_url } = request.body;
+
+
+    // Need to add another check in the db to make it so that the admin is the only one who verifies whether a user is faculty or not
+    database.query(
+        'insert into textbooks (txt_book_name, course_name, faculty_name, price, post_date, img_url) values ($1, $2, $3, $4, $5, $6) RETURNING *', [txt_book_name, course_name, faculty_name, price, post_date, img_url],
+        (error, results) => {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log("Textbook Added")
+            }
+        }
+    );
+};
+
 module.exports = {
     getTextBooks,
     getTextBookById,
+    createTextBook,
     // updateTextBook,
     deleteTextBook
 };

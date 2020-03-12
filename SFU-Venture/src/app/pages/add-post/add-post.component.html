@@ -13,7 +13,7 @@
                         <option selected value="choose">Choose the department</option>
                         <option *ngFor="let dept of faculties; let i = index" ngValue="dept.value" style="text-transform: uppercase;" >{{dept.value}}</option>
                     </select>
-                    <button>Post it!</button>
+                    <button (click)="createTextbook()">Post it!</button>
                 </form>
             </div>
         </div>

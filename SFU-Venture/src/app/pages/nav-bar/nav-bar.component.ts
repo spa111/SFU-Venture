@@ -9,8 +9,6 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class NavBarComponent {
 
-  userLoggedIn: boolean = false;
-
   constructor(private router: Router, private authService: AuthService) { }
 
   goToHome() {
