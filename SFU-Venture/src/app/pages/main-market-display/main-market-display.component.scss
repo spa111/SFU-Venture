@@ -26,11 +26,19 @@ user agent stylesheet html {
     color: -internal-root-color;
 }
 
-.filter {
+.sideBar {
+    display: block;
     position: fixed;
     top: 10%;
     left: 0;
-    // bottom: 0;
+    margin: 20px;
+}
+
+.filter {
+    position: fixed;
+    display: block;
+    top: 20%;
+    left: 0;
     margin: 20px;
     border-radius: 10px;
     border: #f4f4f4 2px solid;
@@ -49,8 +57,6 @@ user agent stylesheet html {
     width: 75%;
     background-color: white;
     border-radius: 2%;
-    // border-style: ridge;
-    // border-color: gray;
     overflow: scroll;
     overflow-x: hidden;
 }
@@ -88,9 +94,39 @@ h5 {
 }
 
 .wrapper-container {
-    background-color: green;
+    background-color: white;
     display: inline-flex;
     width: 100%;
+}
+
+//new listing button
+.addPost {
+    position: fixed;
+    top: 10%;
+    left: 0;
+    margin: 20px;
+    border-radius: 10px;
+    border: #f4f4f4 2px solid;
+    width: 250px;
+    height: 80px;
+    background-color: #f4f4f400;
+    color: #696969;
+}
+
+.addPostBtn {
+    margin: auto;
+    border-radius: 160px;
+    margin-top: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-left: 10%;
+    padding-right: 10%;
+    &:after {
+        border-radius: 160px;
+    }
+    &:before {
+        border-radius: 160px;
+    }
 }
 
 //MARKET SECTION
@@ -103,7 +139,6 @@ h5 {
     border-bottom: 1px solid #ebebeb;
     &:hover {
         background-color: darken($color: rgb(202, 201, 201), $amount: 15);
-        // border-bottom-color: #FF416C;
     }
 }
 
@@ -165,31 +200,39 @@ h5 {
 }
 
 .seeMore {
-    display: block;
+    border-radius: 160px 0 0 160px;
     margin-left: 1%;
     margin-right: auto;
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-    transition: all .5s;
     padding-left: 10%;
     padding-top: 5%;
     padding-bottom: 5%;
-    border-radius: 160px 0 0 160px;
+    &:after {
+        border-radius: 160px 0 0 160px;
+    }
+    &:before {
+        border-radius: 160px 0 0 160px;
+    }
+}
+
+.animatedBtn {
+    display: block;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    transition: all 0.5s;
     color: #fff;
     &:after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;
         height: 100%;
         background-color: rgb(160, 11, 11);
-        border-radius: 160px 0 0 160px;
         z-index: -2;
     }
     &:before {
-        content: '';
+        content: "";
         z-index: -1;
         position: absolute;
         bottom: 0;
@@ -197,8 +240,7 @@ h5 {
         width: 0%;
         height: 100%;
         background-color: darken(rgb(160, 11, 11), 15%);
-        border-radius: 160px 0 0 160px;
-        transition: all .5s;
+        transition: all 0.5s;
     }
     &:hover {
         color: #fff;
@@ -248,20 +290,20 @@ h5 {
 
 /* Track */
 
- ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
 
 
 /* Handle */
 
- ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background: #888;
 }
 
 
 /* Handle on hover */
 
- ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
     background: #555;
 }

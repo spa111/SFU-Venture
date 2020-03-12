@@ -1,31 +1,38 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <div class="wrapper-container">
-    <div class="filter">
-        <h2 class="filter-title">Filter</h2>
-        <div class="fliter-items ">
-            <div class="filter-price">
-                <h5>Price:</h5>
-                <div class="filter-price-input">
-                    <input type="text" class="form-control small-form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                    <span class="separator">-</span>
-                    <input type="text" class="form-control small-form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+    <div class="sideBar">
+        <div class="addPost">
+            <button class="animatedBtn addPostBtn">Add Post</button>
+        </div>
+
+        <div class="filter">
+            <h2 class="filter-title">Filter</h2>
+            <div class="fliter-items ">
+                <div class="filter-price">
+                    <h5>Price:</h5>
+                    <div class="filter-price-input">
+                        <input type="text" class="form-control small-form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <span class="separator">-</span>
+                        <input type="text" class="form-control small-form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+                <br/>
+                <div class="filter-dept">
+                    Dept:
+                    <select id="filterDept" class="custom-select" style="text-transform: uppercase;">
+                        <option selected value="choose">Choose...</option>
+                        <option *ngFor="let dept of faculties; let i = index" ngValue="dept.value" style="text-transform: uppercase;" >{{dept.value}}</option>
+                        
+                    </select>
                 </div>
             </div>
-            <br/>
-            <div class="filter-dept">
-                Dept:
-                <select id="filterDept" class="custom-select" style="text-transform: uppercase;">
-                    <option selected value="choose">Choose...</option>
-                    <option *ngFor="let dept of faculties; let i = index" ngValue="dept.value" style="text-transform: uppercase;" >{{dept.value}}</option>
-        
-                  </select>
+            <div class="search">
+                <button class="btn btn-primary" style="margin-right: 5%;" (click)="reset()">Reset</button>
+                <button class="btn btn-primary" style="margin-left: 5%;" (click)="sortByDept()">Search</button>
             </div>
         </div>
-        <div class="search">
-            <button class="btn btn-primary" style="margin-right: 5%;" (click)="reset()">Reset</button>
-            <button class="btn btn-primary" style="margin-left: 5%;" (click)="sortByDept()">Search</button>
-        </div>
     </div>
+
     <div class="display">
         <div class="row" *ngFor="let dept of facultiesDOM;">
             <div id="department" class="section-splitter"> {{dept.value}} </div>
@@ -45,7 +52,7 @@
                 </div>
             </div>
             <div class="endRow">
-                <a href="#" class="button seeMore">
+                <a href="#" class="button animatedBtn seeMore">
                     <i class="material-icons">
                         add
                     </i>
