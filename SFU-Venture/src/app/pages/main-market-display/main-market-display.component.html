@@ -31,7 +31,7 @@
             <div id="department" class="section-splitter"> {{dept.value}} </div>
 
             <div class="marketItemsArea">
-                <div class="marketItem rcorners" [(ngModel)]="dept" *ngFor="let post of textbooksDOM; let i = index">
+                <div class="marketItem rcorners" *ngFor="let post of dept.textbooks; let i = index">
                     <div class="marketItemLabel">
                         <span>{{post.price}}</span>
                     </div>

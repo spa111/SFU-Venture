@@ -17,7 +17,8 @@ export class MainMarketDisplayComponent implements OnInit {
     private router: Router, 
     private authService: AuthService,
     private textbooksService: TextbooksService,
-  ) {     this.getAllTextbooks();
+  ) {     
+    // this.getAllTextbooks();
   }
 
   getAllTextbooks(){
@@ -26,7 +27,7 @@ export class MainMarketDisplayComponent implements OnInit {
       console.log("Retrieval Successful");
       console.log(result);
       this.textbooks = result;
-      this.textbooksDOM = result;
+
 
     }).catch(err => {
       console.log(err);
@@ -35,10 +36,18 @@ export class MainMarketDisplayComponent implements OnInit {
   }
   
   ngOnInit() {
+    this.getAllTextbooks();
     this.textbooksService.getDept().then((result) => {
       console.log(result);
       this.faculties = result;
-      this.facultiesDOM = result;
+      
+      this.faculties.forEach(faculty => {
+        faculty.textbooks = this.textbooks.filter(textbook => {
+          return textbook.faculty_name.toLocaleLowerCase() == faculty.value;
+        });
+      });
+      
+      this.facultiesDOM = JSON.parse(JSON.stringify(this.faculties));
     })
     .catch((err) => {
       console.log(err);
@@ -46,10 +55,9 @@ export class MainMarketDisplayComponent implements OnInit {
   }
   
   textbooks: any;
-  textbooksDOM: any;
   faculties: any;
   facultiesDOM: any;
-  dept: any;
+  // dept: Array<Array<any>> = [];
   
   sortByDept(){
     console.log($('#filterDept')[0].value);
@@ -57,12 +65,8 @@ export class MainMarketDisplayComponent implements OnInit {
 
     if (filter_value == "choose") {
       this.facultiesDOM = JSON.parse(JSON.stringify(this.faculties));
-      this.textbooksDOM = JSON.parse(JSON.stringify(this.textbooks));
     } else {
       this.facultiesDOM = this.facultiesDOM.filter(filter => {
-        return filter.value == filter_value; 
-      });
-      this.textbooksDOM = this.textbooksDOM.filter(filter => {
         return filter.value == filter_value; 
       });
     }
