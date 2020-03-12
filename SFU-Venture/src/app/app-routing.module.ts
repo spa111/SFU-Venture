@@ -4,6 +4,7 @@ import { HomePageComponent } from '../app/pages/home-page/home-page.component';
 import { LoginPageComponent } from '../app/pages/login-page/login-page.component';
 import { AuthGuard } from '../app/services/auth-guard/auth.guard';
 import { LogoutComponent } from '../app/pages/logout/logout.component';
+import { MainMarketDisplayComponent } from './pages/main-market-display/main-market-display.component';
 import { VerifyEmailPageComponent } from '../app/pages/verify-page/verify-email-page/verify-email-page.component';
 import { LoginGuard } from '../app/services/login-guard/login.guard';
 import { ForgotPasswordComponent } from '../app/pages/forgot-password/forgot-password.component';
@@ -32,6 +33,10 @@ const routes: Routes = [
       component: LogoutComponent
     },
     {
+      path: 'market',
+      pathMatch: 'full',
+      component: MainMarketDisplayComponent
+    },{
       path: 'verify-email/:token',
       pathMatch: 'full',
       component: VerifyEmailPageComponent
