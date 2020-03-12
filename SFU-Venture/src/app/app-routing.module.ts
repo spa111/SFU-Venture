@@ -9,6 +9,7 @@ import { VerifyEmailPageComponent } from '../app/pages/verify-page/verify-email-
 import { LoginGuard } from '../app/services/login-guard/login.guard';
 import { ForgotPasswordComponent } from '../app/pages/forgot-password/forgot-password.component';
 import { ChangeForgottenPasswordComponent } from '../app/pages/change-forgotten-password/change-forgotten-password.component';
+import { AddPostComponent } from './pages/add-post/add-post.component';
 
 // Each route to an object is encased in a separate object
 // path - The URL path to the HTML component
@@ -36,6 +37,11 @@ const routes: Routes = [
       path: 'market',
       pathMatch: 'full',
       component: MainMarketDisplayComponent
+    },
+    {
+      path: 'add-post',
+      pathMatch: 'full',
+      component: AddPostComponent
     },{
       path: 'verify-email/:token',
       pathMatch: 'full',

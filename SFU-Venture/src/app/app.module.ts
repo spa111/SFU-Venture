@@ -16,6 +16,7 @@ import { MainMarketDisplayComponent } from './pages/main-market-display/main-mar
 import { VerifyEmailPageComponent } from './pages/verify-page/verify-email-page/verify-email-page.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ChangeForgottenPasswordComponent } from './pages/change-forgotten-password/change-forgotten-password.component';
+import { AddPostComponent } from './pages/add-post/add-post.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -31,7 +32,8 @@ export function tokenGetter() {
     MainMarketDisplayComponent,
     VerifyEmailPageComponent,
     ForgotPasswordComponent,
-    ChangeForgottenPasswordComponent
+    ChangeForgottenPasswordComponent,
+    AddPostComponent
   ],
   imports: [
     BrowserModule,
