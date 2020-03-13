@@ -5,10 +5,10 @@ const jwt = require('jsonwebtoken');
 
 const TOKEN_STRING = 'sfuventure_jwt_token_string';
 
-const isProduction = true;
+const isProduction = false;
 
 const URL_DEV = "http://localhost:8080";
-const URL_SERVER = "http://localhost";
+const URL_SERVER = "http://34.82.223.192/4200";
 const URL = isProduction ? URL_SERVER : URL_DEV;
 
 const database = new Pool({
