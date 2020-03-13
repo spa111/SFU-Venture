@@ -35,7 +35,6 @@ export class MainMarketDisplayComponent implements OnInit {
     this.textbooksService
       .getDept()
       .then(result => {
-        console.log(result);
         this.faculties = result;
 
         this.faculties.forEach(faculty => {
