@@ -1,28 +1,32 @@
 <div id="body">
     <div class="container" id="container">
-        <div class="form-container sign-up-container">
+        <div class="form-container url-post-container">
         </div>
-        <div class="form-container sign-in-container">
-            <div class="login-top-container">
-                <form id="sign-in-form">
-                    <h1>Your Textbook</h1>
-                    <input type="text" placeholder="Textbook Name" id="textbookName" required/>
-                    <input type="text" placeholder="Course" id="Course" required/>
-                    <input type="number" placeholder="Price" id="Price" required/>
-                    <select id="filterDept" class="custom-select" style="text-transform: uppercase;">
+        <div class="form-container textbook-details-container">
+            <!-- <div class="textbook-container"> -->
+            <form id="textbook-form">
+                <h1>Your Textbook</h1>
+                <input type="text" placeholder="Textbook Name" id="textbookName" required/>
+                <select id="filterDept" class="custom-select" style="text-transform: uppercase;">
                         <option selected value="choose">Choose the department</option>
                         <option *ngFor="let dept of faculties; let i = index" ngValue="dept.value" style="text-transform: uppercase;" >{{dept.value}}</option>
+                </select>
+
+                <select id="course" class="custom-select" style="text-transform: uppercase;">
+                        <option selected value="choose">Choose the course</option>
+                        <option *ngFor="let course of courses; let i = index" ngValue="course.value" style="text-transform: uppercase;" >{{course.value}}</option>
                     </select>
-                    <button (click)="createTextbook()">Post it!</button>
-                </form>
-            </div>
+
+                <input type="number" placeholder="Price" id="price" required/>
+                <button (click)="createTextbook()">Post it!</button>
+            </form>
+            <!-- </div> -->
         </div>
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-right">
                     <h3 id="urllink">Enter a PIC URL link</h3>
                     <input type="text" placeholder="URL" id="URL" required/>
-
                 </div>
             </div>
         </div>

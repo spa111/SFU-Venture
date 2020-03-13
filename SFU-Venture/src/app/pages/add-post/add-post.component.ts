@@ -18,27 +18,46 @@ export class AddPostComponent implements OnInit {
     private textbooksService: TextbooksService) { }
 
     faculties: any;
+    courses: any;
 
   ngOnInit() {
+    $(() => {
+      $("#textbook-form").on('submit', (event) => {
+        event.preventDefault();
+      });
+
+      $("#filterDept")[0].addEventListener("change", () => {
+        let dept = $("#filterDept")[0].value;
+        this.textbooksService.getCourses(dept)
+          .then((result) => {
+            this.courses = result;
+          })
+          .catch(err => {
+            console.log(err);
+          }
+        );
+      });
+    });
+
     this.textbooksService
       .getDept()
       .then(result => {
         console.log(result);
         this.faculties = result;
-
       })
       .catch(err => {
         console.log(err);
-      });
+      }
+    );
   }
 
   createTextbook() {
     console.log("createTextbook called");
 
     let textbookName = $("#textbookName")[0].value;
-    let course = $("#Course")[0].value;
-    let price = $("#Price")[0].value;
     let dept = $("#filterDept")[0].value;
+    let course = $("#course")[0].value;
+    let price = $("#price")[0].value;
     let url = $("#URL")[0].value;
     let date = new Date();
 
@@ -51,16 +70,16 @@ export class AddPostComponent implements OnInit {
       "img_url": url,
     };
 
-    console.log(details)
     if (textbookName && course && price && dept && url) {
-      this.textbooksService.addNewTextbook(details).then((result) => {
-        console.log(result);
-      }).catch(server_reply => {
-        console.log(server_reply);
+      this.textbooksService.addNewTextbook(details).then(result => {
+        console.log(result.response);
+        this.router.navigate(['market']);
+
+      }).catch(err => {
+        console.log(err.error);
       });
-      this.router.navigate(['market']);
-    }else{
-      console.log("form not fully filled out")
+    } else{
+      console.log("form not fully filled out");
     }
   }
 

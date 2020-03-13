@@ -54,6 +54,7 @@ button {
     letter-spacing: 1px;
     text-transform: uppercase;
     transition: transform 80ms ease-in;
+    margin-top: 15px;
 }
 
 button:active {
@@ -80,12 +81,17 @@ form {
     text-align: center;
 }
 
-input {
+input,
+select {
     background-color: #eee;
     border: none;
     padding: 12px 15px;
     margin: 8px 0;
     width: 100%;
+}
+
+select {
+    height: fit-content;
 }
 
 .container {
@@ -106,24 +112,27 @@ input {
     transition: all 0.6s ease-in-out;
 }
 
-.sign-in-container {
+.textbook-details-container {
     left: 0;
     width: 50%;
     z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.container.right-panel-active .sign-in-container {
+.container.right-panel-active .textbook-details-container {
     transform: translateX(100%);
 }
 
-.sign-up-container {
+.url-post-container {
     left: 0;
     width: 50%;
     opacity: 0;
     z-index: 1;
 }
 
-.container.right-panel-active .sign-up-container {
+.container.right-panel-active .url-post-container {
     transform: translateX(100%);
     opacity: 1;
     z-index: 5;
@@ -162,7 +171,6 @@ input {
     background: #FF416C;
     background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
     background: linear-gradient(to right, #FF4B2B, #FF416C);
-    // background: #FF4B2B;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 0;
@@ -211,148 +219,13 @@ input {
     transform: translateX(20%);
 }
 
-.social-container {
-    margin: 20px 0;
-}
-
-.social-container a {
-    border: 1px solid #DDDDDD;
-    border-radius: 50%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 5px;
-    height: 40px;
-    width: 40px;
-}
-
-.cntr {
-    margin-top: 2.5%;
-    margin-bottom: 5%;
-}
-
-#radio-info {
-    margin-top: 0.5em !important;
-    margin-bottom: 0.5em !important;
-}
-
-.btn-radio {
-    cursor: pointer;
-    display: inline-block;
-    -webkit-user-select: none;
-    user-select: none;
-    &:not(:first-child) {
-        margin-left: 20px;
-    }
-    svg {
-        fill: none;
-        vertical-align: middle;
-        circle {
-            stroke-width: 2;
-            stroke: #C8CCD4;
-        }
-        path {
-            stroke: #FF416C;
-            &.inner {
-                stroke-width: 6;
-                stroke-dasharray: 19;
-                stroke-dashoffset: 19;
-            }
-            &.outer {
-                stroke-width: 2;
-                stroke-dasharray: 57;
-                stroke-dashoffset: 57;
-            }
-        }
-    }
-    input {
-        display: none;
-        &:checked+svg {
-            path {
-                transition: all .4s ease;
-                &.inner {
-                    stroke-dashoffset: 38;
-                    transition-delay: .3s;
-                }
-                &.outer {
-                    stroke-dashoffset: 0;
-                }
-            }
-        }
-    }
-    span {
-        display: inline;
-    }
-}
-
-#sign-up-form {
+#textbook-form {
     width: 100%;
     height: fit-content;
 }
 
-.signup-top-container {
-    height: 75%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-}
-
-.signup-bottom-container {
-    height: 20%;
-    margin-top: 5%;
-}
-
-.signup-alert {
-    padding: 20px;
-    width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
-    border-radius: 10px 10px 10px 10px;
-}
-
-#sign-in-form {
-    width: 100%;
-    height: fit-content;
-}
-
-.login-top-container {
-    height: 65%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-}
-
-.login-bottom-container {
-    height: 30%;
-    margin-top: 5%;
-}
-
-.login-alert {
-    padding: 20px;
-    background-color: #ff4d4d;
-    color: white;
-    width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
-    border-radius: 10px 10px 10px 10px;
-}
-
-.login-alert .message,
-.signup-alert .message {
-    text-align: center;
-}
-
-.closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.closebtn:hover {
-    color: black;
-}
+// .textbook-container {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+// }

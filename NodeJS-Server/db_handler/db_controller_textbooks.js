@@ -55,8 +55,10 @@ const createTextBook = (request, response) => {
         (error, results) => {
             if (error) {
                 console.log(error);
+                response.status(401).json({ error: error });
             } else {
-                console.log("Textbook Added")
+                console.log("Textbook Added");
+                response.status(201).json({ response: "Textbook Added" });
             }
         }
     );

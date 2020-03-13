@@ -16,7 +16,7 @@
                         <input type="text" class="form-control small-form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                     </div>
                 </div>
-                
+
                 <br/>
                 <div class="filter-dept">
                     Dept:
@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <div class="display">
+    <div class="display" *ngIf="contentLoaded">
         <div class="row" *ngFor="let dept of facultiesDOM;">
             <div id="department" class="section-splitter"> {{dept.value}} </div>
 

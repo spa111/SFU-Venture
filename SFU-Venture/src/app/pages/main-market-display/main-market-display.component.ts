@@ -10,29 +10,36 @@ declare var $: any;
   styleUrls: ["./main-market-display.component.scss"]
 })
 export class MainMarketDisplayComponent implements OnInit {
+  contentLoaded: Boolean = false;
+
   constructor(
     private router: Router,
     private authService: AuthService,
     private textbooksService: TextbooksService
   ) {}
 
-  getAllTextbooks() {
+  getAllTextbooks(): Promise<any> {
     console.log("full Texbook Retrieval called");
-    this.textbooksService
-      .getAll()
-      .then(result => {
-        console.log("Retrieval Successful");
-        console.log(result);
-        this.textbooks = result;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    return this.textbooksService.getAll();
+    // this.textbooksService
+    //   .getAll()
+    //   .then(result => {
+    //     console.log("Retrieval Successful");
+    //     console.log(result);
+    //     this.textbooks = result;
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   }
 
   ngOnInit() {
-    this.getAllTextbooks();
-    this.textbooksService
+    this.getAllTextbooks().then(result => {
+      console.log("Retrieval Successful");
+      console.log(result);
+      this.textbooks = result;
+
+      this.textbooksService
       .getDept()
       .then(result => {
         this.faculties = result;
@@ -44,10 +51,14 @@ export class MainMarketDisplayComponent implements OnInit {
         });
 
         this.facultiesDOM = JSON.parse(JSON.stringify(this.faculties));
+        this.contentLoaded = true;
       })
       .catch(err => {
         console.log(err);
       });
+    }).catch(err => { 
+      console.log(err)
+    });
   }
 
   textbooks: any;
