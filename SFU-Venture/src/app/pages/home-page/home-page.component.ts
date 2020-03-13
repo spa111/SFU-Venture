@@ -12,10 +12,5 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
     // Console.log the users on the homepage for connection testing
-    this.userService.getAll().then(users => {
-        console.log(users);
-    }).catch(err => {
-        console.log(err);
-    });
   }
 }

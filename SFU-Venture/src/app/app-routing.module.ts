@@ -20,7 +20,6 @@ const routes: Routes = [
       path: '',
       pathMatch: 'full',
       component: HomePageComponent,
-      canActivate: [AuthGuard]
     },
     {
       path: 'login',
