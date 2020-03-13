@@ -7,9 +7,14 @@ import { AuthService } from '../../services/auth/auth.service';
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.scss']
 })
-export class NavBarComponent {
+export class NavBarComponent implements OnInit{
+  isLoggedOn: Boolean = false;
 
   constructor(private router: Router, private authService: AuthService) { }
+
+  ngOnInit() {
+    this.isLoggedOn = this.authService.loggedIn;
+  }
 
   goToHome() {
     this.router.navigate(['home']);
