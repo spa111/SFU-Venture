@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../services/server-apis/users/users.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-home-page',
@@ -8,9 +9,11 @@ import { UsersService } from '../../services/server-apis/users/users.service';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private userService : UsersService) { }
+  loggedIn: Boolean = false;
+
+  constructor(private authService : AuthService) { }
 
   ngOnInit() {
-    // Console.log the users on the homepage for connection testing
+    this.loggedIn = this.authService.loggedIn;
   }
 }
