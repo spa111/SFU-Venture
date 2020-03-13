@@ -63,7 +63,7 @@ const createUser = (request, response) => {
                 response.status(401).send(`Error, email is currently in use`);
             } else {
                 var verification_token = jwt.sign({ userId: results.rows[0].id }, TOKEN_STRING, { expiresIn: '1d' });
-                var url = `http://localhost:4200/verify-email/${verification_token}`;
+                var url = `http://localhost:8080/verify-email/${verification_token}`;
 
                 var mailOptions = {
                     from: 'sfuventure470@gmail.com',
@@ -129,7 +129,7 @@ const loginUser = (request, response) => {
 
                     // Resend the token to verify the email
                     var verification_token = jwt.sign({ userId: user.id }, TOKEN_STRING, { expiresIn: '1d' });
-                    var url = `http://localhost:4200/verify-email/${verification_token}`;
+                    var url = `http://localhost:8080/verify-email/${verification_token}`;
                     var mailOptions = {
                         from: 'sfuventure470@gmail.com',
                         to: user.email,
@@ -162,7 +162,7 @@ const forgotPasswordCheckEmail = (request, response) => {
             } else {
                 if (results.rows[0] && results.rows[0].id) {
                     var verification_token = jwt.sign({ userId: results.rows[0].id }, TOKEN_STRING, { expiresIn: '1d' });
-                    var url = `http://localhost:4200/change-forgotten-password/${verification_token}`;
+                    var url = `http://localhost:8080/change-forgotten-password/${verification_token}`;
 
                     var mailOptions = {
                         from: 'sfuventure470@gmail.com',
