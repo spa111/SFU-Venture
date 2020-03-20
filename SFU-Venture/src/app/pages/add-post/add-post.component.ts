@@ -62,6 +62,7 @@ export class AddPostComponent implements OnInit {
     let date = new Date();
 
     let details = {
+      "user_id": localStorage.getItem("user"),
       "txt_book_name": textbookName,
       "course_name": course,
       "faculty_name": dept,

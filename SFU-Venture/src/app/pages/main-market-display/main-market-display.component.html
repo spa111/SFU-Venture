@@ -11,9 +11,9 @@
                 <div class="filter-price">
                     <h5>Price:</h5>
                     <div class="filter-price-input">
-                        <input type="text" class="form-control small-form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <input type="number" id="lower-price" class="form-control small-form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Min">
                         <span class="separator">-</span>
-                        <input type="text" class="form-control small-form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <input type="number" id="higher-price" class="form-control small-form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Max">
                     </div>
                 </div>
 
@@ -26,10 +26,19 @@
                         
                     </select>
                 </div>
+
+                <div class="filter-class">
+                    Course:
+                    <select id="filterClass" class="custom-select" style="text-transform: uppercase;">
+                        <option selected value="All">All</option>
+                        <option *ngFor="let course of courses; let i = index" ngValue="course.value" style="text-transform: uppercase;" >{{course.value}}</option>
+                        
+                    </select>
+                </div>
             </div>
             <div class="search">
                 <button class="btn btn-primary" style="margin-right: 5%;" (click)="reset()">Reset</button>
-                <button class="btn btn-primary" style="margin-left: 5%;" (click)="sortByDept()">Search</button>
+                <button class="btn btn-primary" style="margin-left: 5%;" (click)="filter()">Filter</button>
             </div>
         </div>
     </div>
@@ -39,7 +48,7 @@
             <div id="department" class="section-splitter"> {{dept.value}} </div>
 
             <div class="marketItemsArea">
-                <div class="marketItem rcorners" *ngFor="let post of dept.textbooks; let i = index">
+                <div class="marketItem rcorners" *ngFor="let post of dept.textbooks; let i = index" (click)="openTextbookInfo(post)">
                     <div class="marketItemLabel">
                         <span>{{post.price}}</span>
                     </div>

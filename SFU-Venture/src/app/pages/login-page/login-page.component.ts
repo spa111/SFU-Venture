@@ -65,7 +65,7 @@ export class LoginPageComponent implements AfterViewInit {
       this.authService.login(details).then((result) => {
         console.log("Login Successful");
         localStorage.setItem("access_token", result.token);
-        localStorage.setItem("user", result.user);
+        localStorage.setItem("user", result.user.id);
         this.router.navigate(['']);
 
       }).catch(err => {

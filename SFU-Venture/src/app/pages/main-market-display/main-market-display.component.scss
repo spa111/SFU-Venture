@@ -79,6 +79,16 @@ user agent stylesheet html {
     padding-left: 10px;
 }
 
+.filter-class {
+    margin-top: 10%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .separator {
     padding-left: 10px;
     padding-right: 10px;

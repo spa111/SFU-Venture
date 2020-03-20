@@ -16,6 +16,7 @@ CREATE  TABLE users (
  
  CREATE TABLE textbooks (
 	id                bigserial  NOT NULL ,
+	posting_user_id	  bigint NOT NULL ,
 	txt_book_name     text  NOT NULL ,
 	course_name       text  NOT NULL ,
 	faculty_name      text  NOT NULL ,
@@ -24,6 +25,8 @@ CREATE  TABLE users (
 	img_url           text  NOT NULL,
 	CONSTRAINT pk_txtbook_id PRIMARY KEY ( id )
 );
+
+ALTER TABLE textbooks ADD CONSTRAINT fk_textbook_poster FOREIGN KEY ( posting_user_id ) REFERENCES users( id ) on DELETE CASCADE ON UPDATE CASCADE;
 
 CREATE  TABLE marketplace ( 
 	id                   bigserial  NOT NULL ,
