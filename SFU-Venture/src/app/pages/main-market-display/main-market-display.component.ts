@@ -212,7 +212,7 @@ export class MainMarketDisplayComponent implements OnInit {
   openTextbookInfo(clicked_textbook) {
     const dialogRef = this.dialog.open(MainMarketBookInfoDialog, {
       width: '75%',
-      height: '75%',
+      // height: '75%',
       data: {
         textbook: clicked_textbook
       }
@@ -246,7 +246,8 @@ export class MainMarketDisplayComponent implements OnInit {
 
 @Component({
   selector: 'main-market-book-information',
-  templateUrl: 'main-market-book-information.html'
+  templateUrl: 'main-market-book-information.html',
+  styleUrls: ["./main-market-display.component.scss"]
 })
 
 export class MainMarketBookInfoDialog {

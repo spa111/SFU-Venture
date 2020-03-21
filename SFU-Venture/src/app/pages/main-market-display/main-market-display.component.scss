@@ -26,6 +26,81 @@ user agent stylesheet html {
     color: -internal-root-color;
 }
 
+.popup-title {
+    padding: 20px;
+}
+
+.mat-dialog-container .ng-tns-c3-0 .ng-trigger .ng-trigger-dialogContainer .ng-star-inserted {
+    margin: -24px !important;
+}
+.popup-modal {
+    position: relative;
+    margin: -24px !important;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.close-button {
+    border: none;
+    display: inline-block;
+    padding: 8px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap
+  }
+  
+  .topright {
+    position: absolute;
+    right: 0;
+    top: 0
+  }
+
+.textbook-header-image {
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+
+.textbook-details {
+    width: 50%;
+    height: 100%;
+    float: right;
+    // background-color: #afafaf;
+}
+
+.textbook-image {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+// .textbook-header-image img{
+//     width: 100%;
+//     height: auto;
+//     background-size: cover;
+//     background-repeat: no-repeat;
+//     background-position: center;
+//  }​
+
+.contact-section {
+    width: 100%;
+    height: 100px;
+    position: relative;
+}
+
+.contact-button {
+    position: absolute;
+    bottom: 0px;
+    right: 20px;
+    background-color: inherit;
+    color: #FF4B2B;
+}
+
 .sideBar {
     display: block;
     position: fixed;

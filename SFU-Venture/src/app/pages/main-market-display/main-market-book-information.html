@@ -1,5 +1,25 @@
-<h1 mat-dialog-title>{{textbook.txt_book_name}}</h1>
-<div mat-dialog-content>
+<div class="popup-modal" mat-dialog-content>
+  <h1 class="popup-title" mat-dialog-title>{{textbook.txt_book_name}} - {{textbook.price}}</h1>
   
-  <button mat-button matRipple (click)="onCloseClick()">Close</button>
+  <header style="background-color:#000;color:#fff;">
+    <span  (click)="onCloseClick()" class="close-button topright">&times;</span>
+  </header>
+
+  <div>
+    <div class="textbook-header-image" >
+      <img class="textbook-image" src='{{textbook.img_url}}'/>
+    </div>
+
+    <div class="textbook-details">
+      This is a good book to learn javascript scripting language from scratch, i idvice you to learn it
+    </div>
+
+  </div>
+
+
+
+  <div class="contact-section">
+    <button class='contact-button' mat-button matRipple (click)="onCloseClick()">Contact Seller</button>
+  </div>
+
 </div>
