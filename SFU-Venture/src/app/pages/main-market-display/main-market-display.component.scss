@@ -26,18 +26,30 @@ user agent stylesheet html {
     color: -internal-root-color;
 }
 
-.popup-title {
-    padding: 20px;
+.popup-content {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
-.mat-dialog-container .ng-tns-c3-0 .ng-trigger .ng-trigger-dialogContainer .ng-star-inserted {
+.clear-both {
+    clear: both;
+}
+
+.popup-title {
+    padding: 10px;
+}
+
+.mat-dialog-content {
     margin: -24px !important;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
 }
 .popup-modal {
     position: relative;
     margin: -24px !important;
-    overflow: hidden;
-    padding: 20px;
+    // overflow: hidden;
+    // padding: 20px;
 }
 
 .close-button {
@@ -52,25 +64,32 @@ user agent stylesheet html {
     text-align: center;
     cursor: pointer;
     white-space: nowrap
-  }
+}
   
-  .topright {
+.topright {
     position: absolute;
     right: 0;
     top: 0
-  }
+}
 
 .textbook-header-image {
     width: 50%;
     height: 100%;
     float: left;
+    padding: 10px;
+}
+
+.textbook-info {
+    margin-top: 20px;
+    padding: 30px;
 }
 
 .textbook-details {
+    padding-top: 20px;
     width: 50%;
-    height: 100%;
+    height: 400px;
     float: right;
-    // background-color: #afafaf;
+    background-color: #e9e9e9;
 }
 
 .textbook-image {
@@ -89,13 +108,12 @@ user agent stylesheet html {
 
 .contact-section {
     width: 100%;
-    height: 100px;
     position: relative;
 }
 
 .contact-button {
     position: absolute;
-    bottom: 0px;
+    bottom: 20px;
     right: 20px;
     background-color: inherit;
     color: #FF4B2B;

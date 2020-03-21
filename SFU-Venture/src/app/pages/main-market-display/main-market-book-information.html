@@ -1,19 +1,22 @@
 <div class="popup-modal" mat-dialog-content>
-  <h1 class="popup-title" mat-dialog-title>{{textbook.txt_book_name}} - {{textbook.price}}</h1>
-  
-  <header style="background-color:#000;color:#fff;">
-    <span  (click)="onCloseClick()" class="close-button topright">&times;</span>
-  </header>
 
-  <div>
+  <div class="popup-content">
+    
     <div class="textbook-header-image" >
+      <h1 class="popup-title" mat-dialog-title>{{textbook.txt_book_name}} - {{textbook.price}}</h1>
+
       <img class="textbook-image" src='{{textbook.img_url}}'/>
     </div>
 
     <div class="textbook-details">
-      This is a good book to learn javascript scripting language from scratch, i idvice you to learn it
+      <header style="background-color:#000;color:#fff;">
+        <span  (click)="onCloseClick()" class="close-button topright">&times;</span>
+      </header>
+     
+      <div class="textbook-info">
+        This is a good book to learn javascript scripting language from scratch, i idvice you to learn it
+      </div>
     </div>
-
   </div>
 
 
