@@ -51,7 +51,7 @@ const createVolunteerPos = (request, response) => {
 
     // Need to add another check in the db to make it so that the admin is the only one who verifies whether a user is faculty or not
     database.query(
-        'insert into textbooks (user_id, volunteer_title, volunteer_description, volunteer_location) values ($1, $2, $3, $4) RETURNING *', [user_id, volunteer_title, volunteer_description, volunteer_location],
+        'insert into volunteer_board (user_id, volunteer_title, volunteer_description, volunteer_location) values ($1, $2, $3, $4) RETURNING *', [user_id, volunteer_title, volunteer_description, volunteer_location],
         (error, results) => {
             if (error) {
                 console.log(error);
