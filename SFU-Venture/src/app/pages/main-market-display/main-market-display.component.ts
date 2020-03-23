@@ -252,14 +252,23 @@ export class MainMarketDisplayComponent implements OnInit {
 
 export class MainMarketBookInfoDialog {
   textbook: any = {};
+  user_owns_posting: Boolean = false;
 
   constructor(public dialogRef: MatDialogRef<MainMarketBookInfoDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.textbook = Object.assign({}, this.data.textbook);
-    console.log(this.textbook);
+    this.textbook.description = this.textbook.description != "" ? this.textbook.description : "No Description Provided";
+    this.user_owns_posting = this.textbook.posting_user_id == localStorage.getItem('user') ? true : false;
   }
 
   onCloseClick(): void {
     this.dialogRef.close();
   }
 
+  contactSeller() {
+
+  }
+
+  deletePosting() {
+    
+  }
 }

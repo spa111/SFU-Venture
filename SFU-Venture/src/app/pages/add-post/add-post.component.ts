@@ -59,6 +59,7 @@ export class AddPostComponent implements OnInit {
     let course = $("#course")[0].value;
     let price = $("#price")[0].value;
     let url = $("#URL")[0].value;
+    let description = $("#description-info")[0].value || "";
     let date = new Date();
 
     let details = {
@@ -69,6 +70,7 @@ export class AddPostComponent implements OnInit {
       "price": price,
       "post_date": date,
       "img_url": url,
+      "description": description
     };
 
     if (textbookName && course && price && dept && url) {

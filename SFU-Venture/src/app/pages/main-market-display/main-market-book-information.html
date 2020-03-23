@@ -14,15 +14,17 @@
       </header>
      
       <div class="textbook-info">
-        This is a good book to learn javascript scripting language from scratch, i idvice you to learn it
+        {{textbook.description}}
       </div>
     </div>
   </div>
 
-
-
-  <div class="contact-section">
-    <button class='contact-button' mat-button matRipple (click)="onCloseClick()">Contact Seller</button>
+  <div class="delete-section" *ngIf="user_owns_posting else user_doesnt_own">
+    <button class='delete-button' mat-button matRipple (click)="deletePosting()">Delete Posting</button>
   </div>
+  
+  <ng-template #user_doesnt_own class="contact-section">
+    <button class='contact-button' mat-button matRipple (click)="contactSeller()">Contact Seller</button>
+  </ng-template>
 
 </div>

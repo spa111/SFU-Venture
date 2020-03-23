@@ -99,20 +99,14 @@ user agent stylesheet html {
     max-width: 50%;
 }
 
-// .textbook-header-image img{
-//     width: 100%;
-//     height: auto;
-//     background-size: cover;
-//     background-repeat: no-repeat;
-//     background-position: center;
-//  }​
-
-.contact-section {
+.contact-section,
+.delete-section {
     width: 100%;
     position: relative;
 }
 
-.contact-button {
+.contact-button,
+.delete-button {
     position: absolute;
     bottom: 20px;
     right: 20px;

@@ -23,6 +23,7 @@ CREATE  TABLE users (
 	price             money DEFAULT 0 NOT NULL ,
 	post_date         date NOT NULL DEFAULT current_timestamp,
 	img_url           text  NOT NULL,
+	description		  text ,
 	CONSTRAINT pk_txtbook_id PRIMARY KEY ( id )
 );
 

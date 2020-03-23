@@ -81,7 +81,29 @@ form {
     text-align: center;
 }
 
+#url-link-top-half,
+#desc-link-bottom-half {
+    width: 100%;
+}
+
+#url-link-top-half {
+    height: 20%;
+    margin-top: 5%;
+}
+
+#desc-link-bottom-half {
+    height: 80%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+textarea {
+    height: 90%;
+    resize: none;
+}
+
 input,
+textarea,
 select {
     background-color: #eee;
     border: none;
