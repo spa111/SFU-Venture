@@ -108,12 +108,12 @@ export class MainMarketDisplayComponent implements OnInit {
     }
 
     // Gather checked field for Dept
-    let deptFilterVvalue = $("#filterDept")[0].value;
+    let deptFilterValue = $("#filterDept")[0].value;
 
     // Check if the dept filter value was set
-    if (deptFilterVvalue != "All") {
+    if (deptFilterValue != "All") {
       this.shouldSortDept = true;
-      this.deptFilterVal = deptFilterVvalue;
+      this.deptFilterVal = deptFilterValue;
     } else {
       this.shouldSortDept = false;
     }
@@ -122,7 +122,7 @@ export class MainMarketDisplayComponent implements OnInit {
     let courseFilterValue = $("#filterClass")[0].value;
 
     // Check if the course filter value was set
-    if (deptFilterVvalue != "ALL") {
+    if (deptFilterValue != "All") {
       this.shouldSortClass = true;
       this.courseFilterVal = courseFilterValue;
     } else {
