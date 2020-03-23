@@ -12,6 +12,7 @@ export interface DialogData {
 
 export interface BookDeleteData {
   textbook: any;
+  textbookDeleted: Boolean;
 }
 
 @Component({
@@ -37,8 +38,6 @@ export class MainMarketDisplayComponent implements OnInit {
 
   ngOnInit() {
     this.getAllTextbooks().then(result => {
-      console.log("Retrieval Successful");
-      console.log(result);
       this.textbooks = result;
 
       this.textbooksService
@@ -126,7 +125,7 @@ export class MainMarketDisplayComponent implements OnInit {
     let courseFilterValue = $("#filterClass")[0].value;
 
     // Check if the course filter value was set
-    if (deptFilterValue != "All") {
+    if (courseFilterValue != "All") {
       this.shouldSortClass = true;
       this.courseFilterVal = courseFilterValue;
     } else {
@@ -248,6 +247,8 @@ export class MainMarketDisplayComponent implements OnInit {
   //   }]
 }
 
+
+// The textbook details Modal Dialog
 @Component({
   selector: 'main-market-book-information',
   templateUrl: 'main-market-book-information.html',
@@ -258,7 +259,11 @@ export class MainMarketBookInfoDialog {
   textbook: any = {};
   user_owns_posting: Boolean = false;
 
-  constructor(public dialogRef: MatDialogRef<MainMarketBookInfoDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData, public dialog: MatDialog) {
+  constructor(
+    public dialogRef: MatDialogRef<MainMarketBookInfoDialog>, 
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public dialog: MatDialog
+  ) {
     this.textbook = Object.assign({}, this.data.textbook);
     this.textbook.description = this.textbook.description != "" ? this.textbook.description : "No Description Provided";
     this.user_owns_posting = this.textbook.posting_user_id == localStorage.getItem('user') ? true : false;
@@ -273,20 +278,27 @@ export class MainMarketBookInfoDialog {
   }
 
   deletePosting() {
-    const dialogRef = this.dialog.open(PostingDeleteConfirmationDialog, {
+    const deleteDialogRef = this.dialog.open(PostingDeleteConfirmationDialog, {
       width: '30%',
       height: '200px',
       data: {
-        textbook: this.textbook
+        textbook: this.textbook,
+        textbookDeleted: false
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The delete dialog was closed');
+    deleteDialogRef.afterClosed().subscribe(result => {
+      console.log(`Textbook deleted = ${result.data.textbookDeleted}`);
+
+      if (result.data.textbookDeleted) {
+        this.dialogRef.close();
+      }
     });
   }
 }
 
+
+// Posting Delete Modal
 @Component({
   selector: 'posting-delete-confirmation',
   templateUrl: 'posting-delete-confirmation.html',
@@ -296,15 +308,39 @@ export class MainMarketBookInfoDialog {
 export class PostingDeleteConfirmationDialog {
   textbook: any = {};
 
-  constructor(public dialogRef: MatDialogRef<PostingDeleteConfirmationDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  constructor(
+    public dialogRef: MatDialogRef<PostingDeleteConfirmationDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: BookDeleteData,
+    private textbooksService: TextbooksService,
+    private router: Router
+  ) {
     this.textbook = Object.assign({}, this.data.textbook);
   }
 
-  onCloseClick(): void {
-    this.dialogRef.close();
+  onCloseClick() {
+    this.data.textbookDeleted = false;
+    this.dialogRef.close({
+      data: this.data
+    });
   }
 
   deletePosting() {
-    
+    // Need to implement deletion here
+    this.textbooksService.deleteTextbookPosting(this.textbook.id).then(result => {
+      this.redirectTo('market');
+    }).catch((err) => {
+      console.log(err);
+    });
+
+
+    this.data.textbookDeleted = true;
+    this.dialogRef.close({
+      data: this.data
+    });
   }
+
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
 }

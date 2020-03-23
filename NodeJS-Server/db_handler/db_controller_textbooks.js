@@ -41,7 +41,7 @@ const deleteTextBook = (request, response) => {
             console.log(error);
         }
 
-        response.status(200).send('textbooks deleted with ID: ${id}');
+        response.status(200).send({ response: 'textbooks deleted with ID: ${id}' });
     });
 };
 
