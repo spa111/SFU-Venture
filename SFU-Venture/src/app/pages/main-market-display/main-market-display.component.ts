@@ -10,6 +10,10 @@ export interface DialogData {
   textbook: any;
 }
 
+export interface BookDeleteData {
+  textbook: any;
+}
+
 @Component({
   selector: "app-main-market-display",
   templateUrl: "./main-market-display.component.html",
@@ -254,7 +258,7 @@ export class MainMarketBookInfoDialog {
   textbook: any = {};
   user_owns_posting: Boolean = false;
 
-  constructor(public dialogRef: MatDialogRef<MainMarketBookInfoDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  constructor(public dialogRef: MatDialogRef<MainMarketBookInfoDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData, public dialog: MatDialog) {
     this.textbook = Object.assign({}, this.data.textbook);
     this.textbook.description = this.textbook.description != "" ? this.textbook.description : "No Description Provided";
     this.user_owns_posting = this.textbook.posting_user_id == localStorage.getItem('user') ? true : false;
@@ -266,6 +270,38 @@ export class MainMarketBookInfoDialog {
 
   contactSeller() {
 
+  }
+
+  deletePosting() {
+    const dialogRef = this.dialog.open(PostingDeleteConfirmationDialog, {
+      width: '30%',
+      height: '200px',
+      data: {
+        textbook: this.textbook
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The delete dialog was closed');
+    });
+  }
+}
+
+@Component({
+  selector: 'posting-delete-confirmation',
+  templateUrl: 'posting-delete-confirmation.html',
+  styleUrls: ["./main-market-display.component.scss"]
+})
+
+export class PostingDeleteConfirmationDialog {
+  textbook: any = {};
+
+  constructor(public dialogRef: MatDialogRef<PostingDeleteConfirmationDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    this.textbook = Object.assign({}, this.data.textbook);
+  }
+
+  onCloseClick(): void {
+    this.dialogRef.close();
   }
 
   deletePosting() {

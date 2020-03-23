@@ -12,7 +12,7 @@ import { AuthService } from './services/auth/auth.service';
 import { AuthGuard } from './services/auth-guard/auth.guard';
 import { LoginGuard } from './services/login-guard/login.guard'; 
 import { LogoutComponent } from './pages/logout/logout.component';
-import { MainMarketDisplayComponent, MainMarketBookInfoDialog } from './pages/main-market-display/main-market-display.component';
+import { MainMarketDisplayComponent, MainMarketBookInfoDialog, PostingDeleteConfirmationDialog } from './pages/main-market-display/main-market-display.component';
 import { VerifyEmailPageComponent } from './pages/verify-page/verify-email-page/verify-email-page.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ChangeForgottenPasswordComponent } from './pages/change-forgotten-password/change-forgotten-password.component';
@@ -36,7 +36,8 @@ export function tokenGetter() {
     ForgotPasswordComponent,
     ChangeForgottenPasswordComponent,
     AddPostComponent,
-    MainMarketBookInfoDialog
+    MainMarketBookInfoDialog,
+    PostingDeleteConfirmationDialog
   ],
   imports: [
     BrowserModule,
@@ -59,6 +60,6 @@ export function tokenGetter() {
     LoginGuard
   ],
   bootstrap: [AppComponent],
-  entryComponents: [MainMarketBookInfoDialog]
+  entryComponents: [MainMarketBookInfoDialog, PostingDeleteConfirmationDialog]
 })
 export class AppModule { }
