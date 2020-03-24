@@ -245,7 +245,7 @@ const deleteUser = (request, response) => {
 };
 
 const emailBuyerAndSeller = (request, response) => {
-    const { buyerId, sellerId, message, textbook } = request.body;
+    var { buyerId, sellerId, message, textbook } = request.body;
 
     let seller_email = "";
     let buyer_email = "";
@@ -258,9 +258,12 @@ const emailBuyerAndSeller = (request, response) => {
                 response.status(500).send(`Internal server error`);
             } else {
                 if (results.rows[0] && results.rows[0].id) {
-                    console.log(results.rows);
                     seller_email = results.rows[0].email;
                     buyer_email = results.rows[1].email
+
+                    if (message == "Hi there. I would like to talk about purchasing this textbook. Please send me an email if it is still available. <br><br> Thanks") {
+                        message += `,<br>${buyer_email}`;
+                    }
 
                     var seller_message = {
                         from: 'sfuventure470@gmail.com',

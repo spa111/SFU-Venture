@@ -343,28 +343,28 @@ export class ContactSellerDialog {
     let message = $("#message")[0].value;
 
     if (message == "") {
-      alert("Please enter a message");
-    } else {
+      message = "Hi there. I would like to talk about purchasing this textbook. Please send me an email if it is still available. <br><br> Thanks"
+    } 
 
-      let payload = {
-        "buyerId" : localStorage.getItem('user'),
-        "sellerId" : this.data.textbook.posting_user_id,
-        "message": message,
-        "textbook": this.data.textbook
-      };
+    let payload = {
+      "buyerId" : localStorage.getItem('user'),
+      "sellerId" : this.data.textbook.posting_user_id,
+      "message": message,
+      "textbook": this.data.textbook
+    };
 
-      this.usersService.emailSellerAndBuyer(payload).then(result => {
-        console.log(result);
-        this.data.messageSent = true;
+    this.usersService.emailSellerAndBuyer(payload).then(result => {
+      console.log(result);
+      this.data.messageSent = true;
 
-        this.dialogRef.close({
-          data: this.data
-        });
-
-      }).catch(err => {
-        console.log(err);
+      this.dialogRef.close({
+        data: this.data
       });
-    }
+
+    }).catch(err => {
+      console.log(err);
+    });
+    
   }
 }
 
