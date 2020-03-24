@@ -51,16 +51,16 @@ user agent stylesheet html {
 
 //Filter component
 @import url("https://fonts.googleapis.com/css?family=Playfair+Display&display=swap");
-.typo,
+.textbookSelector,
 .list a {
-    font-size: 60px;
+    font-size: 30px;
     font-weight: 700;
     font-family: 'Playfair Display', serif;
     color: #585858;
     text-decoration: none;
 }
 
-.typo option,
+.textbookSelector option,
 .list a option {
     font-size: 30px;
 }
@@ -75,9 +75,10 @@ body {
 }
 
 .wrapper {
-    padding-top: 150px;
-    height: 100vh;
-    font-size: 60px;
+    position: absolute;
+    padding-left: 2%;
+    left: 300px;
+    width: 75%;
 }
 
 .list {
@@ -184,7 +185,7 @@ select option {
 
 .display {
     position: absolute;
-    top: 10%;
+    top: 13%;
     left: 300px;
     bottom: 1%;
     width: 75%;

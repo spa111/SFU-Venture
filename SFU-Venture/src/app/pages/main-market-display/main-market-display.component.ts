@@ -9,7 +9,6 @@ declare var $: any;
   selector: "app-main-market-display",
   templateUrl: "./main-market-display.component.html",
   styleUrls: ["./main-market-display.component.scss"]
-  
 })
 export class MainMarketDisplayComponent implements OnInit {
   contentLoaded: Boolean = false;
@@ -36,31 +35,39 @@ export class MainMarketDisplayComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAllTextbooks().then(result => {
-      console.log("Retrieval Successful");
-      console.log(result);
-      this.textbooks = result;
-
-      this.textbooksService
-      .getDept()
+    this.getAllTextbooks()
       .then(result => {
-        this.faculties = result;
+        console.log("Retrieval Successful");
+        console.log(result);
+        this.textbooks = result;
 
-        this.faculties.forEach(faculty => {
-          faculty.textbooks = this.textbooks && this.textbooks.length > 0 ? this.textbooks.filter(textbook => {
-            return textbook.faculty_name.toLocaleLowerCase() == faculty.value;
-          }) : [];
-        });
+        this.textbooksService
+          .getDept()
+          .then(result => {
+            this.faculties = result;
 
-        this.facultiesDOM = JSON.parse(JSON.stringify(this.faculties));
-        this.contentLoaded = true;
+            this.faculties.forEach(faculty => {
+              faculty.textbooks =
+                this.textbooks && this.textbooks.length > 0
+                  ? this.textbooks.filter(textbook => {
+                      return (
+                        textbook.faculty_name.toLocaleLowerCase() ==
+                        faculty.value
+                      );
+                    })
+                  : [];
+            });
+
+            this.facultiesDOM = JSON.parse(JSON.stringify(this.faculties));
+            this.contentLoaded = true;
+          })
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(err => {
         console.log(err);
       });
-    }).catch(err => { 
-      console.log(err)
-    });
   }
 
   courses: any;
@@ -71,10 +78,11 @@ export class MainMarketDisplayComponent implements OnInit {
   facultiesSort: any;
 
   sortByDept() {
-    console.log($("#filterDept")[0].value);
-    let filter_value = $("#filterDept")[0].value;
+    let filter_value = this.Selector.toLowerCase();
+    console.log(this.Selector)
+    // let filter_value = this.Selector;
 
-    if (filter_value == "All") {
+    if (filter_value == "all") {
       this.reset();
     } else {
       this.facultiesDOM = JSON.parse(JSON.stringify(this.faculties));
@@ -85,107 +93,103 @@ export class MainMarketDisplayComponent implements OnInit {
   }
 
   reset() {
+    this.Selector = "ALL";
+    this.Course = "";
     this.facultiesDOM = JSON.parse(JSON.stringify(this.faculties));
-    $("#filterDept")[0].value = $("#filterDept")[0][0].value;
-    console.log($("#filterDept")[0].value);
   }
 
+  //-------------Section for UI Factuly and course chooser//
 
   Selected: Boolean = false;
+  Selector: string = "ALL";
+  SelectedCourse: Boolean = false;
+  SelectorOpen: Boolean = false;
+  Course: string = "";
+
   selector() {
-    if(this.SelectorOpen == true){
+    if (this.SelectorOpen == true) {
       return;
     }
     this.SelectorOpen = true;
     this.facultiesSort = this.faculties;
-    this.currString = '';
+    this.currString = "";
     this.Selected = true;
     $(".placeholder").css("opacity", "0");
     $(".list__ul").css("display", "block");
     $(".placeholderCourse").css("opacity", "0");
   }
 
-  Selector: string = 'ALL';
   selected(event: any): void {
-    if(event.target.name == null){
-      return
+    if (event.target.name == null) {
+      return;
     }
-    console.log(event.target.name)
-    var index = $(event.target.name)
-    
+
     $(".placeholder").css("opacity", "1");
     this.Selector = event.target.name.toUpperCase();
     $(".list__ul").css("display", "none");
     this.Selected = false;
-    this.Course = '---'
+    this.Course = "---";
     this.SelectorOpen = false;
 
+    if(!(event.target.name == "ALL")){
 
-    this.textbooksService.getCourses(event.target.name)
-          .then((result) => {
-            this.courses = result;
-          })
-          .catch(err => {
-            console.log(err);
-          }
-        );
-        $(".placeholderCourse").css("opacity", "1");
-
+      this.textbooksService
+      .getCourses(event.target.name)
+      .then(result => {
+        this.courses = result;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
+      $(".placeholderCourse").css("opacity", "1");
+    this.sortByDept();
   }
-  
-  SelectedCourse: Boolean = false;
+
   selectorCourse() {
-    if(this.SelectorOpen == true){
+    if (this.SelectorOpen == true) {
       return;
     }
     this.SelectorOpen = true;
-    console.log("selecting course")
-    console.log(this.courses)
     this.coursesSort = this.courses;
-    this.currStringCourse = '';
+    this.currStringCourse = "";
+
     this.SelectedCourse = true;
     $(".placeholderCourse").css("opacity", "0");
     $(".list__ul_course").css("display", "block");
-
   }
-  
-  SelectorOpen : Boolean = false;
-  
-  Course: string = '';
+
   selectedCourse(event: any): void {
     $(".placeholder").css("opacity", "1");
     $(".list__ul").css("display", "none");
-    console.log(event.target.name)
-    var index = $(event.target.name)
-    if(event.target.name == null){
-      return
+    if (event.target.name == null) {
+      return;
     }
-  
+
     $(".placeholderCourse").css("opacity", "1");
-      this.Course = event.target.name.toUpperCase();
+    this.Course = event.target.name.toUpperCase();
     $(".list__ul_course").css("display", "none");
     this.SelectedCourse = false;
     this.SelectorOpen = false;
   }
 
-  currString: string = '';
-  currStringCourse: string = '';
-  @HostListener('document:keypress', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) { 
-    if(this.Selected){
+  currString: string = "";
+  currStringCourse: string = "";
+  @HostListener("document:keypress", ["$event"])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (this.Selected) {
       this.currString += event.key;
 
-        this.facultiesSort = this.faculties.filter(faculty => {
-          return faculty.value.startsWith(this.currString);
-        })
-
-    }else if(this.SelectedCourse){
+      this.facultiesSort = this.faculties.filter(faculty => {
+        return faculty.value.startsWith(this.currString);
+      });
+    } else if (this.SelectedCourse) {
       this.currStringCourse += event.key;
 
-        this.coursesSort = this.courses.filter(courses => {
-          return courses.value.startsWith(this.currStringCourse);
-        })
-
+      this.coursesSort = this.courses.filter(courses => {
+        return courses.value.startsWith(this.currStringCourse);
+      });
     }
   }
+  //-------------END Section for UI Factuly and course chooser//
 }
