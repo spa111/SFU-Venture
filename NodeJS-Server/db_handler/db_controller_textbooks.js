@@ -24,7 +24,7 @@ const getTextBooks = (request, response) => {
 const getTextBookById = (request, response) => {
     const id = parseInt(request.params.id);
 
-    database.query('select * from textbooks where id = $1', [id], (error, results) => {
+    database.query('select * from textbooks where posting_user_id = $1', [id], (error, results) => {
         if (error) {
             console.log(error);
         } else {

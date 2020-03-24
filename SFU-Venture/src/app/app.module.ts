@@ -19,10 +19,12 @@ import { ChangeForgottenPasswordComponent } from './pages/change-forgotten-passw
 import { AddPostComponent } from './pages/add-post/add-post.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { AccountPageComponent, AccountDeleteConfirmationDialog } from './pages/account-page/account-page.component';
+import { AccountPageComponent, AccountDeleteConfirmationDialog, ViewMarketPostsDialog } from './pages/account-page/account-page.component';
 import { MatListModule } from '@angular/material/list';
 import { ChangeAccountPasswordPageComponent } from './pages/change-account-password-page/change-account-password-page.component';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material';
+import { MatRippleModule } from '@angular/material/core';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -45,7 +47,8 @@ export function tokenGetter() {
     ContactSellerDialog,
     AccountPageComponent,
     AccountDeleteConfirmationDialog,
-    ChangeAccountPasswordPageComponent
+    ChangeAccountPasswordPageComponent,
+    ViewMarketPostsDialog
   ],
   imports: [
     BrowserModule,
@@ -56,6 +59,8 @@ export function tokenGetter() {
     MatButtonModule,
     MatListModule,
     MatInputModule,
+    MatTableModule,
+    MatRippleModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -74,7 +79,8 @@ export function tokenGetter() {
     MainMarketBookInfoDialog, 
     PostingDeleteConfirmationDialog, 
     ContactSellerDialog,
-    AccountDeleteConfirmationDialog
+    AccountDeleteConfirmationDialog,
+    ViewMarketPostsDialog
   ]
 })
 export class AppModule { }

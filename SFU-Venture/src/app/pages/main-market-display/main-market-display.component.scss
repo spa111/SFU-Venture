@@ -114,6 +114,13 @@ user agent stylesheet html {
     right: 20px;
     background-color: inherit;
     color: #FF4B2B;
+    overflow: hidden;
+}
+
+#sendMsg-button,
+#cancel-delete-button,
+#delete-posting-button {
+    overflow: hidden;
 }
 
 .sideBar {

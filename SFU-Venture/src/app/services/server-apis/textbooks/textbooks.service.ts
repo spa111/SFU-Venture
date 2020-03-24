@@ -26,6 +26,11 @@ export class TextbooksService {
     return this.http.get(SERVER_BASE_URL + '/api/textbooks', this.httpOptions).toPromise();
   }
 
+  getUsersTextbooks(id: any): Promise<any> {
+    this.generateHeaders();
+    return this.http.get(SERVER_BASE_URL + '/api/textbooks/' + id, this.httpOptions).toPromise();
+  }
+
   getDept(): Promise<any> {
     return this.http.get('http://www.sfu.ca/bin/wcm/academic-calendar?2020/summer/courses').toPromise();
   }

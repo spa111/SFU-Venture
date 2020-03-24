@@ -275,7 +275,9 @@ export class MainMarketBookInfoDialog {
   }
 
   onCloseClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close({
+      textbookDeleted: false
+    });
   }
 
   contactSeller() {
@@ -306,17 +308,21 @@ export class MainMarketBookInfoDialog {
     });
 
     deleteDialogRef.afterClosed().subscribe(result => {
-      console.log(`Textbook deleted = ${result.data.textbookDeleted}`);
-
-      if (result.data.textbookDeleted) {
-        this.dialogRef.close();
+      if (result && result.data.textbookDeleted) {
+        this.dialogRef.close({
+          textbookDeleted: true
+        });
+      } else {
+        this.dialogRef.close({
+          textbookDeleted: false
+        });
       }
     });
   }
 }
 
 
-// The textbook details Modal Dialog
+// The Contact Seller Modal Dialog
 @Component({
   selector: 'contact-seller',
   templateUrl: 'posting-contact-seller.html',
@@ -398,7 +404,10 @@ export class PostingDeleteConfirmationDialog {
   deletePosting() {
     // Need to implement deletion here
     this.textbooksService.deleteTextbookPosting(this.textbook.id).then(result => {
-      this.redirectTo('market');
+
+      if (window.location.pathname == "/market") {
+        this.redirectTo('market');
+      }
     }).catch((err) => {
       console.log(err);
     });
