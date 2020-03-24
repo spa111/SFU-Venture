@@ -1,13 +1,15 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Component, HostListener, OnInit, AfterViewInit } from "@angular/core";
 import { AuthService } from "../../services/auth/auth.service";
 import { Router } from "@angular/router";
 import { TextbooksService } from "../../services/server-apis/textbooks/textbooks.service";
+
 declare var $: any;
 
 @Component({
   selector: "app-main-market-display",
   templateUrl: "./main-market-display.component.html",
   styleUrls: ["./main-market-display.component.scss"]
+  
 })
 export class MainMarketDisplayComponent implements OnInit {
   contentLoaded: Boolean = false;
@@ -61,9 +63,12 @@ export class MainMarketDisplayComponent implements OnInit {
     });
   }
 
+  courses: any;
+  coursesSort: any;
   textbooks: any;
   faculties: any;
   facultiesDOM: any;
+  facultiesSort: any;
 
   sortByDept() {
     console.log($("#filterDept")[0].value);
@@ -84,21 +89,103 @@ export class MainMarketDisplayComponent implements OnInit {
     $("#filterDept")[0].value = $("#filterDept")[0][0].value;
     console.log($("#filterDept")[0].value);
   }
-  //   {
-  //     textbookName: "C++ Primer (5th Edition)",
-  //     course: "135",
-  //     faculty: "CMPT",
-  //     price: "15",
-  //     postDate: "July 3",
-  //     imageUrl: "https://image.ebooks.com/previews/001/001436/001436169/001436169.jpg"
 
-  //   },
-  //   {
-  //     textbookName: "Data Structures and Algorithms in C++",
-  //     course: "225",
-  //     faculty: "CMPT",
-  //     price: "1",
-  //     postDate: "Feburary 14",
-  //     imageUrl: "https://images-na.ssl-images-amazon.com/images/I/61pHgCDCgqL.jpg"
-  //   }]
+
+  Selected: Boolean = false;
+  selector() {
+    if(this.SelectorOpen == true){
+      return;
+    }
+    this.SelectorOpen = true;
+    this.facultiesSort = this.faculties;
+    this.currString = '';
+    this.Selected = true;
+    $(".placeholder").css("opacity", "0");
+    $(".list__ul").css("display", "block");
+    $(".placeholderCourse").css("opacity", "0");
+  }
+
+  Selector: string = 'ALL';
+  selected(event: any): void {
+    if(event.target.name == null){
+      return
+    }
+    console.log(event.target.name)
+    var index = $(event.target.name)
+    
+    $(".placeholder").css("opacity", "1");
+    this.Selector = event.target.name.toUpperCase();
+    $(".list__ul").css("display", "none");
+    this.Selected = false;
+    this.Course = '---'
+    this.SelectorOpen = false;
+
+
+    this.textbooksService.getCourses(event.target.name)
+          .then((result) => {
+            this.courses = result;
+          })
+          .catch(err => {
+            console.log(err);
+          }
+        );
+        $(".placeholderCourse").css("opacity", "1");
+
+  }
+  
+  SelectedCourse: Boolean = false;
+  selectorCourse() {
+    if(this.SelectorOpen == true){
+      return;
+    }
+    this.SelectorOpen = true;
+    console.log("selecting course")
+    console.log(this.courses)
+    this.coursesSort = this.courses;
+    this.currStringCourse = '';
+    this.SelectedCourse = true;
+    $(".placeholderCourse").css("opacity", "0");
+    $(".list__ul_course").css("display", "block");
+
+  }
+  
+  SelectorOpen : Boolean = false;
+  
+  Course: string = '';
+  selectedCourse(event: any): void {
+    $(".placeholder").css("opacity", "1");
+    $(".list__ul").css("display", "none");
+    console.log(event.target.name)
+    var index = $(event.target.name)
+    if(event.target.name == null){
+      return
+    }
+  
+    $(".placeholderCourse").css("opacity", "1");
+      this.Course = event.target.name.toUpperCase();
+    $(".list__ul_course").css("display", "none");
+    this.SelectedCourse = false;
+    this.SelectorOpen = false;
+  }
+
+  currString: string = '';
+  currStringCourse: string = '';
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) { 
+    if(this.Selected){
+      this.currString += event.key;
+
+        this.facultiesSort = this.faculties.filter(faculty => {
+          return faculty.value.startsWith(this.currString);
+        })
+
+    }else if(this.SelectedCourse){
+      this.currStringCourse += event.key;
+
+        this.coursesSort = this.courses.filter(courses => {
+          return courses.value.startsWith(this.currStringCourse);
+        })
+
+    }
+  }
 }

@@ -49,6 +49,139 @@ user agent stylesheet html {
     // box-shadow: 0px 5px 10px 3px #bdbdbd;
 }
 
+//Filter component
+@import url("https://fonts.googleapis.com/css?family=Playfair+Display&display=swap");
+.typo,
+.list a {
+    font-size: 60px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: #585858;
+    text-decoration: none;
+}
+
+.typo option,
+.list a option {
+    font-size: 30px;
+}
+
+.transition {
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+body {
+    text-align: center;
+}
+
+.wrapper {
+    padding-top: 150px;
+    height: 100vh;
+    font-size: 60px;
+}
+
+.list {
+    display: inline-block;
+    position: relative;
+    margin-left: 6px;
+}
+
+.list ul {
+    text-align: left;
+    padding: 0;
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 9999;
+    position: absolute;
+    width: 200px;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 0px;
+    padding-left: 5px;
+}
+
+.list li {
+    list-style: none;
+}
+
+.list li:first-child a {
+    color: #7d40bf;
+}
+
+.list a {
+    -webkit-transition: all .4s;
+    transition: all .4s;
+    color: #7b00ff;
+    position: relative;
+}
+
+.list a:after {
+    position: absolute;
+    content: '';
+    height: 5px;
+    width: 0;
+    left: 0;
+    background: #b066ff;
+    bottom: 0;
+    -webkit-transition: all .4s ease-out;
+    transition: all .4s ease-out;
+}
+
+.list a:hover {
+    cursor: pointer;
+    color: #b066ff;
+}
+
+.list a:hover:after {
+    width: 100%;
+}
+
+select {
+    display: inline;
+    border: 0;
+    width: auto;
+    margin-left: 10px;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-bottom: 2px solid #555;
+    color: #7b00ff;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+select:hover {
+    cursor: pointer;
+}
+
+select option {
+    border: 0;
+    border-bottom: 1px solid #555;
+    padding: 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.placeholder {
+    border-bottom: 4px solid;
+    cursor: pointer;
+}
+
+.placeholder:hover {
+    color: #888888;
+}
+
+.placeholderCourse {
+    border-bottom: 4px solid;
+    cursor: pointer;
+}
+
+.placeholderCourse:hover {
+    color: #888888;
+}
+
 .display {
     position: absolute;
     top: 10%;
@@ -117,11 +250,11 @@ h5 {
     margin: auto;
     border-radius: 10px;
     // margin-top: 5px;
-    padding-top:  5px;
-    padding-bottom:  5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     padding-left: 20px;
     padding-right: 20px;
-    background-color: #FF4B2B; 
+    background-color: #FF4B2B;
     border: none;
 }
 
@@ -225,7 +358,7 @@ h5 {
         width: 100%;
         height: 100%;
         // background-color: rgb(160, 11, 11);
-        background-color: #FF4B2B; 
+        background-color: #FF4B2B;
         z-index: -2;
     }
     &:before {
@@ -248,9 +381,8 @@ h5 {
 }
 
 .btn-primary {
-    background-color: #FF4B2B; 
+    background-color: #FF4B2B;
     border: none;
- 
     &:before {
         content: "";
         z-index: -1;
@@ -267,7 +399,6 @@ h5 {
 .btn-primary:hover {
     background-color: darken(#FF4B2B, 15%);
     transition: all 0.5s;
-
 }
 
 .marketItemsArea {
