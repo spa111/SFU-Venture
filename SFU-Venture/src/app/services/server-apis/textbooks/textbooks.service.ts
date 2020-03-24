@@ -23,6 +23,7 @@ export class TextbooksService {
 
   getAll(): Promise<any> {
     this.generateHeaders();
+    this.http.get(SERVER_BASE_URL + '/api/activity/sfu/food', this.httpOptions).toPromise();
     return this.http.get(SERVER_BASE_URL + '/api/textbooks', this.httpOptions).toPromise();
   }
 
