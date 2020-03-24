@@ -23,7 +23,13 @@ export class TextbooksService {
 
   getAll(): Promise<any> {
     this.generateHeaders();
-    this.http.get(SERVER_BASE_URL + '/api/activity/sfu/food', this.httpOptions).toPromise();
+    const jsonTest = {
+      coord: '49.276505,-122.921785',
+      radius: '1500',
+      type: 'restaurant',
+      keyword: 'chinese'
+    }
+    this.http.post(SERVER_BASE_URL + '/api/activity/' , jsonTest, this.httpOptions).toPromise();
     return this.http.get(SERVER_BASE_URL + '/api/textbooks', this.httpOptions).toPromise();
   }
 
