@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, Inject } from "@angular/core";
 import { AuthService } from "../../services/auth/auth.service";
 import { Router } from "@angular/router";
 import { TextbooksService } from "../../services/server-apis/textbooks/textbooks.service";
+import { UsersService } from "../../services/server-apis/users/users.service";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 declare var $: any;
@@ -13,6 +14,11 @@ export interface DialogData {
 export interface BookDeleteData {
   textbook: any;
   textbookDeleted: Boolean;
+}
+
+export interface ContactSellerData {
+  textbook: any;
+  messageSent: Boolean;
 }
 
 @Component({
@@ -222,8 +228,7 @@ export class MainMarketDisplayComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result);      
+      console.log("textbook dialog closed");
     });
   }
 
@@ -274,7 +279,20 @@ export class MainMarketBookInfoDialog {
   }
 
   contactSeller() {
+    const contactSellerDialogRef = this.dialog.open(ContactSellerDialog, {
+      width: '75%',
+      height: '80%',
+      data: {
+        textbook: this.textbook,
+        messageSent: false
+      }
+    });
 
+    contactSellerDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(`Message sent = ${result.data.messageSent}`);
+      }
+    });
   }
 
   deletePosting() {
@@ -294,6 +312,59 @@ export class MainMarketBookInfoDialog {
         this.dialogRef.close();
       }
     });
+  }
+}
+
+
+// The textbook details Modal Dialog
+@Component({
+  selector: 'contact-seller',
+  templateUrl: 'posting-contact-seller.html',
+  styleUrls: ["./main-market-display.component.scss"]
+})
+
+export class ContactSellerDialog {
+  constructor(
+    public dialogRef: MatDialogRef<ContactSellerDialog>, 
+    @Inject(MAT_DIALOG_DATA) public data: ContactSellerData,
+    public dialog: MatDialog,
+    private usersService: UsersService
+  ) {
+    this.data.messageSent = false;
+  }
+
+  onCloseClick(): void {
+    this.dialogRef.close({
+      data: this.data
+    });
+  }
+
+  sendMessage() {
+    let message = $("#message")[0].value;
+
+    if (message == "") {
+      alert("Please enter a message");
+    } else {
+
+      let payload = {
+        "buyerId" : localStorage.getItem('user'),
+        "sellerId" : this.data.textbook.posting_user_id,
+        "message": message,
+        "textbook": this.data.textbook
+      };
+
+      this.usersService.emailSellerAndBuyer(payload).then(result => {
+        console.log(result);
+        this.data.messageSent = true;
+
+        this.dialogRef.close({
+          data: this.data
+        });
+
+      }).catch(err => {
+        console.log(err);
+      });
+    }
   }
 }
 

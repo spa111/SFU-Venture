@@ -46,6 +46,11 @@ export class UsersService {
     return this.http.post(SERVER_BASE_URL + "/api/change-forgotten-password", newPasswordJSON).toPromise();
   }
 
+  emailSellerAndBuyer(payload: any): Promise<any> {
+    this.generateHeaders();
+    return this.http.post(SERVER_BASE_URL + "/api/users/emailBuyerAndSeller", payload, this.httpOptions).toPromise();
+  }
+
   update(id: any, patchJSON: any): Promise<any> {
     return this.http.put(SERVER_BASE_URL + '/api/users/' + id + '/update-account', patchJSON, this.httpOptions).toPromise();
   }

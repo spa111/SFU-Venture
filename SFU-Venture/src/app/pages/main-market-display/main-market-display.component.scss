@@ -429,18 +429,25 @@ h5 {
     background: #555;
 }
 
-.delete-modal {
+.delete-modal,
+.sendMsg-modal {
     margin: 0 !important;
     height: 100%;
     display: flex;
     align-items: center;
 }
 
-#delete-popup-content {
+#delete-popup-content,
+#sendMsg-content {
     height: fit-content;
 }
 
-#delete-prompt {
+#sendMsg-content {
+    width: 100%;
+}
+
+#delete-prompt,
+#sendMsg-prompt {
     text-align: center;
 }
 
@@ -451,11 +458,21 @@ h5 {
 }
 
 #delete-posting-section,
-#cancel-delete-section {
+#cancel-delete-section,
+#cancel-email-section,
+#sendMsg-section {
     display: inline;
     margin: 0 auto;
 }
 
-#cancel-delete-section {
+#cancel-delete-section,
+#cancel-email-section {
     margin-right: 15px;
+}
+
+textarea {
+    margin-left: 10%;
+    width: 80%;
+    height: 60vh;
+    resize: none;
 }

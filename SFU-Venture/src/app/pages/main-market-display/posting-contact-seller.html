@@ -1,0 +1,19 @@
+<div class="sendMsg-modal">
+    <div id="sendMsg-content">
+        <div id="sendMsg-prompt">
+            <h4>Contact Seller</h4>
+        </div>
+
+        <textarea id="message"></textarea>
+
+        <div id="posting-control-buttons">
+            <div id="cancel-email-section">
+                <button id='cancel-delete-button' mat-raised-button matRipple (click)="onCloseClick()">Cancel</button>
+            </div>
+
+            <div id="sendMsg-section">
+                <button id='sendMsg-button' mat-raised-button color="primary" matRipple (click)="sendMessage()">Send Message</button>
+            </div>
+        </div>
+    </div>
+</div>

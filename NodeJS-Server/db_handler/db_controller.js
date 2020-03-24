@@ -69,7 +69,7 @@ const createUser = (request, response) => {
                 response.status(401).send(`Error, email is currently in use`);
             } else {
                 var verification_token = jwt.sign({ userId: results.rows[0].id }, TOKEN_STRING, { expiresIn: '1d' });
-                var url = `${URL_SERVER}/verify-email/${verification_token}`;
+                var url = `${URL}/verify-email/${verification_token}`;
 
                 var mailOptions = {
                     from: 'sfuventure470@gmail.com',
@@ -244,6 +244,52 @@ const deleteUser = (request, response) => {
     });
 };
 
+const emailBuyerAndSeller = (request, response) => {
+    const { buyerId, sellerId, message, textbook } = request.body;
+
+    let seller_email = "";
+    let buyer_email = "";
+
+    database.query(
+        'select * from users where id = $1 union all select * from users where id = $2', [sellerId, buyerId], 
+        (error, results) => {
+            if (error) {
+                console.log(error);
+                response.status(500).send(`Internal server error`);
+            } else {
+                if (results.rows[0] && results.rows[0].id) {
+                    console.log(results.rows);
+                    seller_email = results.rows[0].email;
+                    buyer_email = results.rows[1].email
+
+                    var seller_message = {
+                        from: 'sfuventure470@gmail.com',
+                        to: seller_email,
+                        subject: `${buyer_email} wants to buy your ${textbook.txt_book_name} ${textbook.faculty_name} ${textbook.course_name} textbook`,
+                        html: `<p>${message}</p>`
+                    };
+
+                    var buyer_message = {
+                        from: 'sfuventure470@gmail.com',
+                        to: buyer_email,
+                        subject: `Message sent to ${seller_email} regarding textbook ${textbook.txt_book_name}`,
+                        html: `<p>
+                            The following message was sent to ${seller_email}:<br><br>
+                            ${message}
+                        </p>`
+                    };
+
+                    sendEmail(seller_message);
+                    sendEmail(buyer_message);
+                    response.status(201).send({ 'response': `Messages Sent to buyer and seller` });
+                } else {
+                    response.status(500).send(`Internal server error`);
+                }
+            }
+        }
+    );
+};
+
 const sendEmail = function(mailOptions) {
 
     // Email details
@@ -277,5 +323,6 @@ module.exports = {
     loginUser,
     verifyUserEmail,
     forgotPasswordCheckEmail,
-    changeForgottenPassword
+    changeForgottenPassword,
+    emailBuyerAndSeller
 };
