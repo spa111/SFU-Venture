@@ -1,0 +1,54 @@
+<div class="navContent" *ngIf="userRetrieved">
+  <h1 class="account-settings-heading">Account Settings </h1>
+
+  <mat-list>
+    <mat-list-item>
+      <p class="attribute"> Full Name </p>
+    </mat-list-item>
+    <mat-list-item>
+      <p class="userInputVal"> {{user.fullname}} </p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <br>
+
+    <mat-list-item>
+      <p class="attribute"> Username </p>
+    </mat-list-item>
+    <mat-list-item>
+      <p class="userInputVal"> {{user.username}} </p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <br>
+
+    <mat-list-item>
+      <p class="attribute"> Email </p>
+    </mat-list-item>
+    <mat-list-item>
+      <p class="userInputVal"> {{user.email}} </p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <br>
+
+    <mat-list-item>
+      <p class="attribute"> Access Level </p>
+    </mat-list-item>
+    <mat-list-item>
+      <p class="userInputVal"> {{accessLevel}} </p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </mat-list>
+  
+  <br><br>
+
+  <button (click)="changePassword()" mat-raised-button>
+      <font color="black"> Change Password </font>
+  </button>
+
+  <button (click)="deleteAccount()" class="buttons" color="warn" mat-raised-button>
+      <font color="white"> Delete Account </font>
+  </button>
+</div>
+

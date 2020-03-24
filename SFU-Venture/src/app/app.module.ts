@@ -18,7 +18,11 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { ChangeForgottenPasswordComponent } from './pages/change-forgotten-password/change-forgotten-password.component';
 import { AddPostComponent } from './pages/add-post/add-post.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
+import { AccountPageComponent, AccountDeleteConfirmationDialog } from './pages/account-page/account-page.component';
+import { MatListModule } from '@angular/material/list';
+import { ChangeAccountPasswordPageComponent } from './pages/change-account-password-page/change-account-password-page.component';
+import { MatInputModule } from '@angular/material/input';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -38,7 +42,10 @@ export function tokenGetter() {
     AddPostComponent,
     MainMarketBookInfoDialog,
     PostingDeleteConfirmationDialog,
-    ContactSellerDialog
+    ContactSellerDialog,
+    AccountPageComponent,
+    AccountDeleteConfirmationDialog,
+    ChangeAccountPasswordPageComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +54,8 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     MatDialogModule,
     MatButtonModule,
+    MatListModule,
+    MatInputModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -61,6 +70,11 @@ export function tokenGetter() {
     LoginGuard
   ],
   bootstrap: [AppComponent],
-  entryComponents: [MainMarketBookInfoDialog, PostingDeleteConfirmationDialog, ContactSellerDialog]
+  entryComponents: [
+    MainMarketBookInfoDialog, 
+    PostingDeleteConfirmationDialog, 
+    ContactSellerDialog,
+    AccountDeleteConfirmationDialog
+  ]
 })
 export class AppModule { }

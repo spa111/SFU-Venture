@@ -214,22 +214,37 @@ const changeForgottenPassword = (request, response) => {
     );
 };
 
-const updateUser = (request, response) => {
-    const id = parseInt(request.params.id);
-    const { fullname, password } = request.body;
-    var hashed_password = generatePasswordHash(password);
+const updatePassword = (request, response) => {
+    var { id, oldPassword, newPassword } = request.body;
 
-    database.query(
-        'update users set name = $1, password = $2 where id = $3', [fullname, hashed_password, id],
+    database.query('select * from users where id = $1', [id], (error, results) => {
+        if (error) {
+            console.log(error);
+        } else {
+            let user = JSON.parse(JSON.stringify(results.rows[0]));
+            console.log(user);
 
-        (error, results) => {
-            if (error) {
-                console.log(error);
+            // Update the password if it was valid
+            if (validPassword(oldPassword, user.password)) {
+
+                let hashed_password = generatePasswordHash(newPassword);
+                database.query(
+                    'update users set password = $1 where id = $2', [hashed_password, id],
+                    (err, res) => {
+                        if (err) {
+                            console.log(error);
+                        }
+            
+                        response.status(200).send({response: 'Password updated'});
+                    }
+                );
+
+            } else {
+                response.status(401).send("Error. Old password doesn't match existing records");
             }
 
-            response.status(200).send('User modified with ID: ${id}');
         }
-    );
+    });
 };
 
 const deleteUser = (request, response) => {
@@ -238,9 +253,10 @@ const deleteUser = (request, response) => {
     database.query('delete from users where id = $1', [id], (error, results) => {
         if (error) {
             console.log(error);
+            response.status(401).send(error);
         }
 
-        response.status(200).send('User deleted with ID: ${id}');
+        response.status(200).send({response: 'User deleted'});
     });
 };
 
@@ -321,7 +337,7 @@ module.exports = {
     getUsers,
     getUserById,
     createUser,
-    updateUser,
+    updatePassword,
     deleteUser,
     loginUser,
     verifyUserEmail,

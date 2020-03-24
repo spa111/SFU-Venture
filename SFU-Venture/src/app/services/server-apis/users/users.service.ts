@@ -27,6 +27,7 @@ export class UsersService {
   }
 
   getById(id: any): Promise<any> {
+    this.generateHeaders();
     return this.http.get(SERVER_BASE_URL + '/api/users/' + id, this.httpOptions).toPromise();
   }
 
@@ -51,11 +52,13 @@ export class UsersService {
     return this.http.post(SERVER_BASE_URL + "/api/users/emailBuyerAndSeller", payload, this.httpOptions).toPromise();
   }
 
-  update(id: any, patchJSON: any): Promise<any> {
-    return this.http.put(SERVER_BASE_URL + '/api/users/' + id + '/update-account', patchJSON, this.httpOptions).toPromise();
+  update(patchJSON: any): Promise<any> {
+    this.generateHeaders();
+    return this.http.post(SERVER_BASE_URL + '/api/users/update-password', patchJSON, this.httpOptions).toPromise();
   }
 
   delete(id: any): Promise<any> {
+    this.generateHeaders();
     return this.http.delete(SERVER_BASE_URL + "/api/users/" + id, this.httpOptions).toPromise();
   }
 }
