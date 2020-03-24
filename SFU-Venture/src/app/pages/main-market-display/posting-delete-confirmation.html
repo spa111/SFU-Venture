@@ -1,0 +1,17 @@
+<div class="delete-modal">
+    <div id="delete-popup-content">
+        <div id="delete-prompt">
+            <h4>Are you sure you wish to delete this posting?</h4>
+        </div>
+
+        <div id="posting-control-buttons">
+            <div id="cancel-delete-section">
+                <button id='cancel-delete-button' mat-raised-button matRipple (click)="onCloseClick()">Cancel</button>
+            </div>
+
+            <div id="delete-posting-section">
+                <button id='delete-posting-button' mat-raised-button color="warn" matRipple (click)="deletePosting()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

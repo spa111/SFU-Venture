@@ -26,6 +26,96 @@ user agent stylesheet html {
     color: -internal-root-color;
 }
 
+.popup-content {
+    width: 100%;
+    height: 100%;
+    max-height: 400px;
+    overflow: hidden;
+}
+
+.clear-both {
+    clear: both;
+}
+
+.popup-title {
+    padding: 10px;
+}
+
+.mat-dialog-content {
+    margin: -24px !important;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+.popup-modal {
+    position: relative;
+    margin: -24px !important;
+    // overflow: hidden;
+    // padding: 20px;
+}
+
+.close-button {
+    border: none;
+    display: inline-block;
+    padding: 8px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap
+}
+  
+.topright {
+    position: absolute;
+    right: 0;
+    top: 0
+}
+
+.textbook-header-image {
+    width: 50%;
+    height: 100%;
+    float: left;
+    padding: 10px;
+}
+
+.textbook-info {
+    margin-top: 20px;
+    padding: 30px;
+}
+
+.textbook-details {
+    padding-top: 20px;
+    width: 50%;
+    height: 400px;
+    float: right;
+    background-color: #e9e9e9;
+}
+
+.textbook-image {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 50%;
+    max-height: 400px;
+}
+
+.contact-section,
+.delete-section {
+    width: 100%;
+    position: relative;
+}
+
+.contact-button,
+.delete-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: inherit;
+    color: #FF4B2B;
+}
+
 .sideBar {
     display: block;
     position: fixed;
@@ -77,6 +167,16 @@ user agent stylesheet html {
     display: inline-flex;
     margin: 0 auto;
     padding-left: 10px;
+}
+
+.filter-class {
+    margin-top: 10%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .separator {
@@ -327,4 +427,52 @@ h5 {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.delete-modal,
+.sendMsg-modal {
+    margin: 0 !important;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#delete-popup-content,
+#sendMsg-content {
+    height: fit-content;
+}
+
+#sendMsg-content {
+    width: 100%;
+}
+
+#delete-prompt,
+#sendMsg-prompt {
+    text-align: center;
+}
+
+#posting-control-buttons {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#delete-posting-section,
+#cancel-delete-section,
+#cancel-email-section,
+#sendMsg-section {
+    display: inline;
+    margin: 0 auto;
+}
+
+#cancel-delete-section,
+#cancel-email-section {
+    margin-right: 15px;
+}
+
+textarea {
+    margin-left: 10%;
+    width: 80%;
+    height: 60vh;
+    resize: none;
 }

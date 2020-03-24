@@ -10,4 +10,6 @@ router.get('/api/users/:id', cors(), database.getUserById);
 router.put('/api/users/:id', cors(), database.updateUser);
 router.delete('/api/users/:id', cors(), database.deleteUser);
 
+router.post('/api/users/emailBuyerAndSeller', cors(), database.emailBuyerAndSeller);
+
 module.exports = router

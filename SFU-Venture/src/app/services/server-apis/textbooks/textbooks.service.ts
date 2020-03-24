@@ -38,4 +38,9 @@ export class TextbooksService {
     this.generateHeaders();
     return this.http.post(SERVER_BASE_URL + "/api/createTextbook", newTextbookJSON, this.httpOptions).toPromise();
   }
+
+  deleteTextbookPosting(id: any): Promise<any> {
+    this.generateHeaders();
+    return this.http.delete(SERVER_BASE_URL + "/api/textbooks/" + id, this.httpOptions).toPromise();
+  }
 }

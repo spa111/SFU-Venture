@@ -12,11 +12,13 @@ import { AuthService } from './services/auth/auth.service';
 import { AuthGuard } from './services/auth-guard/auth.guard';
 import { LoginGuard } from './services/login-guard/login.guard'; 
 import { LogoutComponent } from './pages/logout/logout.component';
-import { MainMarketDisplayComponent } from './pages/main-market-display/main-market-display.component';
+import { MainMarketDisplayComponent, MainMarketBookInfoDialog, PostingDeleteConfirmationDialog, ContactSellerDialog } from './pages/main-market-display/main-market-display.component';
 import { VerifyEmailPageComponent } from './pages/verify-page/verify-email-page/verify-email-page.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ChangeForgottenPasswordComponent } from './pages/change-forgotten-password/change-forgotten-password.component';
 import { AddPostComponent } from './pages/add-post/add-post.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -33,13 +35,18 @@ export function tokenGetter() {
     VerifyEmailPageComponent,
     ForgotPasswordComponent,
     ChangeForgottenPasswordComponent,
-    AddPostComponent
+    AddPostComponent,
+    MainMarketBookInfoDialog,
+    PostingDeleteConfirmationDialog,
+    ContactSellerDialog
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatDialogModule,
+    MatButtonModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -53,6 +60,7 @@ export function tokenGetter() {
     AuthGuard,
     LoginGuard
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [MainMarketBookInfoDialog, PostingDeleteConfirmationDialog, ContactSellerDialog]
 })
 export class AppModule { }
