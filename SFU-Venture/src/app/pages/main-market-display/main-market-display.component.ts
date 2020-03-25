@@ -29,6 +29,7 @@ export interface ContactSellerData {
 export class MainMarketDisplayComponent implements OnInit {
   contentLoaded: Boolean = false;
   courses: Array<any> = [];
+  deptWithTextbooks: Array<any> = [];
 
   constructor(
     private router: Router,
@@ -55,9 +56,13 @@ export class MainMarketDisplayComponent implements OnInit {
           faculty.textbooks = this.textbooks && this.textbooks.length > 0 ? this.textbooks.filter(textbook => {
             return textbook.faculty_name.toLocaleLowerCase() == faculty.value;
           }) : [];
+
+          if (faculty.textbooks.length > 0) {
+            this.deptWithTextbooks.push(faculty)
+          }
         });
 
-        this.facultiesDOM = JSON.parse(JSON.stringify(this.faculties));
+        this.facultiesDOM = JSON.parse(JSON.stringify(this.deptWithTextbooks));
         this.contentLoaded = true;
       })
       .catch(err => {
@@ -97,17 +102,29 @@ export class MainMarketDisplayComponent implements OnInit {
     // Gather checked fields for min - max
     let lowerPriceInput = $("#lower-price")[0].value;
     let higherPriceInput = $("#higher-price")[0].value;
+
+    let defaultMin = 0;
+    let defaultMax = 10000
     
     // Checking price ranges set
-    if (lowerPriceInput && higherPriceInput) {
+    if (lowerPriceInput || higherPriceInput) {
       this.shouldSortPrice = true;
-      let price1 = parseInt(lowerPriceInput);
-      let price2 = parseInt(higherPriceInput);
+      let price1 = defaultMin;
+      let price2 = defaultMax;
+
+      if (lowerPriceInput != '') {
+        price1 = parseInt(lowerPriceInput);
+      }
+
+      if (higherPriceInput != '') {
+        price2 = parseInt(higherPriceInput);
+      }
+
 
       // Check if the user swapped the min and max values
       if (price1 > price2) {
         this.priceRangeLowerBound = price2;
-        this.priceRangeLowerBound = price1;
+        this.priceRangeHigherBound = price1;
       } else {
         this.priceRangeLowerBound = price1;
         this.priceRangeHigherBound = price2;
@@ -143,7 +160,7 @@ export class MainMarketDisplayComponent implements OnInit {
     this.checkFiltersSet();
 
     if (this.shouldSortPrice || this.shouldSortDept || this.shouldSortClass) {
-      this.facultiesDOM = JSON.parse(JSON.stringify(this.faculties));
+      this.facultiesDOM = JSON.parse(JSON.stringify(this.deptWithTextbooks));
     
       if (this.shouldSortPrice) {
         this.sortByPrice();
@@ -162,6 +179,7 @@ export class MainMarketDisplayComponent implements OnInit {
   }
 
   sortByPrice() {
+    console.log("called")
     this.facultiesDOM = this.facultiesDOM.filter(filter => {
       let textbooks = filter.textbooks;
       if (textbooks.length == 0) {
@@ -202,7 +220,7 @@ export class MainMarketDisplayComponent implements OnInit {
   }
 
   reset() {
-    this.facultiesDOM = JSON.parse(JSON.stringify(this.faculties));
+    this.facultiesDOM = JSON.parse(JSON.stringify(this.deptWithTextbooks));
 
     // Reset the price filter
     $("#lower-price")[0].value = "";
