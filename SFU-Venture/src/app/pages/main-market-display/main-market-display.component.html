@@ -16,25 +16,6 @@
                         <input type="number" id="higher-price" class="form-control small-form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Max">
                     </div>
                 </div>
-
-                <br/>
-                <div class="filter-dept">
-                    Dept:
-                    <select id="filterDept" class="custom-select" style="text-transform: uppercase;">
-                        <option selected value="All">All</option>
-                        <option *ngFor="let dept of faculties; let i = index" ngValue="dept.value" style="text-transform: uppercase;" >{{dept.value}}</option>
-                        
-                    </select>
-                </div>
-
-                <div class="filter-class">
-                    Course:
-                    <select id="filterClass" class="custom-select" style="text-transform: uppercase;">
-                        <option selected value="All">All</option>
-                        <option *ngFor="let course of courses; let i = index" ngValue="course.value" style="text-transform: uppercase;" >{{course.value}}</option>
-                        
-                    </select>
-                </div>
             </div>
             <div class="search">
                 <button class="btn btn-primary" style="margin-right: 5%;" (click)="reset()">Reset</button>
@@ -42,7 +23,25 @@
             </div>
         </div>
     </div>
+    <div class="wrapper textbookSelector">Textbooks from
+        <div class="list"><span class="placeholder" id="department" (click)="selector()" (keypress)="onKeydown($event)">{{ Selector }} </span>
 
+            <ul class="list__ul">
+                <li (click)="selected($event)"><a name="All">ALL </a></li>
+                <li *ngFor="let dept of facultiesSort; let i = index" (click)="selected($event)" ngValue="dept.value" style="text-transform: uppercase;">
+                    <a name="{{dept.value}}">{{dept.value}}</a></li>
+            </ul>
+        </div>
+
+        <div class="list"><span class="placeholderCourse" id="course" (click)="selectorCourse()" (keypress)="onKeydown($event)">{{ Course }} </span>
+
+            <ul class="list__ul_course">
+                <li *ngFor="let course of coursesSort; let i = index" (click)="selectedCourse($event)" ngValue="dept.value" style="text-transform: uppercase;">
+                    <a name="{{course.value}}">{{course.value}}</a></li>
+            </ul>
+        </div>
+
+    </div>
     <div class="display" *ngIf="contentLoaded">
         <div class="row" *ngFor="let dept of facultiesDOM;">
             <div id="department" class="section-splitter"> {{dept.value}} </div>

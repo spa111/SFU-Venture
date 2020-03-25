@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Inject } from "@angular/core";
+import { Component, OnInit, HostListener, AfterViewInit, Inject } from "@angular/core";
 import { AuthService } from "../../services/auth/auth.service";
 import { Router } from "@angular/router";
 import { TextbooksService } from "../../services/server-apis/textbooks/textbooks.service";
@@ -50,6 +50,8 @@ export class MainMarketDisplayComponent implements OnInit {
       this.textbooksService
       .getDept()
       .then(result => {
+        console.log("Retrieval Successful");
+        console.log(result);
         this.faculties = result;
 
         this.faculties.forEach(faculty => {
@@ -71,23 +73,14 @@ export class MainMarketDisplayComponent implements OnInit {
     }).catch(err => { 
       console.log(err)
     });
-
-    $("#filterDept")[0].addEventListener("change", () => {
-      let dept = $("#filterDept")[0].value;
-      this.textbooksService.getCourses(dept)
-        .then((result) => {
-          this.courses = result;
-        })
-        .catch(err => {
-          console.log(err);
-        }
-      );
-    });
   }
 
+  coursesArray: any;
+  coursesSort: any;
   textbooks: any;
   faculties: any;
   facultiesDOM: any;
+  facultiesSort: any;
 
   shouldSortPrice: Boolean = false;
   shouldSortDept: Boolean = false;
@@ -134,10 +127,11 @@ export class MainMarketDisplayComponent implements OnInit {
     }
 
     // Gather checked field for Dept
-    let deptFilterValue = $("#filterDept")[0].value;
+    console.log(this.Selector)
+    let deptFilterValue = this.Selector.toLowerCase();
 
     // Check if the dept filter value was set
-    if (deptFilterValue != "All") {
+    if (deptFilterValue != "all") {
       this.shouldSortDept = true;
       this.deptFilterVal = deptFilterValue;
     } else {
@@ -145,10 +139,11 @@ export class MainMarketDisplayComponent implements OnInit {
     }
 
     // Gather checked field for Course
-    let courseFilterValue = $("#filterClass")[0].value;
+    console.log(this.Course)
+    let courseFilterValue = this.Course.toLowerCase();
 
     // Check if the course filter value was set
-    if (courseFilterValue != "All") {
+    if (courseFilterValue != "---") {
       this.shouldSortClass = true;
       this.courseFilterVal = courseFilterValue;
     } else {
@@ -228,11 +223,13 @@ export class MainMarketDisplayComponent implements OnInit {
     this.shouldSortPrice = false;
 
     // Reset the Dept filter to the "ALL" option
-    $("#filterDept")[0].value = $("#filterDept")[0][0].value;
+    // $("#filterDept")[0].value = $("#filterDept")[0][0].value;
+      this.Selector = "ALL";
     this.shouldSortDept = false;
 
     // Reset the class filter to the "ALL" option
-    $("#filterClass")[0].value = $("#filterClass")[0][0].value;
+    // $("#filterClass")[0].value = $("#filterClass")[0][0].value;
+      this.Course = "";
     this.shouldSortClass = false;
   }
 
@@ -268,6 +265,103 @@ export class MainMarketDisplayComponent implements OnInit {
   //     postDate: "Feburary 14",
   //     imageUrl: "https://images-na.ssl-images-amazon.com/images/I/61pHgCDCgqL.jpg"
   //   }]
+   
+
+  //-------------Section for UI Factuly and course chooser//
+
+  Selected: Boolean = false;
+  Selector: string = "ALL";
+  SelectedCourse: Boolean = false;
+  SelectorOpen: Boolean = false;
+  Course: string = "";
+
+  selector() {
+    if (this.SelectorOpen == true) {
+      return;
+    }
+    this.SelectorOpen = true;
+    this.facultiesSort = this.faculties;
+    this.currString = "";
+    this.Selected = true;
+    $(".placeholder").css("opacity", "0");
+    $(".list__ul").css("display", "block");
+    $(".placeholderCourse").css("opacity", "0");
+  }
+
+  selected(event: any): void {
+    if (event.target.name == null) {
+      return;
+    }
+
+    $(".placeholder").css("opacity", "1");
+    this.Selector = event.target.name.toUpperCase();
+    $(".list__ul").css("display", "none");
+    this.Selected = false;
+    this.Course = "---";
+    this.SelectorOpen = false;
+
+    if(!(event.target.name == "ALL")){
+
+      this.textbooksService
+      .getCourses(event.target.name)
+      .then(result => {
+        this.coursesArray = result;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
+      $(".placeholderCourse").css("opacity", "1");
+    this.filter();
+  }
+
+  selectorCourse() {
+    if (this.SelectorOpen == true) {
+      return;
+    }
+    this.SelectorOpen = true;
+    this.coursesSort = this.coursesArray;
+    this.currStringCourse = "";
+
+    this.SelectedCourse = true;
+    $(".placeholderCourse").css("opacity", "0");
+    $(".list__ul_course").css("display", "block");
+  }
+
+  selectedCourse(event: any): void {
+    $(".placeholder").css("opacity", "1");
+    $(".list__ul").css("display", "none");
+    if (event.target.name == null) {
+      return;
+    }
+
+    $(".placeholderCourse").css("opacity", "1");
+    this.Course = event.target.name.toUpperCase();
+    $(".list__ul_course").css("display", "none");
+    this.SelectedCourse = false;
+    this.SelectorOpen = false;
+    this.filter();
+  }
+
+  currString: string = "";
+  currStringCourse: string = "";
+  @HostListener("document:keypress", ["$event"])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (this.Selected) {
+      this.currString += event.key;
+
+      this.facultiesSort = this.faculties.filter(faculty => {
+        return faculty.value.startsWith(this.currString);
+      });
+    } else if (this.SelectedCourse) {
+      this.currStringCourse += event.key;
+
+      this.coursesSort = this.courses.filter(courses => {
+        return courses.value.startsWith(this.currStringCourse);
+      });
+    }
+  }
+  //-------------END Section for UI Factuly and course chooser//
 }
 
 
