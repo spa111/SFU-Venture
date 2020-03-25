@@ -12,6 +12,8 @@ import { ChangeForgottenPasswordComponent } from '../app/pages/change-forgotten-
 import { AddPostComponent } from './pages/add-post/add-post.component';
 import { AccountPageComponent } from './pages/account-page/account-page.component';
 import { ChangeAccountPasswordPageComponent } from './pages/change-account-password-page/change-account-password-page.component';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { AdminGuard } from './services/admin-guard/admin.guard';
 
 // Each route to an object is encased in a separate object
 // path - The URL path to the HTML component
@@ -21,7 +23,7 @@ const routes: Routes = [
     {
       path: '',
       pathMatch: 'full',
-      component: HomePageComponent,
+      component: HomePageComponent
     },
     {
       path: 'login',
@@ -73,6 +75,12 @@ const routes: Routes = [
       pathMatch: 'full',
       component: ChangeAccountPasswordPageComponent,
       canActivate: [AuthGuard]
+    },
+    {
+      path: 'admin-control',
+      pathMatch: 'full',
+      component: AdminPageComponent,
+      canActivate: [AdminGuard]
     }
 ];
 

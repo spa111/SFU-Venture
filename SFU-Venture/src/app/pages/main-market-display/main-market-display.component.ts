@@ -281,15 +281,24 @@ export class MainMarketDisplayComponent implements OnInit {
 export class MainMarketBookInfoDialog {
   textbook: any = {};
   user_owns_posting: Boolean = false;
+  adminOverride: Boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<MainMarketBookInfoDialog>, 
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {
+
     this.textbook = Object.assign({}, this.data.textbook);
     this.textbook.description = this.textbook.description != "" ? this.textbook.description : "No Description Provided";
-    this.user_owns_posting = this.textbook.posting_user_id == localStorage.getItem('user') ? true : false;
+
+    // Override to allow admin user full control over marketplace posts
+    if (this.router.url == "/admin-control") {
+      this.adminOverride = true;
+    }
+
+    this.user_owns_posting = this.textbook.posting_user_id == localStorage.getItem('user') ? true : this.adminOverride ? true : false;
   }
 
   onCloseClick(): void {
@@ -440,5 +449,5 @@ export class PostingDeleteConfirmationDialog {
   redirectTo(uri:string){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));
- }
+  }
 }

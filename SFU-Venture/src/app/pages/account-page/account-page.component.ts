@@ -15,8 +15,18 @@ export class AccountPageComponent implements OnInit {
   accessLevel: any;
   userRetrieved: Boolean = false;
 
-  constructor(private usersService: UsersService, private router: Router, public dialog: MatDialog) {
-    this.usersService.getById(localStorage.getItem('user')).then(result => {
+  normalUser: Boolean = false;
+  adminViewingUser: Boolean = false;
+  adminViewingFromModal: Boolean = false;
+  
+  constructor(
+    private usersService: UsersService, 
+    private router: Router, 
+    public dialog: MatDialog
+  ) {
+    
+    let userToPull = this.router.url == "/admin-control" ? localStorage.getItem('admin-viewed-user') : localStorage.getItem('user');
+    this.usersService.getById(userToPull).then(result => {
       this.user = JSON.parse(JSON.stringify(result[0]));
 
       if (this.user.is_admin) {
@@ -25,6 +35,30 @@ export class AccountPageComponent implements OnInit {
         this.accessLevel = "Faculty";
       } else {
         this.accessLevel = "Student";
+      }
+
+      if (this.user.is_admin && localStorage.getItem('admin-viewed-user') == "") {
+        this.normalUser = false;
+        this.adminViewingUser = false;
+
+      } else if (localStorage.getItem('admin-viewed-user') != "") {
+        this.normalUser = false;
+
+        if (this.user.id == localStorage.getItem('user')) {
+          if (this.router.url == "/admin-control") {
+            this.adminViewingFromModal = true;
+          } else {
+            this.adminViewingFromModal = false;
+          }
+          
+          this.adminViewingUser = false;
+        } else {
+          this.adminViewingUser = true;
+        }
+
+      } else {
+        this.normalUser = true;
+        this.adminViewingUser = false;
       }
 
       this.userRetrieved = true;
@@ -62,8 +96,14 @@ export class AccountPageComponent implements OnInit {
 
     deleteDialogRef.afterClosed().subscribe(result => {
       if (result.needsToDelete) {
-        this.usersService.delete(localStorage.getItem('user')).then(result => {
-          this.router.navigate(['logout']);
+        
+        let userToDelete = this.router.url == "/admin-control" ? localStorage.getItem('admin-viewed-user') : localStorage.getItem('user');
+        this.usersService.delete(userToDelete).then(result => {
+          if (this.router.url == "/admin-control") {
+            this.redirectTo('admin-control');
+          } else {
+            this.router.navigate(['logout']);
+          }
         }).catch(err => {
           console.log(err);
         })
@@ -71,6 +111,11 @@ export class AccountPageComponent implements OnInit {
 
       console.log(result.needsToDelete);
     });
+  }
+
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
   }
 }
 
@@ -121,7 +166,7 @@ export class ViewMarketPostsDialog {
       this.dataReceived = true;
     }).catch(err => {
       console.log(err);
-    })
+    });
   }
 
   closeDialog() {

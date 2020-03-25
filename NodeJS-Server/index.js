@@ -32,14 +32,14 @@ app.get('/', (request, response) => {
 });
 
 // Login API's
-app.use(login_endpoint)
+app.use(login_endpoint);
 
 
 // USER Data manipulation API's
-app.use(userdata_endpoint)
+app.use(userdata_endpoint);
 
 // TEXTBOOKS API'S
-app.use(textbook_endpoint)
+app.use(textbook_endpoint);
 
 // Start NodeJS server and list on port 3000 for requests
 app.listen(port, () => {

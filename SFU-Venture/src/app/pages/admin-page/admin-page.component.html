@@ -1,0 +1,111 @@
+<div *ngIf="contentLoaded" id="content-container">
+    <h1>Admin Settings</h1>
+    
+    <h3>Manage All Users</h3>
+    <mat-form-field>
+        <input matInput (keyup)="userFilter($event)" placeholder="Filter by username, full name, email, or accessLevel">
+    </mat-form-field>
+
+    <table mat-table [dataSource]="allUsers" class="mat-elevation-z8">
+        <ng-container matColumnDef="userId">
+            <mat-header-cell *matHeaderCellDef> User Id </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{user.id}} </mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="username">
+            <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{user.username}} </mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="fullname">
+            <mat-header-cell *matHeaderCellDef> Full Name </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{user.fullname}} </mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="accessLevel">
+            <mat-header-cell *matHeaderCellDef> Access Level </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{user.accessLevel}} </mat-cell>
+        </ng-container>
+        
+        <mat-header-row *matHeaderRowDef="userColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: userColumns;" matRipple (click)="getUser(row)"></mat-row>
+    </table>
+    <br><br>
+
+    <h3>Manage Faculty Signup Applications</h3>
+    <mat-form-field>
+        <input matInput (keyup)="facultyFilter($event)" placeholder="Filter by username, full name, or email">
+    </mat-form-field>
+
+    <table mat-table [dataSource]="allFacultyNeedingVerification" class="mat-elevation-z8">
+        <ng-container matColumnDef="userId">
+            <mat-header-cell *matHeaderCellDef> User Id </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{user.id}} </mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="username">
+            <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{user.username}} </mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="fullname">
+            <mat-header-cell *matHeaderCellDef> Full Name </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{user.fullname}} </mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="accessLevel">
+            <mat-header-cell *matHeaderCellDef> Access Level </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{user.accessLevel}} </mat-cell>
+        </ng-container>
+        
+        <mat-header-row *matHeaderRowDef="userColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: userColumns;" matRipple (click)="processUser(row)"></mat-row>
+    </table>
+    <br><br>
+    
+    <h3>All Market Posts</h3>
+    <mat-form-field>
+        <input matInput (keyup)="textbookFilter($event)" placeholder="Filter by textbook name, faculty name, or course number">
+    </mat-form-field>
+
+    <mat-table [dataSource]="textbooks" class="mat-elevation-z8">
+        <ng-container matColumnDef="textbookName">
+            <mat-header-cell *matHeaderCellDef> Textbook Name </mat-header-cell>
+            <mat-cell *matCellDef="let textbook"> {{textbook.txt_book_name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="facultyName">
+            <mat-header-cell *matHeaderCellDef> Faculty </mat-header-cell>
+            <mat-cell *matCellDef="let textbook"> {{textbook.faculty_name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="courseNumber">
+            <mat-header-cell *matHeaderCellDef> Course Number </mat-header-cell>
+            <mat-cell *matCellDef="let textbook"> {{textbook.course_name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+            <mat-cell *matCellDef="let textbook"> {{textbook.price}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="postDate">
+            <mat-header-cell *matHeaderCellDef> Posting Date </mat-header-cell>
+            <mat-cell *matCellDef="let textbook"> {{textbook.post_date}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="textbookFields"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: textbookFields;" matRipple (click)="getTextbook(row)"></mat-row>
+    </mat-table>
+    <br><br>
+</div>

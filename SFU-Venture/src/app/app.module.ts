@@ -25,6 +25,8 @@ import { ChangeAccountPasswordPageComponent } from './pages/change-account-passw
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material';
 import { MatRippleModule } from '@angular/material/core';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { AdminGuard } from './services/admin-guard/admin.guard';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -48,7 +50,8 @@ export function tokenGetter() {
     AccountPageComponent,
     AccountDeleteConfirmationDialog,
     ChangeAccountPasswordPageComponent,
-    ViewMarketPostsDialog
+    ViewMarketPostsDialog,
+    AdminPageComponent
   ],
   imports: [
     BrowserModule,
@@ -72,10 +75,12 @@ export function tokenGetter() {
   providers: [
     AuthService,
     AuthGuard,
-    LoginGuard
+    LoginGuard,
+    AdminGuard
   ],
   bootstrap: [AppComponent],
   entryComponents: [
+    AccountPageComponent,
     MainMarketBookInfoDialog, 
     PostingDeleteConfirmationDialog, 
     ContactSellerDialog,

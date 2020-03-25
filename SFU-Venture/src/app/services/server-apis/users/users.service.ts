@@ -31,6 +31,11 @@ export class UsersService {
     return this.http.get(SERVER_BASE_URL + '/api/users/' + id, this.httpOptions).toPromise();
   }
 
+  checkHasAdminPrivileges(id: any): Promise<any> {
+    this.generateHeaders();
+    return this.http.get(SERVER_BASE_URL + '/api/users/checkHasAdminPrivileges/' + id, this.httpOptions).toPromise();
+  }
+  
   addNewUser(newUserJSON: any): Promise<any> {
     return this.http.post(SERVER_BASE_URL + "/api/signup", newUserJSON).toPromise();
   }

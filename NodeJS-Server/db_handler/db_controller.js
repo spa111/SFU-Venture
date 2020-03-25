@@ -30,9 +30,10 @@ const validPassword = function(input_password, database_password) {
 
 // Queries
 const getUsers = (request, response) => {
-    database.query('select * from users order by ID ASC', (error, results) => {
+    database.query('select * from users', (error, results) => {
         if (error) {
             console.log(error);
+            response.status(401).send(error);
         } else {
             response.status(200).json(results.rows);
         }
@@ -309,6 +310,27 @@ const emailBuyerAndSeller = (request, response) => {
     );
 };
 
+const checkHasAdminPrivileges = (request, response) => {
+    var id = request.params.id;
+    database.query(
+        'select * from users where id = $1', [id], 
+        (error, results) => {
+            if (error) {
+                console.log(error);
+                response.status(500).send(`Internal server error`);
+            } else {
+                if (results.rows[0] && results.rows[0].id) {
+                    response.status(200).send({
+                        'hasPrivileges': results.rows[0].is_admin
+                    });
+                } else {
+                    response.status(500).send(`Internal server error`);
+                }
+            }
+        }
+    );
+}
+
 const sendEmail = function(mailOptions) {
 
     // Email details
@@ -343,5 +365,6 @@ module.exports = {
     verifyUserEmail,
     forgotPasswordCheckEmail,
     changeForgottenPassword,
-    emailBuyerAndSeller
+    emailBuyerAndSeller,
+    checkHasAdminPrivileges
 };
