@@ -88,8 +88,8 @@ const createTextBook = (request, response) => {
                 console.log(error);
                 response.status(401).json({ error: error });
             } else {
-                console.log("Textbook Added");
-                response.status(201).json({ response: "Textbook Added" });
+                console.log("Activity Added");
+                response.status(201).json({ response: "Activity Added" });
             }
         }
     );
