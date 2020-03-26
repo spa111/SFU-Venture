@@ -20,10 +20,30 @@ const getBookDetails = (request, response) => {
                     if (err) {
                         return console.log(err);
                     } else {
-                        if (res.body.requiredText === undefined) {
+                        if (res.body.requiredText === undefined && res.body.recommendedText === undefined) {
                             response.status(401).json({ error: "Could not find the corresponding ISBN" });
                         } else {
-                            response.status(200).json(res.body.requiredText);
+                            let books = [];
+                            let requiredTexts = res.body.requiredText
+                            let recommendedTexts = res.body.recommendedText
+                            requiredTexts && requiredTexts.forEach(book => {
+                                if (book.isbn) {
+                                    if (book.isbn.includes(" ")) {
+                                        book.isbn = book.isbn.split(" ")[1];
+                                    }
+                                    books.push(book);
+                                }
+                            })
+
+                            recommendedTexts && recommendedTexts.forEach(book => {
+                                if (book.isbn) {
+                                    if (book.isbn.includes(" ")) {
+                                        book.isbn = book.isbn.split(" ")[1];
+                                    }
+                                    books.push(book);
+                                }
+                            })
+                            response.status(200).json(books);
                         }
                     }
                 });

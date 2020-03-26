@@ -54,6 +54,7 @@ export class AddPostComponent implements OnInit {
               this.books = result;
             })
             .catch(err => {
+              this.books = [];
               console.log("No books required for this course");
             });
         });
