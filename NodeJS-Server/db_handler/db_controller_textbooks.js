@@ -1,14 +1,12 @@
 const Pool = require('pg').Pool;
 
 const database = new Pool({
-    user: 'cmpt470',
-    host: 'localhost',
-    database: 'cmpt470',
-    password: 'cmpt470',
+    user: 'postgres',
+    host: '35.203.175.95',
+    database: 'postgres',
+    password: 'postgres',
     port: 5432
 });
-
-
 
 // Queries
 const getTextBooks = (request, response) => {
