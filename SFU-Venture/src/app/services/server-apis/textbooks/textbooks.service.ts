@@ -25,7 +25,7 @@ export class TextbooksService {
     this.generateHeaders();
     const jsonTest = {
       coord: '49.276505,-122.921785',
-      radius: '1500',
+      radius: '1500', 
       type: 'restaurant',
       keyword: 'chinese'
     }
