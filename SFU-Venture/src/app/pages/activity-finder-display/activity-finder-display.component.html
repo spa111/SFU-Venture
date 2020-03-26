@@ -1,1 +1,42 @@
-<p>activity-finder-display works!</p>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="wrapper-container">
+    <div class="sideBar">
+        <div class="addPost">
+            <button routerLink="/add-post" class="animatedBtn addPostBtn">Add Textbook</button>
+        </div>
+
+        <div class="filter">
+            <h2 class="filter-title">Filter</h2>
+            <div class="fliter-items ">
+                <div class="filter-price">
+                    <h5>Price:</h5>
+                    <div class="filter-price-input">
+                        <input type="text" class="form-control small-form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <span class="separator">-</span>
+                        <input type="text" class="form-control small-form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+
+                <br/>
+                <div class="filter-dept">
+                    Dept:
+                    <select id="filterDept" class="custom-select" style="text-transform: uppercase;">
+                        <option selected value="All">All</option>
+                        <option *ngFor="let dept of faculties; let i = index" ngValue="dept.value" style="text-transform: uppercase;" >{{dept.value}}</option>
+                        
+                    </select>
+                </div>
+            </div>
+            <div class="search">
+                <button class="btn btn-primary" style="margin-right: 5%;" (click)="reset()">Reset</button>
+                <button class="btn btn-primary" style="margin-left: 5%;" (click)="sortByDept()">Search</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="display" *ngIf="contentLoaded">
+
+
+
+    </div>
+</div>
