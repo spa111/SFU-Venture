@@ -69,7 +69,7 @@ const deleteActivityById = (request, response) => {
     });
 };
 
-const createTextBook = (request, response) => {
+const createActivity = (request, response) => {
     const {
         poster_user_id,
         corresponding_department,
@@ -98,7 +98,7 @@ const createTextBook = (request, response) => {
 
 module.exports = {
     getActivityAround,
-    createTextBook,
+    createActivity,
     deleteActivityById,
     getActivityById,
     getAllActivities

@@ -29,7 +29,7 @@ export class TextbooksService {
       type: 'restaurant',
       keyword: 'chinese'
     }
-    this.http.post(SERVER_BASE_URL + '/api/activity/' , jsonTest, this.httpOptions).toPromise();
+    this.http.post(SERVER_BASE_URL + '/api/activityAround/' , jsonTest, this.httpOptions).toPromise();
     return this.http.get(SERVER_BASE_URL + '/api/textbooks', this.httpOptions).toPromise();
   }
 
