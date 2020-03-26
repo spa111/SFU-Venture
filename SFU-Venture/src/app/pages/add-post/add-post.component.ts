@@ -20,6 +20,8 @@ export class AddPostComponent implements OnInit {
   faculties: any;
   courses: any;
   books: any;
+  imageURL: any;
+  userEnteringBook: Boolean = false;
 
   ngOnInit() {
     $(() => {
@@ -39,38 +41,52 @@ export class AddPostComponent implements OnInit {
           });
 
         $("#course")[0].addEventListener("change", () => {
-          let jsonTest = {
+          let json = {
             year: "2020",
             term: "spring",
             course: $("#filterDept")[0].value,
             courseNumber: $("#course")[0].value
           };
           this.textbooksService
-            .getTextbooksByCourse(jsonTest)
+            .getTextbooksByCourse(json)
             .then(result => {
               console.log(result);
               this.books = result;
             })
             .catch(err => {
-              console.log(err);
+              console.log("No books required for this course");
             });
         });
       });
 
       $("#chooseBook")[0].addEventListener("change", event => {
-        let isbnOBJ = this.books.filter(book => {
-          return book.details == event.target.value;
-        });
-
-        if (isbnOBJ && isbnOBJ[0]) {
-          this.textbooksService.getTextbooksCover(isbnOBJ[0].isbn)
-            .then(result => {
-              console.log(result);
-              // this.books = result;
-            })
-            .catch(err => {
-              console.log(err);
-            });
+        console.log(event.target.value)
+        if(event.target.value == "UserEntered"){
+          this.userEnteringBook = true;
+          this.imageURL = "";
+        }else{
+          this.userEnteringBook = false;
+          let isbnOBJ = this.books.filter(book => {
+            return book.details == event.target.value;
+          });
+          if (isbnOBJ && isbnOBJ[0]) {
+            console.log(isbnOBJ[0].isbn);
+            let json = {
+              isbn: isbnOBJ[0].isbn,
+              size: "l"
+            };
+            this.textbooksService
+              .getTextbooksCover(json)
+              .then(result => {
+                console.log(result);
+                this.imageURL = result;
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          } else {
+            this.imageURL = "";
+          }
         }
       });
     });
@@ -87,9 +103,7 @@ export class AddPostComponent implements OnInit {
   }
 
   createTextbook() {
-    console.log("createTextbook called");
-
-    let textbookName = $("#textbookName")[0].value;
+    let textbookName = this.userEnteringBook ? $("#textbook-name")[0].value : $("#chooseBook")[0].value
     let dept = $("#filterDept")[0].value;
     let course = $("#course")[0].value;
     let price = $("#price")[0].value;

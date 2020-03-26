@@ -39,7 +39,7 @@ const getBookDetails = (request, response) => {
 const getImageForISBN = (request, response) => {
     let isbn = request.body.isbn;
     let size = request.body.size;
-    response.status(200).send(`https://syndetics.com/index.php?client=primo&isbn=${isbn}/${size}c.jpg`)
+    response.status(200).json(`https://syndetics.com/index.php?client=primo&isbn=${isbn}/${size}c.jpg`)
 }
 
 module.exports = {
