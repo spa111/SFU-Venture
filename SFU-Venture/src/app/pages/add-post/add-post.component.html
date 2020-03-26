@@ -6,7 +6,6 @@
             <!-- <div class="textbook-container"> -->
             <form id="textbook-form">
                 <h1>Your Textbook</h1>
-                <input type="text" placeholder="Textbook Name" id="textbookName" required/>
                 <select id="filterDept" class="custom-select" style="text-transform: uppercase;">
                         <option selected value="choose">Choose the department</option>
                         <option *ngFor="let dept of faculties; let i = index" ngValue="dept.value" style="text-transform: uppercase;" >{{dept.value}}</option>
@@ -16,6 +15,11 @@
                         <option selected value="choose">Choose the course</option>
                         <option *ngFor="let course of courses; let i = index" ngValue="course.value" style="text-transform: uppercase;" >{{course.value}}</option>
                     </select>
+
+                <select id="chooseBook" class="custom-select" style="text-transform: uppercase;">
+                        <option selected value="choose">Choose your Book</option>
+                        <option *ngFor="let book of books; let i = index" ngValue="book" style="text-transform: uppercase;" >{{book.details}}</option>
+                </select>
 
                 <input type="number" placeholder="Price" id="price" required/>
                 <button (click)="createTextbook()">Post it!</button>
