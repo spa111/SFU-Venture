@@ -11,18 +11,26 @@ const getBookDetails = (request, response) => {
     requestCaller(`http://www.sfu.ca/bin/wcm/course-outlines?${year}/${term}/${course}/${courseNumber}
     `, { json: true }, (err, res, body) => {
         if (err) {
-            return console.log(err);
+            response.status(401).json({ error: "Could not find the corresponding Course" });
         } else {
-            section = res.body[0].value
-            requestCaller(`http://www.sfu.ca/bin/wcm/course-outlines?${year}/${term}/${course}/${courseNumber}/${section}
-            `, { json: true }, (err, res, body) => {
-                if (err) {
-                    return console.log(err);
-                } else {
-                    console.log(res.body.requiredText);
-                    response.status(200).json(res.body.requiredText);
-                }
-            });
+            if (!res.body.errorMessage) {
+                section = res.body[0].value
+                requestCaller(`http://www.sfu.ca/bin/wcm/course-outlines?${year}/${term}/${course}/${courseNumber}/${section}
+                `, { json: true }, (err, res, body) => {
+                    if (err) {
+                        return console.log(err);
+                    } else {
+                        if (res.body.requiredText === undefined) {
+                            response.status(401).json({ error: "Could not find the corresponding ISBN" });
+                        } else {
+                            response.status(200).json(res.body.requiredText);
+                        }
+                    }
+                });
+            } else {
+                response.status(401).json({ error: "Could not find the corresponding section" });
+            }
+
         }
 
     });
