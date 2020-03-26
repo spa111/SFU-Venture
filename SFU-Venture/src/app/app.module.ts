@@ -17,6 +17,7 @@ import { VerifyEmailPageComponent } from './pages/verify-page/verify-email-page/
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ChangeForgottenPasswordComponent } from './pages/change-forgotten-password/change-forgotten-password.component';
 import { AddPostComponent } from './pages/add-post/add-post.component';
+import { ActivityFinderDisplayComponent } from './pages/activity-finder-display/activity-finder-display.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -33,7 +34,8 @@ export function tokenGetter() {
     VerifyEmailPageComponent,
     ForgotPasswordComponent,
     ChangeForgottenPasswordComponent,
-    AddPostComponent
+    AddPostComponent,
+    ActivityFinderDisplayComponent
   ],
   imports: [
     BrowserModule,
