@@ -29,10 +29,42 @@ const validPassword = function(input_password, database_password) {
 };
 
 // Queries
+const createDefaultAdmin = function() {
+    let hashed_password = generatePasswordHash("sfuventure");
+
+    database.query('select * from users where email = $1', ["sfuventure470@gmail.com"], 
+    (error, results) => {
+        if (error) {
+            console.log("Error pulling default user existance");
+
+        } else {
+            if (results && results.rows && results.rows[0]) {
+                console.log("Default Admin Exists");
+
+            } else {
+
+                database.query(
+                    'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', 
+                    ["SFU Venture", hashed_password, "sfuventure470@gmail.com", "sfuventure470", true, true, false, false, false],
+                    (error, results) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log("Default admin added to the database");
+                        }
+                    }
+                );
+            }
+        }
+    });
+
+};
+
 const getUsers = (request, response) => {
-    database.query('select * from users order by ID ASC', (error, results) => {
+    database.query('select * from users', (error, results) => {
         if (error) {
             console.log(error);
+            response.status(401).send(error);
         } else {
             response.status(200).json(results.rows);
         }
@@ -51,6 +83,46 @@ const getUserById = (request, response) => {
     });
 };
 
+const updatePrivileges = (request, response) => {
+    let id = request.params.id;
+    let payload = request.body;
+    
+    let is_admin = false;
+    let is_student = false;
+    let is_faculty = false;
+    let is_faculty_verified = false;
+
+    if (payload.accessLevel == "Admin") {
+        is_admin = true;
+        is_student = false;
+        is_faculty = false;
+        is_faculty_verified = false;
+    } else if (payload.accessLevel == "Faculty") {
+        is_admin = false;
+        is_student = false;
+        is_faculty = true;
+        is_faculty_verified = true;
+    } else {
+        is_admin = false;
+        is_student = true;
+        is_faculty = false;
+        is_faculty_verified = false;
+    }
+
+    database.query(
+        'update users set is_admin = $1, is_student = $2, is_faculty = $3, is_faculty_verified = $4 where id = $5', 
+        [is_admin, is_student, is_faculty, is_faculty_verified, id], 
+        (error, results) => {
+            if (error) {
+                console.log(error);
+                response.status(401).send(error);
+            } else {
+                response.status(200).send(results);
+            }
+        }
+    );
+};
+
 const createUser = (request, response) => {
     const { fullname, password, email, is_student, is_faculty } = request.body;
 
@@ -60,32 +132,45 @@ const createUser = (request, response) => {
     var is_admin = false;
     var hashed_password = generatePasswordHash(password);
 
-    // Need to add another check in the db to make it so that the admin is the only one who verifies whether a user is faculty or not
-    database.query(
-        'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', [fullname, hashed_password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified],
-        (error, results) => {
-            if (error) {
-                console.log(error);
-                response.status(401).send(`Error, email is currently in use`);
-            } else {
-                var verification_token = jwt.sign({ userId: results.rows[0].id }, TOKEN_STRING, { expiresIn: '1d' });
-                var url = `${URL}/verify-email/${verification_token}`;
-
-                var mailOptions = {
-                    from: 'sfuventure470@gmail.com',
-                    to: email,
-                    subject: 'Please confirm your email',
-                    html: `
-                        <h4>Please click this link to confirm to verify your email: <a href="${url}">${url}</a></h4>
-                        <p>This link will only be valid for 1 day.</p>
-                    `
-                };
-
-                sendEmail(mailOptions);
-                response.status(201).send(`Please check your email for instructions to activate your account`);
+    database.query('select * from users where username = $1', [username], (error, results) => {
+        if (error) {
+            console.log(error);
+        } else {
+            if (results && results.rows) {
+                username += ("" + results.rows.length);
             }
+
+            // Need to add another check in the db to make it so that the admin is the only one who verifies whether a user is faculty or not
+            database.query(
+                'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', 
+                [fullname, hashed_password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified],
+                (error, results) => {
+                    if (error) {
+                        console.log(error);
+                        response.status(401).send(`Error, email is currently in use`);
+                    } else {
+                        var verification_token = jwt.sign({ userId: results.rows[0].id }, TOKEN_STRING, { expiresIn: '1d' });
+                        var url = `${URL}/verify-email/${verification_token}`;
+        
+                        var mailOptions = {
+                            from: 'sfuventure470@gmail.com',
+                            to: email,
+                            subject: 'Please confirm your email',
+                            html: `
+                                <h4>Please click this link to confirm to verify your email: <a href="${url}">${url}</a></h4>
+                                <p>This link will only be valid for 1 day.</p>
+                            `
+                        };
+        
+                        sendEmail(mailOptions);
+                        response.status(201).send(`Please check your email for instructions to activate your account`);
+                    }
+                }
+            );
         }
-    );
+    });
+
+
 };
 
 const verifyUserEmail = (request, response) => {
@@ -112,48 +197,110 @@ const verifyUserEmail = (request, response) => {
 
 const loginUser = (request, response) => {
     const { username, password } = request.body;
+    const isUsingEmail = username.includes('@');
 
-    database.query('select * from users where username = $1', [username], (error, results) => {
-        if (error) {
-            console.log(error);
-        } else {
-            var user = results.rows[0];
-            if (user) {
-                if (user.is_email_verified) {
-                    if (validPassword(password, user.password)) {
-                        // Return a vaid web token and the user details
-                        var token = jwt.sign({ userID: user.id }, TOKEN_STRING, { expiresIn: '1d' });
-                        console.log("User: " + user.id + ": " + token);
-                        response.status(201).send({ token, user });
-
-                    } else {
-                        response.status(401).send("Invalid username and password combination");
-                    }
-
-                } else {
-                    response.status(401).send("Please validate your account using the link that was been sent to your email.");
-
-                    // Resend the token to verify the email
-                    var verification_token = jwt.sign({ userId: user.id }, TOKEN_STRING, { expiresIn: '1d' });
-                    var url = `${URL}/verify-email/${verification_token}`;
-                    var mailOptions = {
-                        from: 'sfuventure470@gmail.com',
-                        to: user.email,
-                        subject: 'Please confirm your email',
-                        html: `
-                            <h4>Please click this link to confirm to verify your email: <a href="${url}">${url}</a></h4>
-                            <p>This link will only be valid for 1 day.</p>
-                        `
-                    };
-
-                    sendEmail(mailOptions);
-                }
-
+    if (isUsingEmail) {
+        const email = username;
+        database.query('select * from users where email = $1', [email], (error, results) => {
+            if (error) {
+                console.log(error);
             } else {
-                response.status(401).send("Invalid username and password combination.");
+                var user = results.rows[0];
+                if (user) {
+                    if (user.is_email_verified) {
+                        // Need to add a check for the faculty verification to prevent access unless they have permission from admin)
+                        if (user.is_faculty && !user.is_faculty_verified) {
+                            if (validPassword(password, user.password)) {
+                               response.status(401).send("Your faculty status has not been verified. Please wait for an admin to process the request");    
+                            } else {
+                                response.status(401).send("Invalid email and password combination");
+                            }
+                        } else {
+                            if (validPassword(password, user.password)) {
+                                // Return a vaid web token and the user details
+                                var token = jwt.sign({ userID: user.id }, TOKEN_STRING, { expiresIn: '1d' });
+                                console.log("User: " + user.id + ": " + token);
+                                response.status(201).send({ token, user });
+        
+                            } else {
+                                response.status(401).send("Invalid email and password combination");
+                            }
+                        }
+                    } else {
+                        response.status(401).send("Please validate your account using the link that was been sent to your email.");
+    
+                        // Resend the token to verify the email
+                        var verification_token = jwt.sign({ userId: user.id }, TOKEN_STRING, { expiresIn: '1d' });
+                        var url = `${URL}/verify-email/${verification_token}`;
+                        var mailOptions = {
+                            from: 'sfuventure470@gmail.com',
+                            to: user.email,
+                            subject: 'Please confirm your email',
+                            html: `
+                                <h4>Please click this link to confirm to verify your email: <a href="${url}">${url}</a></h4>
+                                <p>This link will only be valid for 1 day.</p>
+                            `
+                        };
+    
+                        sendEmail(mailOptions);
+                    }
+    
+                } else {
+                    response.status(401).send("Invalid username and password combination.");
+                }
             }
-        }
-    });
+        });
+    } else {
+        database.query('select * from users where username = $1', [username], (error, results) => {
+            if (error) {
+                console.log(error);
+            } else {
+                var user = results.rows[0];
+                if (user) {
+                    if (user.is_email_verified) {
+                        // Need to add a check for the faculty verification to prevent access unless they have permission from admin)
+                        if (user.is_faculty && !user.is_faculty_verified) {
+                            if (validPassword(password, user.password)) {
+                               response.status(401).send("Your faculty status has not been verified. Please wait for an admin to process the request");    
+                            } else {
+                                response.status(401).send("Invalid username and password combination");
+                            }
+                        } else {
+                            if (validPassword(password, user.password)) {
+                                // Return a vaid web token and the user details
+                                var token = jwt.sign({ userID: user.id }, TOKEN_STRING, { expiresIn: '1d' });
+                                console.log("User: " + user.id + ": " + token);
+                                response.status(201).send({ token, user });
+        
+                            } else {
+                                response.status(401).send("Invalid username and password combination");
+                            }
+                        }
+                    } else {
+                        response.status(401).send("Please validate your account using the link that was been sent to your email.");
+    
+                        // Resend the token to verify the email
+                        var verification_token = jwt.sign({ userId: user.id }, TOKEN_STRING, { expiresIn: '1d' });
+                        var url = `${URL}/verify-email/${verification_token}`;
+                        var mailOptions = {
+                            from: 'sfuventure470@gmail.com',
+                            to: user.email,
+                            subject: 'Please confirm your email',
+                            html: `
+                                <h4>Please click this link to confirm to verify your email: <a href="${url}">${url}</a></h4>
+                                <p>This link will only be valid for 1 day.</p>
+                            `
+                        };
+    
+                        sendEmail(mailOptions);
+                    }
+    
+                } else {
+                    response.status(401).send("Invalid username and password combination.");
+                }
+            }
+        });
+    }
 };
 
 const forgotPasswordCheckEmail = (request, response) => {
@@ -214,22 +361,37 @@ const changeForgottenPassword = (request, response) => {
     );
 };
 
-const updateUser = (request, response) => {
-    const id = parseInt(request.params.id);
-    const { fullname, password } = request.body;
-    var hashed_password = generatePasswordHash(password);
+const updatePassword = (request, response) => {
+    var { id, oldPassword, newPassword } = request.body;
 
-    database.query(
-        'update users set name = $1, password = $2 where id = $3', [fullname, hashed_password, id],
+    database.query('select * from users where id = $1', [id], (error, results) => {
+        if (error) {
+            console.log(error);
+        } else {
+            let user = JSON.parse(JSON.stringify(results.rows[0]));
+            console.log(user);
 
-        (error, results) => {
-            if (error) {
-                console.log(error);
+            // Update the password if it was valid
+            if (validPassword(oldPassword, user.password)) {
+
+                let hashed_password = generatePasswordHash(newPassword);
+                database.query(
+                    'update users set password = $1 where id = $2', [hashed_password, id],
+                    (err, res) => {
+                        if (err) {
+                            console.log(error);
+                        }
+            
+                        response.status(200).send({response: 'Password updated'});
+                    }
+                );
+
+            } else {
+                response.status(401).send("Error. Old password doesn't match existing records");
             }
 
-            response.status(200).send('User modified with ID: ${id}');
         }
-    );
+    });
 };
 
 const deleteUser = (request, response) => {
@@ -238,9 +400,10 @@ const deleteUser = (request, response) => {
     database.query('delete from users where id = $1', [id], (error, results) => {
         if (error) {
             console.log(error);
+            response.status(401).send(error);
         }
 
-        response.status(200).send('User deleted with ID: ${id}');
+        response.status(200).send({response: 'User deleted'});
     });
 };
 
@@ -293,6 +456,27 @@ const emailBuyerAndSeller = (request, response) => {
     );
 };
 
+const checkHasAdminPrivileges = (request, response) => {
+    var id = request.params.id;
+    database.query(
+        'select * from users where id = $1', [id], 
+        (error, results) => {
+            if (error) {
+                console.log(error);
+                response.status(500).send(`Internal server error`);
+            } else {
+                if (results.rows[0] && results.rows[0].id) {
+                    response.status(200).send({
+                        'hasPrivileges': results.rows[0].is_admin
+                    });
+                } else {
+                    response.status(500).send(`Internal server error`);
+                }
+            }
+        }
+    );
+}
+
 const sendEmail = function(mailOptions) {
 
     // Email details
@@ -318,14 +502,17 @@ const sendEmail = function(mailOptions) {
 };
 
 module.exports = {
+    createDefaultAdmin,
     getUsers,
     getUserById,
     createUser,
-    updateUser,
+    updatePassword,
+    updatePrivileges,
     deleteUser,
     loginUser,
     verifyUserEmail,
     forgotPasswordCheckEmail,
     changeForgottenPassword,
-    emailBuyerAndSeller
+    emailBuyerAndSeller,
+    checkHasAdminPrivileges
 };

@@ -1,0 +1,36 @@
+<div *ngIf="dataReceived">
+    <h2>Your Market Posts</h2>
+    <mat-form-field>
+        <input matInput (keyup)="textbookFilter($event)" placeholder="Filter by textbook name, faculty name, or course number">
+    </mat-form-field>
+
+    <mat-table [dataSource]="textbooks" class="mat-elevation-z8">
+        <ng-container matColumnDef="textbookName">
+            <mat-header-cell *matHeaderCellDef> Textbook Name </mat-header-cell>
+            <mat-cell *matCellDef="let textbook"> {{textbook.txt_book_name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="facultyName">
+            <mat-header-cell *matHeaderCellDef> Faculty </mat-header-cell>
+            <mat-cell *matCellDef="let textbook"> {{textbook.faculty_name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="courseNumber">
+            <mat-header-cell *matHeaderCellDef> Course Number </mat-header-cell>
+            <mat-cell *matCellDef="let textbook"> {{textbook.course_name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+            <mat-cell *matCellDef="let textbook"> {{textbook.price}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="postDate">
+            <mat-header-cell *matHeaderCellDef> Posting Date </mat-header-cell>
+            <mat-cell *matCellDef="let textbook"> {{textbook.post_date}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="textbookFields"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: textbookFields;" matRipple (click)="getTextbook(row)"></mat-row>
+    </mat-table>
+</div>

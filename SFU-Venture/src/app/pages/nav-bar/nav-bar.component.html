@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="isLoggedOn">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="checkLogin()">
     <a class="navbar-brand" href="#">Venture</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -8,6 +8,12 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="market">Market</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="account">Account Settings</a>
+            </li>
+            <li class="nav-item" *ngIf="userHasAdminPrivileges">
+                <a class="nav-link" href="admin-control">Admin Control</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
