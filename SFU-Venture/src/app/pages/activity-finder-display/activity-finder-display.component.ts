@@ -1,3 +1,4 @@
+import { ActivitiesService } from './../../services/server-apis/activities/activities.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./activity-finder-display.component.scss']
 })
 export class ActivityFinderDisplayComponent implements OnInit {
+  contentLoaded: Boolean = false;
+  
+  constructor( private activitiesService: ActivitiesService) { 
+  }
 
-  constructor() { }
+  activitesDOM: any
 
-  ngOnInit() {
+  async ngOnInit() {
+    var activities = await this.activitiesService.getAll();
+    this.activitesDOM = activities
+    this.contentLoaded = true;
+
+    console.log(activities)
   }
 
 }

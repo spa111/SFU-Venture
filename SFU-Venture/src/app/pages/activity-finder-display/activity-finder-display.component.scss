@@ -326,3 +326,55 @@ h5 {
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+.activity-board {
+    margin: 20px;
+    background-color: #f7f7f7;
+    // background-color: #f5f3f3;
+    height: 100%;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.activity-title {
+    padding: 20px;
+}
+
+.activity-row {
+    width: 100%;
+    // background-color: rgb(228, 228, 228);
+    // background-color: rgb(247, 247, 247);
+
+    background-color: rgb(251, 251, 251);
+}
+
+.activity-row:hover {
+    background-color: rgb(231, 228, 228);
+}
+
+.activity-row td {
+    padding: 10px;
+}
+
+.activity-row a {
+    color: rgb(233, 66, 37);    
+}
+
+.activity-table th {
+    padding-left: 10px;
+}
+
+.activity-row:nth-child(2) {
+    // background-color: rgb(182, 180, 179);
+    background-color: rgb(238, 238, 238);
+}
+
+.activity-row:nth-child(2):hover {
+    background-color: rgb(231, 228, 228);
+}
+
+.activity-table {
+    width: 100%;
+}
+
+

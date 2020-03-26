@@ -22,14 +22,14 @@ export class ActivitiesService {
 
   getAll(): Promise<any> {
     this.generateHeaders();
-    const jsonTest = {
-      coord: '49.276505,-122.921785',
-      radius: '1500', 
-      type: 'restaurant',
-      keyword: 'chinese'
-    }
-    this.http.post(SERVER_BASE_URL + '/api/activityAround/' , jsonTest, this.httpOptions).toPromise();
-    return this.http.get(SERVER_BASE_URL + '/api/activties', this.httpOptions).toPromise();
+    // const jsonTest = {
+    //   coord: '49.276505,-122.921785',
+    //   radius: '1500', 
+    //   type: 'restaurant',
+    //   keyword: 'chinese'
+    // }
+    // this.http.post(SERVER_BASE_URL + '/api/activityAround/' , jsonTest, this.httpOptions).toPromise();
+    return this.http.get(SERVER_BASE_URL + '/api/activity', this.httpOptions).toPromise();
   }
   
   createActivity(newActivityJSON: any): Promise<any> {

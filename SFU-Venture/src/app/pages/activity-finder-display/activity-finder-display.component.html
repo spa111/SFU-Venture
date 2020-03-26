@@ -2,7 +2,7 @@
 <div class="wrapper-container">
     <div class="sideBar">
         <div class="addPost">
-            <button routerLink="/add-post" class="animatedBtn addPostBtn">Add Textbook</button>
+            <button routerLink="/add-post" class="animatedBtn addPostBtn">Add Activity</button>
         </div>
 
         <div class="filter">
@@ -11,19 +11,22 @@
                 <div class="filter-price">
                     <h5>Price:</h5>
                     <div class="filter-price-input">
-                        <input type="text" class="form-control small-form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <input type="text" class="form-control small-form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-sm">
                         <span class="separator">-</span>
-                        <input type="text" class="form-control small-form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        <input type="text" class="form-control small-form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-sm">
                     </div>
                 </div>
 
-                <br/>
+                <br />
                 <div class="filter-dept">
                     Dept:
                     <select id="filterDept" class="custom-select" style="text-transform: uppercase;">
                         <option selected value="All">All</option>
-                        <option *ngFor="let dept of faculties; let i = index" ngValue="dept.value" style="text-transform: uppercase;" >{{dept.value}}</option>
-                        
+                        <option *ngFor="let dept of faculties; let i = index" ngValue="dept.value"
+                            style="text-transform: uppercase;">{{dept.value}}</option>
+
                     </select>
                 </div>
             </div>
@@ -35,6 +38,29 @@
     </div>
 
     <div class="display" *ngIf="contentLoaded">
+        <div class="activity-board">
+            <h2 class='activity-title'>Activities</h2>
+            <table class="activity-table">
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th>Price</th>
+                </tr>
+                <tr class="activity-row" *ngFor="let activity of activitesDOM;">
+                    <td>{{activity.activity_timestamp.substring(0,10)}}</td>
+                    <td>{{activity.activity_timestamp.substring(11,16)}}</td>
+                    <td><a href="#">{{activity.activity_title}}</a></td>
+                    <td>{{activity.activity_description.substring(0, 30)}}...</td>
+                    <td>{{activity.activity_location}}</td>
+                    <td>{{activity.activity_price}}</td>
+                </tr>
+            </table>
+
+
+        </div>
 
 
 
