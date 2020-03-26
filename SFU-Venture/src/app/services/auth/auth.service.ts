@@ -21,6 +21,8 @@ export class AuthService {
   logout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user');
+    localStorage.removeItem('admin-processing-user');
+    localStorage.removeItem('admin-viewed-user');
   }
 
   public get loggedIn(): boolean {

@@ -53,11 +53,11 @@ export class AccountPageComponent implements OnInit {
         this.accessLevel = "Student";
       }
 
-      if (this.user.is_admin && localStorage.getItem('admin-viewed-user') == "") {
+      if (this.user.is_admin && !localStorage.getItem('admin-viewed-user')) {
         this.normalUser = false;
         this.adminViewingUser = false;
 
-      } else if (localStorage.getItem('admin-viewed-user') != "") {
+      } else if (localStorage.getItem('admin-viewed-user')) {
         this.normalUser = false;
 
         if (this.user.id == localStorage.getItem('user')) {
@@ -128,12 +128,12 @@ export class AccountPageComponent implements OnInit {
     });
 
     deleteDialogRef.afterClosed().subscribe(result => {
-      if (result.needsToDelete) {
+      if (result && result.needsToDelete) {
         
         let userToDelete = this.router.url == "/admin-control" ? localStorage.getItem('admin-viewed-user') : localStorage.getItem('user');
         this.usersService.delete(userToDelete).then(result => {
           if (this.router.url == "/admin-control") {
-            this.redirectTo('admin-control');
+            // this.redirectTo('admin-control');
           } else {
             this.router.navigate(['logout']);
           }
@@ -141,8 +141,6 @@ export class AccountPageComponent implements OnInit {
           console.log(err);
         })
       }
-
-      console.log(result.needsToDelete);
     });
   }
 

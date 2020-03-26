@@ -12,10 +12,10 @@ const URL_SERVER = "http://34.82.223.192";
 const URL = isProduction ? URL_SERVER : URL_DEV;
 
 const database = new Pool({
-    user: 'cmpt470',
-    host: 'localhost',
-    database: 'cmpt470',
-    password: 'cmpt470',
+    user: 'postgres',
+    host: '35.203.175.95',
+    database: 'postgres',
+    password: 'postgres',
     port: 5432
 });
 
@@ -36,6 +36,7 @@ const createDefaultAdmin = function() {
     (error, results) => {
         if (error) {
             console.log("Error pulling default user existance");
+            console.log(error);
 
         } else {
             if (results && results.rows && results.rows[0]) {
@@ -57,7 +58,6 @@ const createDefaultAdmin = function() {
             }
         }
     });
-
 };
 
 const getUsers = (request, response) => {
@@ -136,7 +136,7 @@ const createUser = (request, response) => {
         if (error) {
             console.log(error);
         } else {
-            if (results && results.rows) {
+            if (results && results.rows && results.rows[0]) {
                 username += ("" + results.rows.length);
             }
 
