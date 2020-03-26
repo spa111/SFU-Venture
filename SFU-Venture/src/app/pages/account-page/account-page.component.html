@@ -59,17 +59,25 @@
 
   <ng-template #adminUser>
     <div *ngIf="adminViewingUser else adminViewingSelf">
-      <button (click)="changePassword()" mat-raised-button>
-        <font color="black"> Change Password </font>
-      </button>
-  
-      <button (click)="viewMarketPosts()" class="buttons" mat-raised-button>
-        <font color="black"> Your Market Posts </font>
-      </button>
+      <div *ngIf="userIsDefaultAdmin else notDefaultAdmin">
+        <button disabled (click)="changePrivileges()" mat-raised-button class="buttons">
+          <font color="white"> Change Account Privileges </font>
+        </button>
 
-      <button (click)="deleteAccount()" color="warn" mat-raised-button class="buttons">
-        <font color="white"> Delete Account </font>
-      </button>
+        <button disabled (click)="deleteAccount()" color="warn" mat-raised-button class="buttons">
+          <font color="white"> Delete Account </font>
+        </button>
+      </div>
+
+      <ng-template #notDefaultAdmin>
+        <button (click)="changePrivileges()" mat-raised-button class="buttons">
+          <font color="black"> Change Account Privileges </font>
+        </button>
+
+        <button (click)="deleteAccount()" color="warn" mat-raised-button class="buttons">
+          <font color="white"> Delete Account </font>
+        </button>
+      </ng-template>
     </div>
 
     <ng-template #adminViewingSelf>

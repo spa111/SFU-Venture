@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MainMarketBookInfoDialog } from '../main-market-display/main-market-display.component';
 import { TextbooksService } from '../../services/server-apis/textbooks/textbooks.service';
+import { ProcessPrivilegesDialog } from '../admin-page/admin-page.component';
 
 @Component({
   selector: 'app-account-page',
@@ -18,21 +19,36 @@ export class AccountPageComponent implements OnInit {
   normalUser: Boolean = false;
   adminViewingUser: Boolean = false;
   adminViewingFromModal: Boolean = false;
-  
+  userIsDefaultAdmin: Boolean = false;
+
   constructor(
     private usersService: UsersService, 
     private router: Router, 
     public dialog: MatDialog
   ) {
-    
+    this.pullUserAccount();    
+  }
+
+  pullUserAccount() {
     let userToPull = this.router.url == "/admin-control" ? localStorage.getItem('admin-viewed-user') : localStorage.getItem('user');
     this.usersService.getById(userToPull).then(result => {
       this.user = JSON.parse(JSON.stringify(result[0]));
 
       if (this.user.is_admin) {
         this.accessLevel = "Administrator";
-      } else if (this.user.is_faculty && this.user.is_faculty_verified) {
-        this.accessLevel = "Faculty";
+
+        if (this.user.email == "sfuventure470@gmail.com") {
+          this.userIsDefaultAdmin = true;
+          this.accessLevel = "Default Administrator";
+        }
+
+      } else if (this.user.is_faculty) {
+        if (this.user.is_faculty_verified) {
+          this.accessLevel = "Faculty";
+        } else {
+          this.accessLevel = "Pending Faculty Approval";
+        }
+
       } else {
         this.accessLevel = "Student";
       }
@@ -76,6 +92,23 @@ export class AccountPageComponent implements OnInit {
 
   changePassword() {
     this.router.navigate(['change-account-password']);
+  }
+
+  changePrivileges() {
+    localStorage.setItem('admin-processing-user', JSON.stringify(this.user));
+    const dialogRef = this.dialog.open(ProcessPrivilegesDialog, {
+      width: '40%',
+      height: '30%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      localStorage.removeItem('admin-processing-user');
+
+      if (result && result.status == "handled") {
+        this.pullUserAccount();
+      }
+    });
+    
   }
 
   viewMarketPosts() {

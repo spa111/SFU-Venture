@@ -79,6 +79,11 @@
     </mat-form-field>
 
     <mat-table [dataSource]="textbooks" class="mat-elevation-z8">
+        <ng-container matColumnDef="posterId">
+            <mat-header-cell *matHeaderCellDef> Posting Users's Id </mat-header-cell>
+            <mat-cell *matCellDef="let textbook"> {{textbook.posting_user_id}} </mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="textbookName">
             <mat-header-cell *matHeaderCellDef> Textbook Name </mat-header-cell>
             <mat-cell *matCellDef="let textbook"> {{textbook.txt_book_name}} </mat-cell>

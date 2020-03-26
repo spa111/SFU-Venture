@@ -2,10 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const expressJwt = require('express-jwt');
 const cors = require('cors');
+const login_endpoint = require('./end_point_handler/login_endpoint');
+const userdata_endpoint = require('./end_point_handler/user_data_endpoint');
+const textbook_endpoint = require('./end_point_handler/textbooks_endpoint');
 const database = require('./db_handler/db_controller');
-const login_endpoint = require('./end_point_handler/login_endpoint')
-const userdata_endpoint = require('./end_point_handler/user_data_endpoint')
-const textbook_endpoint = require('./end_point_handler/textbooks_endpoint')
 
 const app = express();
 const port = 3000;
@@ -44,4 +44,5 @@ app.use(textbook_endpoint);
 // Start NodeJS server and list on port 3000 for requests
 app.listen(port, () => {
     console.log('Node.js server running on port ' + port);
+    database.createDefaultAdmin();
 });

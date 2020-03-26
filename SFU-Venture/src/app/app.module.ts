@@ -25,7 +25,7 @@ import { ChangeAccountPasswordPageComponent } from './pages/change-account-passw
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material';
 import { MatRippleModule } from '@angular/material/core';
-import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { AdminPageComponent, ProcessPrivilegesDialog } from './pages/admin-page/admin-page.component';
 import { AdminGuard } from './services/admin-guard/admin.guard';
 
 export function tokenGetter() {
@@ -51,7 +51,8 @@ export function tokenGetter() {
     AccountDeleteConfirmationDialog,
     ChangeAccountPasswordPageComponent,
     ViewMarketPostsDialog,
-    AdminPageComponent
+    AdminPageComponent,
+    ProcessPrivilegesDialog
   ],
   imports: [
     BrowserModule,
@@ -85,7 +86,8 @@ export function tokenGetter() {
     PostingDeleteConfirmationDialog, 
     ContactSellerDialog,
     AccountDeleteConfirmationDialog,
-    ViewMarketPostsDialog
+    ViewMarketPostsDialog,
+    ProcessPrivilegesDialog
   ]
 })
 export class AppModule { }

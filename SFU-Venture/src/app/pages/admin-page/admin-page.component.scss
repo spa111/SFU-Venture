@@ -38,3 +38,42 @@ h3 {
     color: #8C8A8A;
     margin: 0;
 }
+
+.button-control {
+    width: 45%;
+    margin-top: 5%
+}
+
+#btn-control-admin {
+    margin-left: 2.5%;
+}
+
+#btn-control-faculty {
+    margin-right: 2.5%;
+    margin-left: 5%;
+}
+
+#btn-control-student {
+    margin-left: 2.5%;
+}
+
+#btn-control-delete {
+    margin-right: 2.5%;
+    margin-left: 5%;
+}
+
+#content {
+    margin: 0 !important;
+}
+
+#modalContent {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+#applicationUser {
+    text-align: center;
+    width: 100%;
+}
