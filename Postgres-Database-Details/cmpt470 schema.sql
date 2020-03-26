@@ -47,9 +47,9 @@ CREATE  TABLE activities (
 	corresponding_department text  NOT NULL ,
 	activity_title       text  NOT NULL ,
 	activity_description text  NOT NULL ,
-	"activity-price"     money DEFAULT 0 NOT NULL ,
+	activity_price     money DEFAULT 0 NOT NULL ,
 	activity_location    text  NOT NULL ,
-	"activity-timestamp" timestamp DEFAULT current_timestamp NOT NULL ,
+	activity_timestamp timestamp DEFAULT current_timestamp NOT NULL ,
 	CONSTRAINT pk_activities_id PRIMARY KEY ( id )
  );
 

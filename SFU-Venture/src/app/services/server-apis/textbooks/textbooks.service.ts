@@ -23,6 +23,19 @@ export class TextbooksService {
 
   getAll(): Promise<any> {
     this.generateHeaders();
+    let jsonTest = {
+      year: '2020',
+      term: 'spring',
+      course: 'CMPT',
+      courseNumber: '310'
+    }
+    let jsonTest2 = {
+      isbn: '1846271320',
+      size: 'l'
+    }
+    this.http.post(SERVER_BASE_URL + '/api/getBookDetail/', jsonTest, this.httpOptions).toPromise();
+    this.http.post(SERVER_BASE_URL + '/api/getBookCover/', jsonTest2, this.httpOptions).toPromise();
+
     return this.http.get(SERVER_BASE_URL + '/api/textbooks', this.httpOptions).toPromise();
   }
 
