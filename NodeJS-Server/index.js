@@ -8,6 +8,8 @@ const userdata_endpoint = require('./end_point_handler/user_data_endpoint')
 const textbook_endpoint = require('./end_point_handler/textbooks_endpoint')
 const volunteer_endpoint = require('./end_point_handler/volunteer_endpoint')
 const activity_endpoint = require('./end_point_handler/activity_enpoint')
+const image_endpoint = require('./end_point_handler/marketplace_image_endpoint')
+
 
 
 const app = express();
@@ -49,6 +51,9 @@ app.use(volunteer_endpoint)
 
 // Activity Finder API'S
 app.use(activity_endpoint)
+
+// ISBN Image Finder API'S
+app.use(image_endpoint)
 
 
 // Start NodeJS server and list on port 3000 for requests
