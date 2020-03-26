@@ -155,6 +155,10 @@ export class AdminPageComponent implements OnInit {
       height: '90%'
     });
 
+    document.addEventListener('close-user-modal', () => {
+      dialogRef && dialogRef.close();
+    });
+
     dialogRef.afterClosed().subscribe(result => {
       localStorage.removeItem('admin-processing-user');
       this.generateAllData();

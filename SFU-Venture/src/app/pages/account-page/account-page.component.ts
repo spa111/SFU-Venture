@@ -21,6 +21,8 @@ export class AccountPageComponent implements OnInit {
   adminViewingFromModal: Boolean = false;
   userIsDefaultAdmin: Boolean = false;
 
+  forceCloseModal: Event;
+
   constructor(
     private usersService: UsersService, 
     private router: Router, 
@@ -84,6 +86,7 @@ export class AccountPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.forceCloseModal = new CustomEvent('close-user-modal');
   }
 
   editAccountDetails() {
@@ -133,7 +136,7 @@ export class AccountPageComponent implements OnInit {
         let userToDelete = this.router.url == "/admin-control" ? localStorage.getItem('admin-viewed-user') : localStorage.getItem('user');
         this.usersService.delete(userToDelete).then(result => {
           if (this.router.url == "/admin-control") {
-            // this.redirectTo('admin-control');
+            document.dispatchEvent(this.forceCloseModal);
           } else {
             this.router.navigate(['logout']);
           }
@@ -142,11 +145,6 @@ export class AccountPageComponent implements OnInit {
         })
       }
     });
-  }
-
-  redirectTo(uri:string){
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-    this.router.navigate([uri]));
   }
 }
 
