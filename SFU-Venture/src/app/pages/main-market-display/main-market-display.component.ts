@@ -247,26 +247,6 @@ export class MainMarketDisplayComponent implements OnInit {
     });
   }
 
-  // Example Textbooks for testing
-  //   {
-  //     textbookName: "C++ Primer (5th Edition)",
-  //     course: "135",
-  //     faculty: "CMPT",
-  //     price: "15",
-  //     postDate: "July 3",
-  //     imageUrl: "https://image.ebooks.com/previews/001/001436/001436169/001436169.jpg"
-
-  //   },
-  //   {
-  //     textbookName: "Data Structures and Algorithms in C++",
-  //     course: "225",
-  //     faculty: "CMPT",
-  //     price: "1",
-  //     postDate: "Feburary 14",
-  //     imageUrl: "https://images-na.ssl-images-amazon.com/images/I/61pHgCDCgqL.jpg"
-  //   }]
-   
-
   //-------------Section for UI Factuly and course chooser//
 
   Selected: Boolean = false;
@@ -362,6 +342,19 @@ export class MainMarketDisplayComponent implements OnInit {
     }
   }
   //-------------END Section for UI Factuly and course chooser//
+  //section for modification of row sections
+  extendSection(event: any){
+      console.log("Child:", event.target.innerHTML);
+      if(event.target.innerHTML === "<i _ngcontent-isr-c2='' class='material-icons'> remove </i>"){
+        event.target.innerHTML = "<i _ngcontent-jvv-c2='' class='material-icons'> add </i>"
+      }else{
+        event.target.innerHTML = "<i _ngcontent-isr-c2='' class='material-icons'> remove </i>"
+      }
+      console.log("Parent:", event.target.parentNode); 
+      console.log("Parent-Parent:", event.target.parentNode.parentNode);
+      event.target.parentNode.parentNode.classList.toggle("is-active-row");
+  }
+  
 }
 
 

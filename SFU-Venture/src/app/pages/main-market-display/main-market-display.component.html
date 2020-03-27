@@ -43,7 +43,7 @@
 
     </div>
     <div class="display" *ngIf="contentLoaded">
-        <div class="row" *ngFor="let dept of facultiesDOM;">
+        <div class="row" *ngFor="let dept of facultiesDOM;" [attr.id]="dept.value +'_rowID'">
             <div id="department" class="section-splitter"> {{dept.value}} </div>
 
             <div class="marketItemsArea">
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="endRow">
-                <a href="#" class="button animatedBtn seeMore">
+                <a type="button" (click)="extendSection($event)" class="button animatedBtn seeMore">
                     <i class="material-icons">
                         add
                     </i>
