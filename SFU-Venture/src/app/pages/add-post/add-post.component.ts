@@ -17,9 +17,9 @@ export class AddPostComponent implements OnInit {
     private textbooksService: TextbooksService
   ) {}
 
-  faculties: any = [];
-  courses: any = [];
-  books: any = [];
+  faculties: any;
+  courses: any;
+  books: any;
   imageURL: any;
   userEnteringBook: Boolean = false;
 
@@ -55,14 +55,9 @@ export class AddPostComponent implements OnInit {
         this.textbooksService.getTextbooksByCourse(json).then(result => {
           result.searchResults.forEach(textbook => {
             let details = textbook.details;
-            let new_details_string = "";
-            $(details).text().split('\n').forEach(element => {
-              if (element) { 
-                new_details_string += element + " "; 
-              } 
-            });
-            
-            textbook.details = new_details_string.substring(0, new_details_string.length - 1);
+            var tmp = document.createElement("DIV");
+            tmp.innerHTML = details;
+            textbook.details = tmp.textContent || tmp.innerText;
           });
 
           this.books = result.searchResults;
