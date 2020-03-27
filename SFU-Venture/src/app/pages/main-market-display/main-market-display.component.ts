@@ -36,7 +36,7 @@ export class MainMarketDisplayComponent implements OnInit {
     private authService: AuthService,
     private textbooksService: TextbooksService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   getAllTextbooks(): Promise<any> {
     console.log("full Texbook Retrieval called");
@@ -48,29 +48,29 @@ export class MainMarketDisplayComponent implements OnInit {
       this.textbooks = result;
 
       this.textbooksService
-      .getDept()
-      .then(result => {
-        console.log("Retrieval Successful");
-        console.log(result);
-        this.faculties = result;
+        .getDept()
+        .then(result => {
+          console.log("Retrieval Successful");
+          console.log(result);
+          this.faculties = result;
 
-        this.faculties.forEach(faculty => {
-          faculty.textbooks = this.textbooks && this.textbooks.length > 0 ? this.textbooks.filter(textbook => {
-            return textbook.faculty_name.toLocaleLowerCase() == faculty.value;
-          }) : [];
+          this.faculties.forEach(faculty => {
+            faculty.textbooks = this.textbooks && this.textbooks.length > 0 ? this.textbooks.filter(textbook => {
+              return textbook.faculty_name.toLocaleLowerCase() == faculty.value;
+            }) : [];
 
-          if (faculty.textbooks.length > 0) {
-            this.deptWithTextbooks.push(faculty)
-          }
+            if (faculty.textbooks.length > 0) {
+              this.deptWithTextbooks.push(faculty)
+            }
+          });
+
+          this.facultiesDOM = JSON.parse(JSON.stringify(this.deptWithTextbooks));
+          this.contentLoaded = true;
+        })
+        .catch(err => {
+          console.log(err);
         });
-
-        this.facultiesDOM = JSON.parse(JSON.stringify(this.deptWithTextbooks));
-        this.contentLoaded = true;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    }).catch(err => { 
+    }).catch(err => {
       console.log(err)
     });
   }
@@ -98,7 +98,7 @@ export class MainMarketDisplayComponent implements OnInit {
 
     let defaultMin = 0;
     let defaultMax = 10000
-    
+
     // Checking price ranges set
     if (lowerPriceInput || higherPriceInput) {
       this.shouldSortPrice = true;
@@ -156,15 +156,15 @@ export class MainMarketDisplayComponent implements OnInit {
 
     if (this.shouldSortPrice || this.shouldSortDept || this.shouldSortClass) {
       this.facultiesDOM = JSON.parse(JSON.stringify(this.deptWithTextbooks));
-    
+
       if (this.shouldSortPrice) {
         this.sortByPrice();
       }
-  
+
       if (this.shouldSortDept) {
         this.sortByDept();
       }
-  
+
       if (this.shouldSortClass) {
         this.sortByCourse();
       }
@@ -193,9 +193,32 @@ export class MainMarketDisplayComponent implements OnInit {
   }
 
   sortByDept() {
-    this.facultiesDOM = this.facultiesDOM.filter(filter => {
-      return filter.value == this.deptFilterVal;
-    });
+
+    console.log(this.facultiesDOM);
+
+    this.facultiesDOM = [];
+    let courseDOM = [];
+    this.textbooksService.getCourses(this.deptFilterVal).then(result => {
+      courseDOM = result;
+
+      courseDOM.forEach(course => {
+        let textbooksTemp = this.textbooks.filter(textbook => {
+          return textbook.faculty_name == this.deptFilterVal && textbook.course_name == course.value; 
+        });
+
+        if (textbooksTemp.length) {
+          this.facultiesDOM.push({
+            "value": `${this.deptFilterVal} ${course.value}`,
+            "textbooks": textbooksTemp 
+          });
+        }
+        
+      });
+
+      console.log(this.facultiesDOM);
+
+
+    }).catch(err => console.log(err));
   }
 
   sortByCourse() {
@@ -224,12 +247,12 @@ export class MainMarketDisplayComponent implements OnInit {
 
     // Reset the Dept filter to the "ALL" option
     // $("#filterDept")[0].value = $("#filterDept")[0][0].value;
-      this.Selector = "ALL";
+    this.Selector = "ALL";
     this.shouldSortDept = false;
 
     // Reset the class filter to the "ALL" option
     // $("#filterClass")[0].value = $("#filterClass")[0][0].value;
-      this.Course = "";
+    this.Course = "";
     this.shouldSortClass = false;
   }
 
@@ -280,18 +303,18 @@ export class MainMarketDisplayComponent implements OnInit {
     this.Course = "---";
     this.SelectorOpen = false;
 
-    if(!(event.target.name == "ALL")){
+    if (!(event.target.name == "ALL")) {
 
       this.textbooksService
-      .getCourses(event.target.name)
-      .then(result => {
-        this.coursesArray = result;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+        .getCourses(event.target.name)
+        .then(result => {
+          this.coursesArray = result;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
-      $(".placeholderCourse").css("opacity", "1");
+    $(".placeholderCourse").css("opacity", "1");
     this.filter();
   }
 
@@ -343,28 +366,24 @@ export class MainMarketDisplayComponent implements OnInit {
   }
   //-------------END Section for UI Factuly and course chooser//
   //section for modification of row sections
-  extendSection(event: any){
-      // console.log("Child:", event.target.innerHTML);
-      // if(event.target.innerHTML === "<i _ngcontent-isr-c2='' class='material-icons'> remove </i>"){
-      //   event.target.innerHTML = "<i _ngcontent-jvv-c2='' class='material-icons'> add </i>"
-      // }else{
-      //   event.target.innerHTML = "<i _ngcontent-isr-c2='' class='material-icons'> remove </i>"
-      // }
-      console.log("Parent:", event.target.parentNode.parentNode.id); 
-      // console.log($(`#${event.target.parentNode.parentNode.id} #department`)[0].innerText)
-      // event.target.parentNode.classList.toggle("endRowAnimate");
-      // console.log(document.getElementById("loader"))
-      this.Selector = $(`#${event.target.parentNode.parentNode.id} #department`)[0].innerText;
+  extendSection(event: any) {
+    console.log("Child:", event.target.innerHTML);
+
+    if (event.target.innerHTML.includes("add")) {
+      event.target.innerHTML = "<i _ngcontent-jvv-c2='' class='material-icons'> remove </i>"
+    } else if (event.target.innerHTML.includes("remove")) {
+      event.target.innerHTML = "<i _ngcontent-isr-c2='' class='material-icons'> add </i>"
+    }
+    // event.target.parentNode.parentNode.classList.toggle("is-active-row");
+    this.Selector = $(`#${event.target.parentNode.parentNode.id} #department`)[0].innerText;
       this.Course = "---";
       $( "#loader" ).one( "transitionend", () => {
         this.filter()
         document.getElementById("loader").classList.toggle("loaderisactive");
       });
       document.getElementById("loader").classList.toggle("loaderisactive");
-      
-      // console.log("Parent-Parent:", event.target.parentNode.parentNode);
-      // event.target.parentNode.parentNode.classList.toggle("is-active-row");
-    }
+  }
+
 }
   
 
@@ -382,7 +401,7 @@ export class MainMarketBookInfoDialog {
   adminOverride: Boolean = false;
 
   constructor(
-    public dialogRef: MatDialogRef<MainMarketBookInfoDialog>, 
+    public dialogRef: MatDialogRef<MainMarketBookInfoDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialog: MatDialog,
     private router: Router
@@ -456,7 +475,7 @@ export class MainMarketBookInfoDialog {
 
 export class ContactSellerDialog {
   constructor(
-    public dialogRef: MatDialogRef<ContactSellerDialog>, 
+    public dialogRef: MatDialogRef<ContactSellerDialog>,
     @Inject(MAT_DIALOG_DATA) public data: ContactSellerData,
     public dialog: MatDialog,
     private usersService: UsersService
@@ -475,11 +494,11 @@ export class ContactSellerDialog {
 
     if (message == "") {
       message = "Hi there. I would like to talk about purchasing this textbook. Please send me an email if it is still available. <br><br> Thanks"
-    } 
+    }
 
     let payload = {
-      "buyerId" : localStorage.getItem('user'),
-      "sellerId" : this.data.textbook.posting_user_id,
+      "buyerId": localStorage.getItem('user'),
+      "sellerId": this.data.textbook.posting_user_id,
       "message": message,
       "textbook": this.data.textbook
     };
@@ -495,7 +514,7 @@ export class ContactSellerDialog {
     }).catch(err => {
       console.log(err);
     });
-    
+
   }
 }
 
@@ -544,8 +563,8 @@ export class PostingDeleteConfirmationDialog {
     });
   }
 
-  redirectTo(uri:string){
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-    this.router.navigate([uri]));
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
   }
 }
