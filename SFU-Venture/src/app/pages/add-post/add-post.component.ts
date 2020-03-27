@@ -17,9 +17,9 @@ export class AddPostComponent implements OnInit {
     private textbooksService: TextbooksService
   ) {}
 
-  faculties: any;
-  courses: any;
-  books: any;
+  faculties: any = [];
+  courses: any = [];
+  books: any = [];
   imageURL: any;
   userEnteringBook: Boolean = false;
 
@@ -31,76 +31,88 @@ export class AddPostComponent implements OnInit {
 
       $("#filterDept")[0].addEventListener("change", () => {
         let dept = $("#filterDept")[0].value;
-        this.textbooksService
-          .getCourses(dept)
-          .then(result => {
-            this.courses = result;
-          })
-          .catch(err => {
-            console.log(err);
+        this.imageURL = "";
+        this.books = [];
+
+        this.textbooksService.getCourses(dept).then(result => {
+          this.courses = result;
+
+        }).catch(err => {
+          console.log(err);
+        });
+      });
+      
+      $("#course")[0].addEventListener("change", () => {
+        this.imageURL = "";
+
+        let json = {
+          "year": "2020",
+          "term": "spring",
+          "course": $("#filterDept")[0].value,
+          "courseNumber": $("#course")[0].value
+        };
+
+        this.textbooksService.getTextbooksByCourse(json).then(result => {
+          result.searchResults.forEach(textbook => {
+            let details = textbook.details;
+            let new_details_string = "";
+            $(details).text().split('\n').forEach(element => {
+              if (element) { 
+                new_details_string += element + " "; 
+              } 
+            });
+            
+            textbook.details = new_details_string.substring(0, new_details_string.length - 1);
           });
 
-        $("#course")[0].addEventListener("change", () => {
-          let json = {
-            year: "2020",
-            term: "spring",
-            course: $("#filterDept")[0].value,
-            courseNumber: $("#course")[0].value
-          };
-          this.textbooksService
-            .getTextbooksByCourse(json)
-            .then(result => {
-              console.log(result);
-              this.books = result;
-            })
-            .catch(err => {
-              this.books = [];
-              console.log("No books required for this course");
-            });
+          this.books = result.searchResults;
+        }).catch(err => {
+          this.books = [];
+          console.log("No books required for this course");
         });
       });
 
       $("#chooseBook")[0].addEventListener("change", event => {
-        console.log(event.target.value)
-        if(event.target.value == "UserEntered"){
+        if(event.target.value == "UserEntered") {
           this.userEnteringBook = true;
           this.imageURL = "";
-        }else{
+
+        } else {
           this.userEnteringBook = false;
-          let isbnOBJ = this.books.filter(book => {
+
+          let isbnOBJ = this.books && this.books.filter(book => {
             return book.details == event.target.value;
           });
+
           if (isbnOBJ && isbnOBJ[0]) {
-            console.log(isbnOBJ[0].isbn);
             let json = {
-              isbn: isbnOBJ[0].isbn,
-              size: "l"
+              "isbn": isbnOBJ[0].isbn,
+              "size": "l"
             };
-            this.textbooksService
-              .getTextbooksCover(json)
-              .then(result => {
-                console.log(result);
-                this.imageURL = result;
-              })
-              .catch(err => {
-                console.log(err);
-              });
+
+            this.textbooksService.getTextbooksCover(json).then(result => {
+              console.log(result);
+              this.imageURL = result;
+            }).catch(err => {
+              console.log(err);
+            });
+
           } else {
             this.imageURL = "";
           }
         }
       });
+
+      $("#URL")[0].addEventListener('change', event => {
+        this.imageURL = event.target.value;
+      });
     });
 
-    this.textbooksService
-      .getDept()
-      .then(result => {
-        console.log(result);
-        this.faculties = result;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.textbooksService.getDept().then(result => {
+      this.faculties = result;
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   createTextbook() {

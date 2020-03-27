@@ -36,6 +36,9 @@
         <div class="list"><span class="placeholderCourse" id="course" (click)="selectorCourse()" (keypress)="onKeydown($event)">{{ Course }} </span>
 
             <ul class="list__ul_course">
+                <li (click)="selectedCourse($event)">
+                    <a name="---">--- </a>
+                </li>
                 <li *ngFor="let course of coursesSort; let i = index" (click)="selectedCourse($event)" ngValue="dept.value" style="text-transform: uppercase;">
                     <a name="{{course.value}}">{{course.value}}</a></li>
             </ul>

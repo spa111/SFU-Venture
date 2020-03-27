@@ -62,7 +62,6 @@ export class MainMarketDisplayComponent implements OnInit {
           .getDept()
           .then(result => {
             console.log("Retrieval Successful");
-            console.log(result);
             this.faculties = result;
 
             this.faculties.forEach(faculty => {
@@ -173,7 +172,7 @@ export class MainMarketDisplayComponent implements OnInit {
 
     if (this.shouldSortPrice || this.shouldSortDept || this.shouldSortClass) {
       this.facultiesDOM = JSON.parse(JSON.stringify(this.deptWithTextbooks));
-    
+
       if (this.shouldSortDept) {
         this.sortByDept(this.runRemainingSorts.bind(this));
       } else {
@@ -183,6 +182,7 @@ export class MainMarketDisplayComponent implements OnInit {
       this.reset();
     }
   }
+
   runRemainingSorts() {
     if (this.shouldSortClass) {
       this.sortByCourse();
@@ -215,7 +215,6 @@ export class MainMarketDisplayComponent implements OnInit {
   }
 
   sortByDept(callback) {
-
     this.facultiesDOM = [];
     let courseDOM = [];
     this.textbooksService
@@ -305,26 +304,28 @@ export class MainMarketDisplayComponent implements OnInit {
   }
 
   selected(event: any): void {
-    if (event.target.name == null) {
-      return;
+    if (event) {
+      if (event.target.name == null) {
+        return;
+      }
+
+      this.Selector = event.target.name.toUpperCase();
     }
 
+
     $(".placeholder").css("opacity", "1");
-    this.Selector = event.target.name.toUpperCase();
     $(".list__ul").css("display", "none");
     this.Selected = false;
     this.Course = "---";
     this.SelectorOpen = false;
 
-    if (!(event.target.name == "ALL")) {
-      this.textbooksService
-        .getCourses(event.target.name)
-        .then(result => {
-          this.coursesArray = result;
-        })
-        .catch(err => {
-          console.log(err);
-        });
+    if ((event && event.target.name != "ALL") || (event == null)) {
+
+      this.textbooksService.getCourses(event == null ? this.Selector.toLowerCase() : event.target.name).then(result => {
+        this.coursesArray = result;
+      }).catch(err => {
+        console.log(err);
+      });
     }
     $(".placeholderCourse").css("opacity", "1");
     this.filter();
@@ -346,6 +347,11 @@ export class MainMarketDisplayComponent implements OnInit {
   selectedCourse(event: any): void {
     $(".placeholder").css("opacity", "1");
     $(".list__ul").css("display", "none");
+    if(event == null){
+      this.SelectedCourse = false;
+    this.SelectorOpen = false;
+      return;
+    }
     if (event.target.name == null) {
       return;
     }
@@ -360,8 +366,13 @@ export class MainMarketDisplayComponent implements OnInit {
 
   currString: string = "";
   currStringCourse: string = "";
-  @HostListener("document:keypress", ["$event"])
+  @HostListener("document:keydown", ["$event"])
   handleKeyboardEvent(event: KeyboardEvent) {
+    if(event.key === "Escape") {
+      // this.selected(null);
+      this.selectedCourse(null);
+      return
+    }
     if (this.Selected) {
       this.currString += event.key;
 
@@ -379,7 +390,6 @@ export class MainMarketDisplayComponent implements OnInit {
   //-------------END Section for UI Factuly and course chooser//
   //section for modification of row sections
   extendSection(event: any) {
-
     if (event.target.innerHTML.includes("add")) {
       event.target.innerHTML =
         "<i _ngcontent-jvv-c2='' class='material-icons'> remove </i>";
@@ -388,17 +398,22 @@ export class MainMarketDisplayComponent implements OnInit {
         "<i _ngcontent-isr-c2='' class='material-icons'> add </i>";
     }
     let node = event.target.parentNode.parentNode.id;
-    if(node === ""){
+    if (node === "") {
       node = event.target.parentNode.parentNode.parentNode.id;
     }
+    if(this.Selector !== "ALL"){
+
+        event.target.parentNode.parentNode.classList.toggle("is-active-row");
+      }else{
     this.Selector = $(`#${node} #department`)[0].innerText;
-    this.Course = "---";
+    this.selected(null);
     $("#loader").one("transitionend", () => {
       this.filter();
       document.getElementById("loader").classList.toggle("loaderisactive");
     });
     document.getElementById("loader").classList.toggle("loaderisactive");
   }
+}
 }
 
 // The textbook details Modal Dialog

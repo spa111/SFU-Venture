@@ -539,11 +539,25 @@ h5 {
     background-color: #ff4b2b14;
     // background-color: darken($color: lightgray, $amount: 20);
     overflow: hidden;
-    transition: height 300ms;
+}
+
+.list__ul,
+.list__ul_course {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+i,
+a {
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
 }
 
 .is-active-row {
-    // height: 100%;
     height: max-content;
 }
 
