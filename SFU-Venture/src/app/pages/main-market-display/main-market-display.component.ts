@@ -328,7 +328,9 @@ export class MainMarketDisplayComponent implements OnInit {
       });
     }
     $(".placeholderCourse").css("opacity", "1");
-    this.filter();
+    if(event != null){
+      this.filter();
+    }
   }
 
   selectorCourse() {
@@ -403,7 +405,7 @@ export class MainMarketDisplayComponent implements OnInit {
     }
     if(this.Selector !== "ALL"){
 
-        event.target.parentNode.parentNode.classList.toggle("is-active-row");
+        // event.target.parentNode.parentNode.classList.toggle("is-active-row");
       }else{
     this.Selector = $(`#${node} #department`)[0].innerText;
     this.selected(null);
