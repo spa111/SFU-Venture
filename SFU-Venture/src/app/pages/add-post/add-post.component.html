@@ -18,7 +18,7 @@
 
                 <select id="chooseBook" class="custom-select" style="text-transform: uppercase;">
                     <option selected value="choose">Select a Book</option>
-                    <option *ngFor="let book of books; let i = index" ngValue="book" style="text-transform: uppercase;" >{{book.details}}</option>
+                    <option *ngFor="let book of books; let i = index" ngValue="book.details" style="text-transform: uppercase;" >{{book.details}}</option>
                     <option value="UserEntered">Enter a custom book</option>
                 </select>
                 <input type="text" placeholder="Textbook Name" id="textbook-name" *ngIf="userEnteringBook" />

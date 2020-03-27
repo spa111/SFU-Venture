@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, AfterViewInit } from "@angular/core";
 import { TextbooksService } from "../../services/server-apis/textbooks/textbooks.service";
 import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth/auth.service";
@@ -14,7 +14,8 @@ export class AddPostComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private textbooksService: TextbooksService
+    private textbooksService: TextbooksService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   faculties: any;
@@ -36,6 +37,7 @@ export class AddPostComponent implements OnInit {
 
         this.textbooksService.getCourses(dept).then(result => {
           this.courses = result;
+          this.cdr.detectChanges();
 
         }).catch(err => {
           console.log(err);
@@ -53,14 +55,16 @@ export class AddPostComponent implements OnInit {
         };
 
         this.textbooksService.getTextbooksByCourse(json).then(result => {
-          result.searchResults.forEach(textbook => {
+          this.books = result.searchResults;
+          this.books.forEach(textbook => {
             let details = textbook.details;
             var tmp = document.createElement("DIV");
             tmp.innerHTML = details;
-            textbook.details = tmp.textContent || tmp.innerText;
+            
+            let textbookDetails = tmp.textContent || tmp.innerText;
+            textbook.details = textbookDetails.replace(/(\r\n|\n|\r)/gm, "");
+            this.cdr.detectChanges();
           });
-
-          this.books = result.searchResults;
         }).catch(err => {
           this.books = [];
           console.log("No books required for this course");
