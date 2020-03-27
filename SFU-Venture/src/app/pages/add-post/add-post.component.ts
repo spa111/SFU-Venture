@@ -56,6 +56,8 @@ export class AddPostComponent implements OnInit {
 
         this.textbooksService.getTextbooksByCourse(json).then(result => {
           this.books = result.searchResults;
+          this.cdr.detectChanges();
+          
           this.books.forEach(textbook => {
             let details = textbook.details;
             var tmp = document.createElement("DIV");
@@ -63,7 +65,6 @@ export class AddPostComponent implements OnInit {
             
             let textbookDetails = tmp.textContent || tmp.innerText;
             textbook.details = textbookDetails.replace(/(\r\n|\n|\r)/gm, "");
-            this.cdr.detectChanges();
           });
         }).catch(err => {
           this.books = [];
