@@ -47,30 +47,28 @@ export class MainMarketDisplayComponent implements OnInit {
     this.getAllTextbooks().then(result => {
       this.textbooks = result;
 
-      this.textbooksService
-        .getDept()
-        .then(result => {
-          console.log("Retrieval Successful");
-          console.log(result);
-          this.faculties = result;
+      this.textbooksService.getDept().then(result => {
+        console.log("Retrieval Successful");
+        this.faculties = result;
 
-          this.faculties.forEach(faculty => {
-            faculty.textbooks = this.textbooks && this.textbooks.length > 0 ? this.textbooks.filter(textbook => {
-              return textbook.faculty_name.toLocaleLowerCase() == faculty.value;
-            }) : [];
+        this.faculties.forEach(faculty => {
+          faculty.textbooks = this.textbooks && this.textbooks.length > 0 ? this.textbooks.filter(textbook => {
+            return textbook.faculty_name.toLocaleLowerCase() == faculty.value;
+          }) : [];
 
-            if (faculty.textbooks.length > 0) {
-              this.deptWithTextbooks.push(faculty)
-            }
-          });
-
-          this.facultiesDOM = JSON.parse(JSON.stringify(this.deptWithTextbooks));
-          this.contentLoaded = true;
-        })
-        .catch(err => {
-          console.log(err);
+          if (faculty.textbooks.length > 0) {
+            this.deptWithTextbooks.push(faculty)
+          }
         });
-    }).catch(err => {
+
+        this.facultiesDOM = JSON.parse(JSON.stringify(this.deptWithTextbooks));
+        this.contentLoaded = true;
+
+      }).catch(err => {
+        console.log(err);
+      });
+
+    }).catch(err => { 
       console.log(err)
     });
   }
@@ -170,6 +168,16 @@ export class MainMarketDisplayComponent implements OnInit {
       }
     } else {
       this.reset();
+    }
+  }
+
+  runRemainingSorts() {
+    if (this.shouldSortClass) {
+      this.sortByCourse();
+    }
+
+    if (this.shouldSortPrice) {
+      this.sortByPrice();
     }
   }
 
@@ -305,14 +313,11 @@ export class MainMarketDisplayComponent implements OnInit {
 
     if (!(event.target.name == "ALL")) {
 
-      this.textbooksService
-        .getCourses(event.target.name)
-        .then(result => {
-          this.coursesArray = result;
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.textbooksService.getCourses(event.target.name).then(result => {
+        this.coursesArray = result;
+      }).catch(err => {
+        console.log(err);
+      });
     }
     $(".placeholderCourse").css("opacity", "1");
     this.filter();
