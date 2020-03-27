@@ -344,18 +344,29 @@ export class MainMarketDisplayComponent implements OnInit {
   //-------------END Section for UI Factuly and course chooser//
   //section for modification of row sections
   extendSection(event: any){
-      console.log("Child:", event.target.innerHTML);
-      if(event.target.innerHTML === "<i _ngcontent-isr-c2='' class='material-icons'> remove </i>"){
-        event.target.innerHTML = "<i _ngcontent-jvv-c2='' class='material-icons'> add </i>"
-      }else{
-        event.target.innerHTML = "<i _ngcontent-isr-c2='' class='material-icons'> remove </i>"
-      }
-      console.log("Parent:", event.target.parentNode); 
-      console.log("Parent-Parent:", event.target.parentNode.parentNode);
-      event.target.parentNode.parentNode.classList.toggle("is-active-row");
-  }
-  
+      // console.log("Child:", event.target.innerHTML);
+      // if(event.target.innerHTML === "<i _ngcontent-isr-c2='' class='material-icons'> remove </i>"){
+      //   event.target.innerHTML = "<i _ngcontent-jvv-c2='' class='material-icons'> add </i>"
+      // }else{
+      //   event.target.innerHTML = "<i _ngcontent-isr-c2='' class='material-icons'> remove </i>"
+      // }
+      console.log("Parent:", event.target.parentNode.parentNode.id); 
+      // console.log($(`#${event.target.parentNode.parentNode.id} #department`)[0].innerText)
+      // event.target.parentNode.classList.toggle("endRowAnimate");
+      // console.log(document.getElementById("loader"))
+      this.Selector = $(`#${event.target.parentNode.parentNode.id} #department`)[0].innerText;
+      this.Course = "---";
+      $( "#loader" ).one( "transitionend", () => {
+        this.filter()
+        document.getElementById("loader").classList.toggle("loaderisactive");
+      });
+      document.getElementById("loader").classList.toggle("loaderisactive");
+      
+      // console.log("Parent-Parent:", event.target.parentNode.parentNode);
+      // event.target.parentNode.parentNode.classList.toggle("is-active-row");
+    }
 }
+  
 
 
 // The textbook details Modal Dialog

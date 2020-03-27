@@ -535,6 +535,27 @@ h5 {
 
 .endRow {
     width: 10%;
+    transition: height 300ms;
+    transition: width 300ms;
+}
+
+.endRowAnimate {
+    height: 100vh;
+    width: 100vh;
+}
+
+.loader {
+    opacity: 0;
+    z-index: -1;
+    background-color: #fff1ee;
+    transition: opacity 500ms;
+    // transition: z-index 300ms;
+}
+
+.loaderisactive {
+    // transition: opacity ;
+    opacity: 1;
+    z-index: 100;
 }
 
 .section-splitter {
