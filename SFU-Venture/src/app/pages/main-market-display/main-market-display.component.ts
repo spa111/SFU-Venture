@@ -312,7 +312,6 @@ export class MainMarketDisplayComponent implements OnInit {
       this.Selector = event.target.name.toUpperCase();
     }
 
-
     $(".placeholder").css("opacity", "1");
     $(".list__ul").css("display", "none");
     this.Selected = false;
@@ -351,7 +350,7 @@ export class MainMarketDisplayComponent implements OnInit {
     $(".list__ul").css("display", "none");
     if(event == null){
       this.SelectedCourse = false;
-    this.SelectorOpen = false;
+      this.SelectorOpen = false;
       return;
     }
     if (event.target.name == null) {
@@ -371,8 +370,12 @@ export class MainMarketDisplayComponent implements OnInit {
   @HostListener("document:keydown", ["$event"])
   handleKeyboardEvent(event: KeyboardEvent) {
     if(event.key === "Escape") {
-      // this.selected(null);
-      this.selectedCourse(null);
+      this.SelectorOpen = false;
+    this.SelectedCourse = false;
+    $(".placeholder").css("opacity", "1");
+    $(".list__ul").css("display", "none");
+    $(".placeholderCourse").css("opacity", "1");
+    $(".list__ul_course").css("display", "none");
       return
     }
     if (this.Selected) {
