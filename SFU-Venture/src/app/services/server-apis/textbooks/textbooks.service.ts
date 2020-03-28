@@ -26,6 +26,16 @@ export class TextbooksService {
     return this.http.get(SERVER_BASE_URL + '/api/textbooks', this.httpOptions).toPromise();
   }
 
+  getTextbooksByCourse(json: any): Promise<any> {
+    this.generateHeaders();
+    return this.http.post(SERVER_BASE_URL + '/api/getBookDetail/', json, this.httpOptions).toPromise();
+  }
+
+  getTextbooksCover(json: any): Promise<any> {
+    this.generateHeaders();
+    return this.http.post(SERVER_BASE_URL + '/api/getBookCover/', json, this.httpOptions).toPromise();
+  }
+
   getUsersTextbooks(id: any): Promise<any> {
     this.generateHeaders();
     return this.http.get(SERVER_BASE_URL + '/api/textbooks/' + id, this.httpOptions).toPromise();

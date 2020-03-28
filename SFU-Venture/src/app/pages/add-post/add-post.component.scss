@@ -70,6 +70,11 @@ button.ghost {
     border-color: #FFFFFF;
 }
 
+.textbook-image {
+    max-height: 25%;
+    height: 25%;
+}
+
 form {
     background-color: #FFFFFF;
     display: flex;
@@ -92,7 +97,7 @@ form {
 }
 
 #desc-link-bottom-half {
-    height: 80%;
+    height: 30%;
     margin-top: 5%;
     margin-bottom: 5%;
 }
@@ -100,6 +105,7 @@ form {
 textarea {
     height: 90%;
     resize: none;
+    overflow: auto;
 }
 
 input,

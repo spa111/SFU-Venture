@@ -46,6 +46,7 @@ user agent stylesheet html {
     padding-right: 0px !important;
     padding-left: 0px !important;
 }
+
 .popup-modal {
     position: relative;
     margin: -24px !important;
@@ -66,7 +67,7 @@ user agent stylesheet html {
     cursor: pointer;
     white-space: nowrap
 }
-  
+
 .topright {
     position: absolute;
     right: 0;
@@ -285,7 +286,7 @@ select option {
     top: 13%;
     left: 300px;
     bottom: 1%;
-    width: 75%;
+    // width: 75%;
     background-color: white;
     border-radius: 2%;
     overflow: scroll;
@@ -316,8 +317,8 @@ select option {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .separator {
@@ -369,14 +370,20 @@ h5 {
 //MARKET SECTION
 .marketItem {
     position: relative;
-    height: 90%;
-    width: 25%;
+    // height: 90%;
+    height: 170px;
+    // min-height: 140px;
+    width: 100%;
     margin: 1%;
     background-color: rgb(226, 226, 226);
     border-bottom: 1px solid #ebebeb;
     &:hover {
         background-color: darken($color: rgb(202, 201, 201), $amount: 15);
     }
+}
+
+.spacer {
+    padding-left: 10px;
 }
 
 .marketItemImg {
@@ -512,7 +519,13 @@ h5 {
 .marketItemsArea {
     width: 90%;
     height: 80%;
-    display: flex;
+    // display: flex;
+}
+
+.book-wrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
 }
 
 .row {
@@ -520,15 +533,56 @@ h5 {
     border-radius: 10px;
     padding-top: 5px;
     width: auto;
-    height: 40%;
+    height: 220px;
+    // height: 40%;
     // background-color: #f5f5f5;
     background-color: #ff4b2b14;
     // background-color: darken($color: lightgray, $amount: 20);
     overflow: hidden;
 }
 
+.list__ul,
+.list__ul_course {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+i,
+a {
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+.is-active-row {
+    height: max-content;
+}
+
 .endRow {
     width: 10%;
+    transition: height 300ms;
+    transition: width 300ms;
+}
+
+.endRowAnimate {
+    height: 100vh;
+    width: 100vh;
+}
+
+.loader {
+    width: 100%;
+    opacity: 0;
+    z-index: -1;
+    background-color: #fff1ee;
+    transition: all 500ms;
+}
+
+.loaderisactive {
+    opacity: 1;
+    z-index: 100;
 }
 
 .section-splitter {

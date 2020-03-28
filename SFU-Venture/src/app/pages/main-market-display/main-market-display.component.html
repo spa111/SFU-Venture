@@ -36,6 +36,9 @@
         <div class="list"><span class="placeholderCourse" id="course" (click)="selectorCourse()" (keypress)="onKeydown($event)">{{ Course }} </span>
 
             <ul class="list__ul_course">
+                <li (click)="selectedCourse($event)">
+                    <a name="---">--- </a>
+                </li>
                 <li *ngFor="let course of coursesSort; let i = index" (click)="selectedCourse($event)" ngValue="dept.value" style="text-transform: uppercase;">
                     <a name="{{course.value}}">{{course.value}}</a></li>
             </ul>
@@ -43,10 +46,10 @@
 
     </div>
     <div class="display" *ngIf="contentLoaded">
-        <div class="row" *ngFor="let dept of facultiesDOM;">
+        <div class="row spacer" *ngFor="let dept of facultiesDOM;" [attr.id]="dept.value +'_rowID'">
             <div id="department" class="section-splitter"> {{dept.value}} </div>
 
-            <div class="marketItemsArea">
+            <div class="marketItemsArea book-wrapper">
                 <div class="marketItem rcorners" *ngFor="let post of dept.textbooks; let i = index" (click)="openTextbookInfo(post)">
                     <div class="marketItemLabel">
                         <span>{{post.price}}</span>
@@ -57,10 +60,11 @@
                         <h5 class="marketItemName">{{post.txt_book_name}}
                         </h5>
                     </div>
+
                 </div>
             </div>
             <div class="endRow">
-                <a href="#" class="button animatedBtn seeMore">
+                <a type="button" (click)="extendSection($event)" class="button animatedBtn seeMore">
                     <i class="material-icons">
                         add
                     </i>
@@ -71,4 +75,8 @@
         <div>
         </div>
     </div>
+    <div class="display loader" id="loader"></div>
+
+
+
 </div>
