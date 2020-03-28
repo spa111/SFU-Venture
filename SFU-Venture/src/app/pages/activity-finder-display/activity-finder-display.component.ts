@@ -43,4 +43,49 @@ export class ActivityFinderDisplayComponent implements OnInit {
     console.log(activities)
   }
 
+  setModal(item) {
+    var title = document.getElementById("activityModalTitle");
+    title.innerHTML = item.activity_title
+
+    var desc = document.getElementById("activityModalDesc")
+    desc.innerHTML = item.activity_description
+
+    var when = document.getElementById("activityModalTime")
+    when.innerHTML += item.activity_timestamp
+
+    var where = document.getElementById("activityModalLocation")
+    where.innerHTML += item.activity_location
+
+  }
+
+  openModal(item) {
+    console.log(item)
+    var modal = document.getElementById("activityModal")
+    modal.style.display = "block"
+    modal.style.backgroundColor = "#0000006e"
+    this.setModal(item)
+  }
+
+  closeModal() {
+    var modal = document.getElementById("activityModal")
+    modal.style.display = "none"
+
+    this.clearModal()
+  }
+
+  clearModal() {
+    let emptyString = ""
+    var title = document.getElementById("activityModalTitle");
+    title.innerHTML = emptyString 
+
+    var desc = document.getElementById("activityModalDesc")
+    desc.innerHTML = emptyString
+
+    var when = document.getElementById("activityModalTime")
+    when.innerHTML = "<b> When: </b>"
+
+    var where = document.getElementById("activityModalLocation")
+    where.innerHTML = "<b> Where: </b>"
+  }
+
 }

@@ -51,7 +51,7 @@
                 <tr class="activity-row" *ngFor="let activity of result;">
                     <td rowspan="activity.values.length">{{activity.name}}</td>
 
-                    <div class="activity-value-div" *ngFor="let item of activity.values">
+                    <div class="activity-value-div" *ngFor="let item of activity.values" (click)="openModal(item)">
                         <tr class="activity-value-row">
                             <td> <span class="colored-dot"></span> </td>
                             <td>{{item.activity_title}}</td>
@@ -59,11 +59,6 @@
                         <!-- <td>{{item.activity_description}}</td> -->
                     </div>
                 </tr>
-
-                
-
-                
-                    
                     <!-- <td>{{activity.activity_timestamp.substring(11,16)}}</td> -->
                     <!-- <td><a href="#">{{activity.activity_title}}</a></td> -->
                     <!-- <td>{{activity.activity_description.substring(0, 30)}}...</td> -->
@@ -78,3 +73,31 @@
 
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal" id="activityModal" tabindex="-1" role="dialog" aria-labelledby="activityModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="activityModalTitle"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="activityModalDetails">
+                <p class="activityModalDetailItem" id="activityModalLocation"><b>Where: </b> </p>
+                <p class="activityModalDetailItem" id="activityModalTime"><b>When: </b> </p>
+            </div>
+            <b>Description</b> 
+            <div id="activityModalDesc">
+
+            </div>
+        </div>
+        <!-- <div class="modal-footer"> -->
+          <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
