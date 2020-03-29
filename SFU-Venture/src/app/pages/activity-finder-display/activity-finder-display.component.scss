@@ -422,8 +422,24 @@ h5 {
     // width: 75%;
     margin-bottom: 10px;
     text-align: center;
+    border-radius: .25rem;
+    border: 1px solid #cecece;
+    padding: 4px;
 }
 
 .filter-date-input {
     text-align: center;
+}
+
+
+#filterDept {
+    text-align: center;
+    margin: 4px;
+    width: 90%;
+}
+
+.filter-dept {
+    margin: 10px;
+    text-align: center;
+
 }

@@ -10,21 +10,22 @@
             <div class="fliter-items ">
                 <div class="filter-price">
                     <div class="filter-date-input">
-                        <h6>From:</h6>
+                        From:
+                        <br/>
                         <input class="datepicker" type="date" id="startDatePicker" name="startDate">
                     </div>
                 </div>
 
                 <br />
-                <!-- <div class="filter-dept">
+                <div class="filter-dept">
                     Dept:
                     <select id="filterDept" class="custom-select" style="text-transform: uppercase;">
                         <option selected value="All">All</option>
-                        <option *ngFor="let dept of faculties; let i = index" ngValue="dept.value"
+                        <option *ngFor="let dept of facultiesDom; let i = index" ngValue="dept.value"
                             style="text-transform: uppercase;">{{dept.value}}</option>
 
                     </select>
-                </div> -->
+                </div>
             </div>
             <div class="search">
                 <button class="btn btn-primary" style="margin-right: 5%;" (click)="reset()">Reset</button>
@@ -45,7 +46,7 @@
                     <!-- <th>Price</th> -->
                 </tr>
                 <tr class="activity-row" *ngFor="let activity of result;">
-                    <td rowspan="activity.values.length">{{activity.name}}</td>
+                    <td *ngIf="activity.values.length" rowspan="activity.values.length">{{activity.name}}</td>
 
                     <div class="activity-value-div" *ngFor="let item of activity.values" (click)="openModal(item)">
                         <tr class="activity-value-row">

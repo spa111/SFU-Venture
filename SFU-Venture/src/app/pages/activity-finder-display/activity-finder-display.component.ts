@@ -1,6 +1,8 @@
+import { TextbooksService } from './../../services/server-apis/textbooks/textbooks.service';
 import { ActivitiesService } from './../../services/server-apis/activities/activities.service';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+declare var $: any;
 
 @Component({
   selector: 'app-activity-finder-display',
@@ -8,16 +10,25 @@ import * as moment from 'moment';
   styleUrls: ['./activity-finder-display.component.scss']
 })
 export class ActivityFinderDisplayComponent implements OnInit {
+  
   contentLoaded: Boolean = false;
   result: Array<any>
-  constructor( private activitiesService: ActivitiesService) { 
+  activities: any
+  activitesDOM: any
+  faculties: any
+  facultiesDom: any
+  resultBackup: any
+
+  constructor( 
+    private activitiesService: ActivitiesService,
+    private textbooksService: TextbooksService) { 
   }
 
-  activitesDOM: any
 
+  // you will have result and result_backup to use after this 
   async ngOnInit() {
-    var activities = await this.activitiesService.getAll();
-    this.activitesDOM = activities
+    this.activities = await this.activitiesService.getAll();
+    this.activitesDOM = JSON.parse(JSON.stringify(this.activities))
     this.contentLoaded = true;
 
     this.activitesDOM.forEach(element => {
@@ -27,6 +38,14 @@ export class ActivityFinderDisplayComponent implements OnInit {
       element.activity_timestamp = formattedDate
 
       element.time = time.format("h:mm a");
+
+
+      this.textbooksService
+      .getDept()
+      .then(result => {
+        this.faculties = result;
+        this.facultiesDom = result
+        });
 
     });
 
@@ -38,6 +57,8 @@ export class ActivityFinderDisplayComponent implements OnInit {
         values: this.activitesDOM.filter(i => i.activity_timestamp === g)
       }
     ))
+
+    this.resultBackup = JSON.parse(JSON.stringify(this.result))
 
     // console.log(this.result)
     groups.forEach(g => console.log(g))
@@ -104,35 +125,64 @@ export class ActivityFinderDisplayComponent implements OnInit {
   }
 
   sort() {
+
+    let listToUse = this.resultBackup;
     let emptyString = ""
     let startDateString = (<HTMLInputElement>document.getElementById("startDatePicker")).value;
 
-    if (startDateString === emptyString) {
-      alert("Invalid Dates")
-      return;
+
+    if (startDateString != emptyString) {
+      listToUse = this.sortByDate(startDateString)
     }
 
+    this.sortDept(listToUse)
+
+  }
+
+  sortByDate(startDateString) {
+
     let startDateMoment = moment(startDateString)
-    let startDate = startDateMoment.format("MMM Do YYYY")
-
-
+    let startDate = startDateMoment.format("YYYY-MM-DD")
+    
     console.log("Start Date: ", startDate)
-    this.result = this.result.filter( i => {
-      console.log(i)
-      console.log(i.name >= startDate)
-      return i.name >= startDate
+    var temp = JSON.parse(JSON.stringify(this.resultBackup))
+
+    this.result = temp.filter( i => {
+      let dateToCompare = moment(i.name, 'MMM Do YYYY').format('YYYY-MM-DD')
+      return moment(startDate).isBefore(dateToCompare)
     })
 
+    return this.result
+  }
 
+  sortDept(listToUse) {
+    var sortedList = JSON.parse(JSON.stringify(listToUse))
+    console.log($("#filterDept")[0].value);
+    let filter_value = $("#filterDept")[0].value;
 
+    if (filter_value == "All") {
+      this.result = sortedList
+    } else {
 
+      sortedList.forEach(element => {
 
+        var values = element.values.filter(item => {
+          return item.corresponding_department.toUpperCase() === filter_value.toUpperCase()
+        })
 
+        element.values = values
 
+      });
 
+      this.result = sortedList
+    }
+  }
 
-
-
+  reset() {
+    this.result = JSON.parse(JSON.stringify(this.resultBackup))
+    $("#filterDept")[0].value = $("#filterDept")[0][0].value
+    let startDateString = (<HTMLInputElement>document.getElementById("startDatePicker"));
+    startDateString.value = ""
   }
 
 }
