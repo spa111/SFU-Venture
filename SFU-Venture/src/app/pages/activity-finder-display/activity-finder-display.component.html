@@ -9,18 +9,14 @@
             <h2 class="filter-title">Filter</h2>
             <div class="fliter-items ">
                 <div class="filter-price">
-                    <h5>Price:</h5>
-                    <div class="filter-price-input">
-                        <input type="text" class="form-control small-form-control" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-sm">
-                        <span class="separator">-</span>
-                        <input type="text" class="form-control small-form-control" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-sm">
+                    <div class="filter-date-input">
+                        <h6>From:</h6>
+                        <input class="datepicker" type="date" id="startDatePicker" name="startDate">
                     </div>
                 </div>
 
                 <br />
-                <div class="filter-dept">
+                <!-- <div class="filter-dept">
                     Dept:
                     <select id="filterDept" class="custom-select" style="text-transform: uppercase;">
                         <option selected value="All">All</option>
@@ -28,11 +24,11 @@
                             style="text-transform: uppercase;">{{dept.value}}</option>
 
                     </select>
-                </div>
+                </div> -->
             </div>
             <div class="search">
                 <button class="btn btn-primary" style="margin-right: 5%;" (click)="reset()">Reset</button>
-                <button class="btn btn-primary" style="margin-left: 5%;" (click)="sortByDept()">Search</button>
+                <button class="btn btn-primary" style="margin-left: 5%;" (click)="sort()">Search</button>
             </div>
         </div>
     </div>
@@ -87,12 +83,18 @@
         <div class="modal-body">
             <div class="activityModalDetails">
                 <p class="activityModalDetailItem" id="activityModalLocation"><b>Where: </b> </p>
-                <p class="activityModalDetailItem" id="activityModalTime"><b>When: </b> </p>
+                <p class="activityModalDetailItem" id="activityModalDate"><b>When: </b> </p>
+                <p class="activityModalDetailItem" id="activityModalTime"><b>Time: </b> </p>
+                <p class="activityModalDetailItem" id="activityModalPrice"><b>Price: </b> </p>
             </div>
-            <b>Description</b> 
-            <div id="activityModalDesc">
-
+          
+            <div class="activityModalDetailItem">
+                <b>Description</b> 
+                <div id="activityModalDesc">
+    
+                </div>
             </div>
+            
         </div>
         <!-- <div class="modal-footer"> -->
           <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->

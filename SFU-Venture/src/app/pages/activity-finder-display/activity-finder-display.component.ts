@@ -22,9 +22,12 @@ export class ActivityFinderDisplayComponent implements OnInit {
 
     this.activitesDOM.forEach(element => {
       let date = moment(element.activity_timestamp)
+      let time = moment(element.activity_timestamp)
       let formattedDate = date.format("MMM Do YYYY")
-      console.log(formattedDate)
       element.activity_timestamp = formattedDate
+
+      element.time = time.format("h:mm a");
+
     });
 
     var groups = new Set(this.activitesDOM.map(item => item.activity_timestamp))
@@ -36,11 +39,11 @@ export class ActivityFinderDisplayComponent implements OnInit {
       }
     ))
 
-    console.log(this.result)
+    // console.log(this.result)
     groups.forEach(g => console.log(g))
 
 
-    console.log(activities)
+    // console.log(activities)
   }
 
   setModal(item) {
@@ -50,11 +53,17 @@ export class ActivityFinderDisplayComponent implements OnInit {
     var desc = document.getElementById("activityModalDesc")
     desc.innerHTML = item.activity_description
 
-    var when = document.getElementById("activityModalTime")
+    var when = document.getElementById("activityModalDate")
     when.innerHTML += item.activity_timestamp
+
+    var time = document.getElementById("activityModalTime")
+    time.innerHTML += item.time
 
     var where = document.getElementById("activityModalLocation")
     where.innerHTML += item.activity_location
+
+    var price = document.getElementById("activityModalPrice")
+    price.innerHTML += item.activity_price
 
   }
 
@@ -81,11 +90,49 @@ export class ActivityFinderDisplayComponent implements OnInit {
     var desc = document.getElementById("activityModalDesc")
     desc.innerHTML = emptyString
 
-    var when = document.getElementById("activityModalTime")
+    var when = document.getElementById("activityModalDate")
     when.innerHTML = "<b> When: </b>"
+
+    var time = document.getElementById("activityModalTime")
+    time.innerHTML = "<b> When: </b>"
 
     var where = document.getElementById("activityModalLocation")
     where.innerHTML = "<b> Where: </b>"
+
+    var price = document.getElementById("activityModalPrice")
+    price.innerHTML = "<b> Price: </b>"
+  }
+
+  sort() {
+    let emptyString = ""
+    let startDateString = (<HTMLInputElement>document.getElementById("startDatePicker")).value;
+
+    if (startDateString === emptyString) {
+      alert("Invalid Dates")
+      return;
+    }
+
+    let startDateMoment = moment(startDateString)
+    let startDate = startDateMoment.format("MMM Do YYYY")
+
+
+    console.log("Start Date: ", startDate)
+    this.result = this.result.filter( i => {
+      console.log(i)
+      console.log(i.name >= startDate)
+      return i.name >= startDate
+    })
+
+
+
+
+
+
+
+
+
+
+
   }
 
 }

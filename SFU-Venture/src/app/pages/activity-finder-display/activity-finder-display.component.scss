@@ -402,7 +402,7 @@ h5 {
 }
 
 #activityModalDesc {
-    min-height: 300px;
+    min-height: 200px;
 }
 
 .activityModalDetails {
@@ -410,6 +410,20 @@ h5 {
 }
 
 .activityModalDetailItem {
-    padding-right: 5px;
+    // padding-right: 5px;
+    padding: 5px;
+    background-color: rgba(255, 75, 43, 0.089);
+    margin: 9px;
+
 }
 
+
+.datepicker {
+    // width: 75%;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.filter-date-input {
+    text-align: center;
+}
