@@ -19,19 +19,24 @@ export class AddActivityComponent implements OnInit {
   ) {}
 
   courses: any;
+  faculties: any;
 
   ngOnInit() {
-    $("#filterDept")[0].addEventListener("change", () => {
-      let dept = $("#filterDept")[0].value;
-      this.textbooksService.getCourses(dept)
-        .then((result) => {
-          this.courses = result;
-        })
-        .catch(err => {
-          console.log(err);
-        }
-      );
+    $(() => {
+      $("#textbook-form").on('submit', (event) => {
+        event.preventDefault();
+      });
     });
+
+    this.textbooksService
+      .getDept()
+      .then(result => {
+        console.log(result);
+        this.faculties = result;
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   createActivity() {
