@@ -27,9 +27,20 @@ export class UsersService {
   }
 
   getById(id: any): Promise<any> {
+    this.generateHeaders();
     return this.http.get(SERVER_BASE_URL + '/api/users/' + id, this.httpOptions).toPromise();
   }
 
+  checkHasAdminPrivileges(id: any): Promise<any> {
+    this.generateHeaders();
+    return this.http.get(SERVER_BASE_URL + '/api/users/checkHasAdminPrivileges/' + id, this.httpOptions).toPromise();
+  }
+
+  updatePrivileges(id: any, newPrivileges: any): Promise<any> {
+    this.generateHeaders();
+    return this.http.put(SERVER_BASE_URL + '/api/users/' + id + "/updatePrivileges", newPrivileges, this.httpOptions).toPromise();
+  }
+  
   addNewUser(newUserJSON: any): Promise<any> {
     return this.http.post(SERVER_BASE_URL + "/api/signup", newUserJSON).toPromise();
   }
@@ -46,11 +57,18 @@ export class UsersService {
     return this.http.post(SERVER_BASE_URL + "/api/change-forgotten-password", newPasswordJSON).toPromise();
   }
 
-  update(id: any, patchJSON: any): Promise<any> {
-    return this.http.put(SERVER_BASE_URL + '/api/users/' + id + '/update-account', patchJSON, this.httpOptions).toPromise();
+  emailSellerAndBuyer(payload: any): Promise<any> {
+    this.generateHeaders();
+    return this.http.post(SERVER_BASE_URL + "/api/users/emailBuyerAndSeller", payload, this.httpOptions).toPromise();
+  }
+
+  update(patchJSON: any): Promise<any> {
+    this.generateHeaders();
+    return this.http.post(SERVER_BASE_URL + '/api/users/update-password', patchJSON, this.httpOptions).toPromise();
   }
 
   delete(id: any): Promise<any> {
+    this.generateHeaders();
     return this.http.delete(SERVER_BASE_URL + "/api/users/" + id, this.httpOptions).toPromise();
   }
 }

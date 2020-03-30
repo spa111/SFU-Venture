@@ -8,8 +8,6 @@ const database = new Pool({
     port: 5432
 });
 
-
-
 // Queries
 const getTextBooks = (request, response) => {
     database.query('select * from textbooks order by ID ASC', (error, results) => {
@@ -24,7 +22,7 @@ const getTextBooks = (request, response) => {
 const getTextBookById = (request, response) => {
     const id = parseInt(request.params.id);
 
-    database.query('select * from textbooks where id = $1', [id], (error, results) => {
+    database.query('select * from textbooks where posting_user_id = $1', [id], (error, results) => {
         if (error) {
             console.log(error);
         } else {
@@ -41,17 +39,17 @@ const deleteTextBook = (request, response) => {
             console.log(error);
         }
 
-        response.status(200).send('textbooks deleted with ID: ${id}');
+        response.status(200).send({ response: 'textbooks deleted with ID: ${id}' });
     });
 };
 
 const createTextBook = (request, response) => {
-    const { txt_book_name, course_name, faculty_name, price, post_date, img_url } = request.body;
+    const { user_id, txt_book_name, course_name, faculty_name, price, post_date, img_url, description } = request.body;
 
 
     // Need to add another check in the db to make it so that the admin is the only one who verifies whether a user is faculty or not
     database.query(
-        'insert into textbooks (txt_book_name, course_name, faculty_name, price, post_date, img_url) values ($1, $2, $3, $4, $5, $6) RETURNING *', [txt_book_name, course_name, faculty_name, price, post_date, img_url],
+        'insert into textbooks (posting_user_id, txt_book_name, course_name, faculty_name, price, post_date, img_url, description) values ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', [user_id, txt_book_name, course_name, faculty_name, price, post_date, img_url, description],
         (error, results) => {
             if (error) {
                 console.log(error);

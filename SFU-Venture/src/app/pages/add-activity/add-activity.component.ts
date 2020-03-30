@@ -100,16 +100,16 @@ export class AddActivityComponent implements OnInit {
       "corresponding_department": corresponding_department,
       "activity_title": activity_title,
       "activity_description": activity_description,
-      "activity-price": activity_price,
+      "activity_price": activity_price,
       "activity_location": activity_location,
       // "activity_date_time": activity_date_time,
-      "activity-timestamp": activity_timestamp,
+      "activity_timestamp": activity_timestamp,
     };
 
     if (poster_user_id && corresponding_department && activity_title && activity_description && activity_price && activity_location) {
       this.activitiesService.createActivity(details).then(result => {
         console.log(result.response);
-        this.router.navigate(['activity']);
+        this.router.navigate(['activity-finder']);
 
       }).catch(err => {
         console.log(err.error);
@@ -120,13 +120,3 @@ export class AddActivityComponent implements OnInit {
   }
 
 }
-
-
-// id                           bigserial  NOT NULL ,
-// poster_user_id               bigint  NOT NULL ,
-// corresponding_department     text  NOT NULL ,
-// activity_title               text  NOT NULL ,
-// activity_description text  NOT NULL ,
-// activity_price     money DEFAULT 0 NOT NULL ,
-// activity_location    text  NOT NULL ,
-// activity_timestamp timestamp DEFAULT current_timestamp NOT NULL ,

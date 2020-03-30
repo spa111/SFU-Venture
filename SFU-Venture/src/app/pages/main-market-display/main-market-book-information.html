@@ -1,0 +1,30 @@
+<div class="popup-modal" mat-dialog-content>
+
+  <div class="popup-content">
+    
+    <div class="textbook-header-image" >
+      <h1 class="popup-title" mat-dialog-title>{{textbook.txt_book_name}} - {{textbook.price}}</h1>
+
+      <img class="textbook-image" src='{{textbook.img_url}}'/>
+    </div>
+
+    <div class="textbook-details">
+      <header style="background-color:#000;color:#fff;">
+        <span (click)="onCloseClick()" class="close-button topright">&times;</span>
+      </header>
+     
+      <div class="textbook-info">
+        {{textbook.description}}
+      </div>
+    </div>
+  </div>
+
+  <div class="delete-section" *ngIf="user_owns_posting else user_doesnt_own">
+    <button class='delete-button' mat-button matRipple (click)="deletePosting()">Delete Posting</button>
+  </div>
+  
+  <ng-template #user_doesnt_own class="contact-section">
+    <button class='contact-button' mat-button matRipple (click)="contactSeller()">Contact Seller</button>
+  </ng-template>
+
+</div>

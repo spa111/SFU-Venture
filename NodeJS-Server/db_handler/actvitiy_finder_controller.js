@@ -80,6 +80,7 @@ const createActivity = (request, response) => {
         activity_timestamp
     } = request.body;
 
+    console.log(request.body);
 
     // Need to add another check in the db to make it so that the admin is the only one who verifies whether a user is faculty or not
     database.query(
@@ -90,7 +91,7 @@ const createActivity = (request, response) => {
                 response.status(401).json({ error: error });
             } else {
                 console.log("Activity Added");
-                response.status(201).json({ response: "Activity Added" });
+                response.status(201).send({ response: "Activity Added" });
             }
         }
     );

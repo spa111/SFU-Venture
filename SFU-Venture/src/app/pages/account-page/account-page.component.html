@@ -1,0 +1,107 @@
+<div class="navContent" *ngIf="userRetrieved">
+  <h1 class="account-settings-heading">Account Settings </h1>
+
+  <mat-list>
+    <mat-list-item>
+      <p class="attribute"> Full Name </p>
+    </mat-list-item>
+    <mat-list-item>
+      <p class="userInputVal"> {{user.fullname}} </p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <br>
+
+    <mat-list-item>
+      <p class="attribute"> Username </p>
+    </mat-list-item>
+    <mat-list-item>
+      <p class="userInputVal"> {{user.username}} </p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <br>
+
+    <mat-list-item>
+      <p class="attribute"> Email </p>
+    </mat-list-item>
+    <mat-list-item>
+      <p class="userInputVal"> {{user.email}} </p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+
+    <br>
+
+    <mat-list-item>
+      <p class="attribute"> Access Level </p>
+    </mat-list-item>
+    <mat-list-item>
+      <p class="userInputVal"> {{accessLevel}} </p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </mat-list>
+  
+  <br><br>
+
+  <div *ngIf="normalUser else adminUser">
+    <button (click)="changePassword()" mat-raised-button>
+      <font color="black"> Change Password </font>
+    </button>
+
+    <button (click)="viewMarketPosts()" class="buttons" mat-raised-button>
+      <font color="black"> Your Market Posts </font>
+    </button>
+
+    <button (click)="deleteAccount()" class="buttons" color="warn" mat-raised-button>
+        <font color="white"> Delete Account </font>
+    </button>
+  </div>
+
+  <ng-template #adminUser>
+    <div *ngIf="adminViewingUser else adminViewingSelf">
+      <div *ngIf="userIsDefaultAdmin else notDefaultAdmin">
+        <button disabled (click)="changePrivileges()" mat-raised-button class="buttons">
+          <font color="white"> Change Account Privileges </font>
+        </button>
+
+        <button disabled (click)="deleteAccount()" color="warn" mat-raised-button class="buttons">
+          <font color="white"> Delete Account </font>
+        </button>
+      </div>
+
+      <ng-template #notDefaultAdmin>
+        <button (click)="changePrivileges()" mat-raised-button class="buttons">
+          <font color="black"> Change Account Privileges </font>
+        </button>
+
+        <button (click)="deleteAccount()" color="warn" mat-raised-button class="buttons">
+          <font color="white"> Delete Account </font>
+        </button>
+      </ng-template>
+    </div>
+
+    <ng-template #adminViewingSelf>
+      <div *ngIf="adminViewingFromModal else viewingFromAccountPage">
+        <button disabled mat-raised-button class="buttons">
+          <font color="white"> Delete Account </font>
+        </button>
+      </div>
+
+      <ng-template #viewingFromAccountPage>
+        <button (click)="changePassword()" mat-raised-button>
+          <font color="black"> Change Password </font>
+        </button>
+    
+        <button (click)="viewMarketPosts()" class="buttons" mat-raised-button>
+          <font color="black"> Your Market Posts </font>
+        </button>
+  
+        <button disabled mat-raised-button class="buttons">
+          <font color="white"> Delete Account </font>
+        </button>
+      </ng-template>
+
+    </ng-template>
+  </ng-template>
+</div>
+
