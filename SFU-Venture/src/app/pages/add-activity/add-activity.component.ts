@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { TextbooksService } from "../../services/server-apis/textbooks/textbooks.service";
 
 declare var $: any;
+declare var google: any;
 
 @Component({
   selector: 'app-add-activity',
@@ -23,20 +24,61 @@ export class AddActivityComponent implements OnInit {
 
   ngOnInit() {
     $(() => {
-      $("#textbook-form").on('submit', (event) => {
+      $("#activity-form").on('submit', (event) => {
         event.preventDefault();
       });
     });
 
     this.textbooksService
-      .getDept()
-      .then(result => {
-        console.log(result);
-        this.faculties = result;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    .getDept()
+    .then(result => {
+      console.log(result);
+      this.faculties = result;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+    ///////////////////////////////// google maps \/
+    var placeSearch, autocomplete;
+
+    var componentForm = {
+      street_number: 'short_name',
+      route: 'long_name',
+      locality: 'long_name',
+      administrative_area_level_1: 'short_name',
+      country: 'long_name',
+      postal_code: 'short_name'
+    };
+
+    function initAutocomplete() {
+      // Create the autocomplete object, restricting the search predictions to
+      // geographical location types.
+      autocomplete = new google.maps.places.Autocomplete(
+          document.getElementById('autocomplete'), {types: ['geocode']});
+
+      // Avoid paying for data that you don't need by restricting the set of
+      // place fields that are returned to just the address components.
+      autocomplete.setFields(['address_component']);
+
+    }
+
+    // Bias the autocomplete object to the user's geographical location,
+    // as supplied by the browser's 'navigator.geolocation' object.
+    function geolocate() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var geolocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          var circle = new google.maps.Circle(
+              {center: geolocation, radius: position.coords.accuracy});
+          autocomplete.setBounds(circle.getBounds());
+        });
+      }
+    }
+    //////////////////////////////// google maps /\
   }
 
   createActivity() {
@@ -58,23 +100,33 @@ export class AddActivityComponent implements OnInit {
       "corresponding_department": corresponding_department,
       "activity_title": activity_title,
       "activity_description": activity_description,
-      "activity_price": activity_price,
+      "activity-price": activity_price,
       "activity_location": activity_location,
       // "activity_date_time": activity_date_time,
-      // "activity_timestamp": activity_timestamp,
+      "activity-timestamp": activity_timestamp,
     };
 
     if (poster_user_id && corresponding_department && activity_title && activity_description && activity_price && activity_location) {
       this.activitiesService.createActivity(details).then(result => {
         console.log(result.response);
-        this.router.navigate(['activity-finder']);
+        this.router.navigate(['activity']);
 
       }).catch(err => {
         console.log(err.error);
       });
     } else{
-      console.log("form not fully filled out");
+      alert("Form is not completely fill out");
     }
   }
 
 }
+
+
+// id                           bigserial  NOT NULL ,
+// poster_user_id               bigint  NOT NULL ,
+// corresponding_department     text  NOT NULL ,
+// activity_title               text  NOT NULL ,
+// activity_description text  NOT NULL ,
+// activity_price     money DEFAULT 0 NOT NULL ,
+// activity_location    text  NOT NULL ,
+// activity_timestamp timestamp DEFAULT current_timestamp NOT NULL ,

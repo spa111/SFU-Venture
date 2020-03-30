@@ -1,7 +1,7 @@
 <div id="body">
     <div class="container" id="container">
         <div class="form-container activity-details-container">
-            <form>
+            <form id="activity-form">
                 <h1>New Activity</h1>
                 <input type="text" placeholder="Activity Title" id="activityTitle" required/>
 
@@ -26,7 +26,10 @@
             <div class="overlay">
                 <div class="overlay-panel overlay-right">
                     <input type="text" placeholder="Activity Date & Time" id="dateTime" />
-                    <input type="text" placeholder="Activity Location" id="location" />
+                    <input type="text" placeholder="Location" id="location" />
+
+                    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDIxWPCm_L0nWdhlQeJoGXn4Insp2FC3E&libraries=places"></script>
+                    <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text" /> -->
 
                 </div>
             </div>
@@ -35,13 +38,3 @@
     </div>
 
 </div>
-
-<!-- activities
-id
-poster_user_id
-corresponding_department
-activity_title
-activity_description
-activity-price
-activity-location
-activity-timestamp -->

@@ -4,10 +4,10 @@ const googleApiBasicCall = "https://maps.googleapis.com/maps/api/place/nearbysea
 const Pool = require('pg').Pool;
 
 const database = new Pool({
-    user: 'cmpt470',
-    host: 'localhost',
-    database: 'cmpt470',
-    password: 'cmpt470',
+    user: 'postgres',
+    host: '35.203.175.95',
+    database: 'postgres',
+    password: 'postgres',
     port: 5432
 });
 
@@ -76,13 +76,14 @@ const createActivity = (request, response) => {
         activity_title,
         activity_description,
         activity_price,
-        activity_location
+        activity_location,
+        activity_timestamp
     } = request.body;
 
 
     // Need to add another check in the db to make it so that the admin is the only one who verifies whether a user is faculty or not
     database.query(
-        'insert into textbooks (poster_user_id, corresponding_department, activity_title, activity_description,activity_price, activity_location) values ($1, $2, $3, $4, $5, $6) RETURNING *', [poster_user_id, corresponding_department, activity_title, activity_description, activity_price, activity_location],
+        'insert into activities (poster_user_id, corresponding_department, activity_title, activity_description, activity_price, activity_location, activity_timestamp) values ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [poster_user_id, corresponding_department, activity_title, activity_description, activity_price, activity_location, activity_timestamp],
         (error, results) => {
             if (error) {
                 console.log(error);
