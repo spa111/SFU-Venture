@@ -10,7 +10,8 @@ import { LoginGuard } from '../app/services/login-guard/login.guard';
 import { ForgotPasswordComponent } from '../app/pages/forgot-password/forgot-password.component';
 import { ChangeForgottenPasswordComponent } from '../app/pages/change-forgotten-password/change-forgotten-password.component';
 import { AddPostComponent } from './pages/add-post/add-post.component';
-import { ActivityFinderDisplayComponent } from './pages/activity-finder-display/activity-finder-display.component'
+import { ActivityFinderDisplayComponent } from './pages/activity-finder-display/activity-finder-display.component';
+import { AddActivityComponent } from './pages/add-activity/add-activity.component';
 
 // Each route to an object is encased in a separate object
 // path - The URL path to the HTML component
@@ -65,6 +66,12 @@ const routes: Routes = [
       path: 'activity-finder',
       pathMatch: 'full',
       component: ActivityFinderDisplayComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'add-activity',
+      pathMatch: 'full',
+      component: AddActivityComponent,
       canActivate: [AuthGuard]
     }
 ];
