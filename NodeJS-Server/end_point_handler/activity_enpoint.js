@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.post('/api/activityAround/', cors(), activityFinder.getActivityAround);
 router.get('/api/activity', cors(), activityFinder.getAllActivities);
-router.post('/api/activity', cors(), activityFinder.createActivity);
+router.post('/api/createActivity', cors(), activityFinder.createActivity);
 router.get('/api/activity/:id', cors(), activityFinder.getActivityById);
 router.delete('/api/activity/:id', cors(), activityFinder.deleteActivityById);
 module.exports = router

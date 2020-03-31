@@ -1,0 +1,21 @@
+<div id="modalContent">
+    <div id="content">
+        <h3 id="applicationUser">{{user.fullname}}'s Application Process</h3>
+        
+        <button (click)="convertToAdmin()" mat-raised-button class="button-control" id="btn-control-admin">
+            <font color="black"> Grant Admin Access </font>
+        </button>
+        
+        <button (click)="convertToFaculty()" mat-raised-button class="button-control" id="btn-control-faculty">
+            <font color="black"> Grant Faculty Access </font>
+        </button>
+        
+        <button (click)="convertToStudent()" mat-raised-button class="button-control" id="btn-control-student">
+            <font color="black"> Grant Student Access </font>
+        </button>
+        
+        <button (click)="deleteUser()" mat-raised-button color="warn" class="button-control" id="btn-control-delete">
+            <font color="white"> Delete User </font>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+.navContent {
+    margin-top: 5%;
+    margin-left: 5%;
+}
+
+.account-settings-heading {
+    width: 564px;
+    height: 96px;
+    font-weight: 300;
+    text-align: left;
+    font-size: 45px;
+    color: #8C8A8A;
+    margin: 0;
+}
+
+.input {
+    display: inline-block;
+}
+
+.edit-settings-button {
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    background-color: teal;
+}
+
+.attribute {
+    color: #8C8A8A;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+.userInputVal {
+    color: black;
+}
+
+.buttons:not(:first-child) {
+    margin-left: 1rem;
+}
+
+.delete-modal {
+    margin: 0 !important;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#delete-popup-content {
+    height: fit-content;
+}
+
+#delete-prompt {
+    text-align: center;
+}
+
+#account-control-buttons {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#delete-account-section,
+#cancel-delete-section {
+    display: inline;
+    margin: 0 auto;
+}
+
+#cancel-delete-section {
+    margin-right: 15px;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.SpacedItem{
+  margin-bottom: 2rem;
+}
+
+#cancel-delete-button,
+#delete-account-button {
+    overflow: hidden;
+}

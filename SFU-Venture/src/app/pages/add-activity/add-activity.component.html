@@ -1,0 +1,40 @@
+<div id="body">
+    <div class="container" id="container">
+        <div class="form-container activity-details-container">
+            <form id="activity-form">
+                <h1>New Activity</h1>
+                <input type="text" placeholder="Activity Title" id="activityTitle" required/>
+
+                <select id="filterDept" class="custom-select" style="text-transform: uppercase;">
+                    <option selected value="choose">Department</option>
+                    <option *ngFor="let dept of faculties; let i = index" ngValue="dept.value" style="text-transform: uppercase;" >{{dept.value}}</option>
+                </select>
+
+                <input type="number" placeholder="Entry Fee (Optional)" id="entryFee" />
+
+
+
+                <textarea class="form-control" placeholder="Description of event" id="description" rows="6"></textarea>
+
+                <button (click)="createActivity()">Submit</button>
+
+            </form>
+
+        </div>
+
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-right">
+                    <input type="text" placeholder="Activity Date & Time" id="dateTime" />
+                    <input type="text" placeholder="Location" id="location" />
+
+                    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDIxWPCm_L0nWdhlQeJoGXn4Insp2FC3E&libraries=places"></script>
+                    <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text" /> -->
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
