@@ -25,7 +25,10 @@
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-right">
-                    <input type="text" placeholder="Activity Date & Time" id="dateTime" />
+                    <!-- <input type="text" placeholder="Activity Date & Time" id="dateTime" /> -->
+                    <input [owlDateTime]="dt" [owlDateTimeTrigger]="dt" placeholder="Activity Date & Time" id="dateTime">
+                    <owl-date-time #dt></owl-date-time>
+
                     <input type="text" placeholder="Location" id="location" />
 
                     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDIxWPCm_L0nWdhlQeJoGXn4Insp2FC3E&libraries=places"></script>

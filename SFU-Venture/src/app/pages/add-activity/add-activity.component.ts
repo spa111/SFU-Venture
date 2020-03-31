@@ -91,8 +91,7 @@ export class AddActivityComponent implements OnInit {
     let activity_description = $("#description")[0].value;
     let activity_price = $("#entryFee")[0].value; // TODO (- CHANGE TO _ IN PG)
     let activity_location = $("#location")[0].value;
-    // let activity_date_time = $("#dateTime")[0].value; TODO (ADD)
-    let activity_timestamp = new Date(); // TODO (- CHANGE TO _ IN PG)
+    let activity_timestamp = $("#dateTime")[0].value;
     
     
     let details = {
@@ -102,7 +101,6 @@ export class AddActivityComponent implements OnInit {
       "activity_description": activity_description,
       "activity_price": activity_price,
       "activity_location": activity_location,
-      // "activity_date_time": activity_date_time,
       "activity_timestamp": activity_timestamp,
     };
 

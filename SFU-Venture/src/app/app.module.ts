@@ -29,6 +29,7 @@ import { MatTableModule } from '@angular/material';
 import { MatRippleModule } from '@angular/material/core';
 import { AdminPageComponent, ProcessPrivilegesDialog } from './pages/admin-page/admin-page.component';
 import { AdminGuard } from './services/admin-guard/admin.guard';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -70,6 +71,8 @@ export function tokenGetter() {
     MatInputModule,
     MatTableModule,
     MatRippleModule,
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
