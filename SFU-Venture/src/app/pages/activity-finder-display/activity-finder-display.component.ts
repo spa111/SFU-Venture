@@ -194,6 +194,8 @@ export class ActivityFinderDisplayComponent implements OnInit {
     startDateString.value = ""
   }
 
+  // this.activityId is the Id of the activity currently open in modal view
+  // It is set in the function "setModal()"
   async deleteActivity() {
 
     this.activitiesService
