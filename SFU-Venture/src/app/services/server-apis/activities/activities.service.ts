@@ -44,7 +44,7 @@ export class ActivitiesService {
 
   deleteActivityById(id: any): Promise<any> {
     this.generateHeaders();
-    return this.http.post(SERVER_BASE_URL + "/api/activity/" + id, this.httpOptions).toPromise();
+    return this.http.delete(SERVER_BASE_URL + "/api/activity/" + id, this.httpOptions).toPromise();
   }
 }
 

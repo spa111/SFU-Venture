@@ -65,7 +65,7 @@ const deleteActivityById = (request, response) => {
             console.log(error);
         }
 
-        response.status(200).send('Activity deleted with ID: ${id}');
+        response.status(200).send( {response: "Activity deleted"} );
     });
 };
 

@@ -2,7 +2,7 @@
 <div class="wrapper-container">
     <div class="sideBar">
         <div class="addPost">
-            <button routerLink="/add-post" class="animatedBtn addPostBtn">Add Activity</button>
+            <button routerLink="/add-activity" class="animatedBtn addPostBtn">Add Activity</button>
         </div>
 
         <div class="filter">
@@ -40,7 +40,7 @@
             <table class="activity-table">
                 <tr>
                     <th>Date</th>
-                    <th>Title</th>
+                    <th>Activity Title</th>
                     <!-- <th>Description</th> -->
                     <!-- <th>Location</th> -->
                     <!-- <th>Price</th> -->
@@ -95,6 +95,10 @@
     
                 </div>
             </div>
+
+            <div class="delete-section" *ngIf="userIsOwner">
+                <button class='delete-button' mat-button matRipple (click)="deleteActivity()">Delete</button>
+              </div>
             
         </div>
         <!-- <div class="modal-footer"> -->

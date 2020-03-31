@@ -2,6 +2,7 @@ import { TextbooksService } from './../../services/server-apis/textbooks/textboo
 import { ActivitiesService } from './../../services/server-apis/activities/activities.service';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 declare var $: any;
 
 @Component({
@@ -18,10 +19,14 @@ export class ActivityFinderDisplayComponent implements OnInit {
   faculties: any
   facultiesDom: any
   resultBackup: any
+  userIsOwner: Boolean = true;
+  activityId: any
 
   constructor( 
     private activitiesService: ActivitiesService,
-    private textbooksService: TextbooksService) { 
+    private textbooksService: TextbooksService,
+    private router: Router
+    ) { 
   }
 
 
@@ -85,6 +90,10 @@ export class ActivityFinderDisplayComponent implements OnInit {
 
     var price = document.getElementById("activityModalPrice")
     price.innerHTML += item.activity_price
+
+    this.userIsOwner = item.poster_user_id == localStorage.getItem("user")
+    this.activityId = item.id
+ 
 
   }
 
@@ -183,6 +192,28 @@ export class ActivityFinderDisplayComponent implements OnInit {
     $("#filterDept")[0].value = $("#filterDept")[0][0].value
     let startDateString = (<HTMLInputElement>document.getElementById("startDatePicker"));
     startDateString.value = ""
+  }
+
+  async deleteActivity() {
+
+    this.activitiesService
+      .deleteActivityById(this.activityId)
+      .then(result => {
+        if (window.location.pathname == "/activity-finder") {
+          this.redirectTo("activity-finder");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+
+  }
+
+  redirectTo(uri: string) {
+    this.router
+      .navigateByUrl("/", { skipLocationChange: true })
+      .then(() => this.router.navigate([uri]));
   }
 
 }
