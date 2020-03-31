@@ -113,4 +113,47 @@
         <mat-row *matRowDef="let row; columns: textbookFields;" matRipple (click)="getTextbook(row)"></mat-row>
     </mat-table>
     <br><br>
+
+
+    <!-- ['activity_title', 'activity_description', 'activity_timestamp', 'activity_location', 'activity_price']; -->
+    <h3>All Activities</h3>
+    <mat-form-field>
+        <input matInput (keyup)="activitiesFilter($event)" placeholder="Filter by id, title, location, date, time, or price">
+    </mat-form-field>
+
+    <mat-table [dataSource]="activities" class="mat-elevation-z8">
+        <ng-container matColumnDef="posterId">
+            <mat-header-cell *matHeaderCellDef> Posting Users's Id </mat-header-cell>
+            <mat-cell *matCellDef="let activity"> {{activity.poster_user_id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="activity_title">
+            <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+            <mat-cell *matCellDef="let activity"> {{activity.activity_title}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="activity_location">
+            <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+            <mat-cell *matCellDef="let activity"> {{activity.activity_location}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="activity_timestamp">
+            <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+            <mat-cell *matCellDef="let activity"> {{activity.activity_timestamp}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="time">
+            <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
+            <mat-cell *matCellDef="let activity"> {{activity.time}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="activity_price">
+            <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+            <mat-cell *matCellDef="let activity"> {{activity.activity_price}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="activityColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: activityColumns;" matRipple (click)="getActivity(row)"></mat-row>
+    </mat-table>
+    <br><br>
 </div>

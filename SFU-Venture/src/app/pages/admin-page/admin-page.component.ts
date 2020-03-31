@@ -5,6 +5,9 @@ import { TextbooksService } from '../../services/server-apis/textbooks/textbooks
 import { Router } from '@angular/router';
 import { AccountPageComponent, AccountDeleteConfirmationDialog } from '../account-page/account-page.component';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ActivityModalDialog } from '../activity-finder-display/activity-finder-display.component';
+import { ActivitiesService } from 'src/app/services/server-apis/activities/activities.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-admin-page',
@@ -26,6 +29,10 @@ export class AdminPageComponent implements OnInit {
   textbookFields: Array<any> = ["posterId", "textbookName", "facultyName", "courseNumber", "price", "postDate"];
   textbooksFilterableArray: any;
 
+  activities: any;
+  activitiesFilterableList: any;
+  activityColumns: Array<any> = ['posterId', 'activity_title', 'activity_location', 'activity_timestamp', 'time', 'activity_price'];
+
   /* To do an admin override:
     if (this.router.url == "/admin-control") {
       this.adminOverride = true;
@@ -35,7 +42,8 @@ export class AdminPageComponent implements OnInit {
   constructor(
     private usersService: UsersService, 
     private textbooksService: TextbooksService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private activitiesService: ActivitiesService
    ) {
 
     this.generateAllData();
@@ -82,7 +90,25 @@ export class AdminPageComponent implements OnInit {
         });
   
         this.textbooksFilterableArray = JSON.parse(JSON.stringify(this.textbooks));
-        this.contentLoaded = true;
+
+        this.activitiesService.getAll().then(result => {
+          this.activities = JSON.parse(JSON.stringify(result));
+
+          this.activities.forEach(element => {
+            let date = moment(element.activity_timestamp);
+            let time = moment(element.activity_timestamp);
+            let formattedDate = date.format("MMM Do YYYY");
+            element.activity_timestamp = formattedDate;
+            element.time = time.format("h:mm a");
+          });
+
+
+          this.activitiesFilterableList = JSON.parse(JSON.stringify(this.activities));
+          this.contentLoaded = true;
+
+        }).catch(err => {
+          console.log(err);
+        })
 
       }).catch(err => {
         console.log(err);
@@ -121,6 +147,19 @@ export class AdminPageComponent implements OnInit {
       return (textbook.txt_book_name.toLowerCase().includes(searchValue.toLowerCase()) ||
               textbook.faculty_name.includes(searchValue.toLowerCase()) ||
               textbook.course_name.includes(searchValue));
+    });
+  }
+
+  activitiesFilter(event: any) {
+    let searchValue = event.target.value;
+    this.activities = this.activitiesFilterableList.filter(activity => {
+      return (activity.poster_user_id == parseInt(searchValue) ||
+              activity.activity_title.toLowerCase().includes(searchValue.toLowerCase()) ||
+              activity.activity_description.toLowerCase().includes(searchValue.toLowerCase()) ||
+              activity.activity_timestamp.toLowerCase().includes(searchValue.toLowerCase()) ||
+              activity.time.toLowerCase().includes(searchValue.toLowerCase()) ||
+              activity.activity_location.toLowerCase().includes(searchValue.toLowerCase()) ||
+              activity.activity_price.toLowerCase().includes(searchValue.toLowerCase()));
     });
   }
 
@@ -176,6 +215,22 @@ export class AdminPageComponent implements OnInit {
       localStorage.removeItem('admin-processing-user');
       
       if (result && result.status == "handled") {
+        this.generateAllData();
+      }
+    });
+  }
+
+  getActivity(activityItem) {
+    const dialogRef = this.dialog.open(ActivityModalDialog, {
+      width: "55%",
+      height: "70%",
+      data: {
+        activity: activityItem
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.activityDeleted) {
         this.generateAllData();
       }
     });

@@ -17,7 +17,7 @@ import { VerifyEmailPageComponent } from './pages/verify-page/verify-email-page/
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ChangeForgottenPasswordComponent } from './pages/change-forgotten-password/change-forgotten-password.component';
 import { AddPostComponent } from './pages/add-post/add-post.component';
-import { ActivityFinderDisplayComponent } from './pages/activity-finder-display/activity-finder-display.component';
+import { ActivityFinderDisplayComponent, ActivityModalDialog } from './pages/activity-finder-display/activity-finder-display.component';
 import { AddActivityComponent } from './pages/add-activity/add-activity.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -56,7 +56,8 @@ export function tokenGetter() {
     ChangeAccountPasswordPageComponent,
     ViewMarketPostsDialog,
     AdminPageComponent,
-    ProcessPrivilegesDialog
+    ProcessPrivilegesDialog,
+    ActivityModalDialog
   ],
   imports: [
     BrowserModule,
@@ -91,7 +92,8 @@ export function tokenGetter() {
     ContactSellerDialog,
     AccountDeleteConfirmationDialog,
     ViewMarketPostsDialog,
-    ProcessPrivilegesDialog
+    ProcessPrivilegesDialog,
+    ActivityModalDialog
   ]
 })
 export class AppModule { }
