@@ -80,8 +80,6 @@ const createActivity = (request, response) => {
         activity_timestamp
     } = request.body;
 
-    console.log(request.body);
-
     // Need to add another check in the db to make it so that the admin is the only one who verifies whether a user is faculty or not
     database.query(
         'insert into activities (poster_user_id, corresponding_department, activity_title, activity_description, activity_price, activity_location, activity_timestamp) values ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [poster_user_id, corresponding_department, activity_title, activity_description, activity_price, activity_location, activity_timestamp],

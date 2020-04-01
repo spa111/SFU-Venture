@@ -211,7 +211,7 @@ export class ActivityModalDialog {
     this.activity_timestamp = this.activity.activity_timestamp;
     this.time = this.activity.time;
     this.activity_location = this.activity.activity_location;
-    this.activity_price = this.activity.activity_price;
+    this.activity_price = this.activity.activity_price == "$0.00" ? "Free" : this.activity.activity_price;
 
     this.usersService.checkHasAdminPrivileges(localStorage.getItem('user')).then(result => {
       this.user_owns_posting = this.activity.poster_user_id == localStorage.getItem("user") || result.hasPrivileges;

@@ -100,6 +100,7 @@ export class AdminPageComponent implements OnInit {
             let formattedDate = date.format("MMM Do YYYY");
             element.activity_timestamp = formattedDate;
             element.time = time.format("h:mm a");
+            element.activity_price = element.activity_price == "$0.00" ? "Free" : element.activity_price;
           });
 
 
