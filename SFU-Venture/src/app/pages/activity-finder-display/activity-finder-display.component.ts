@@ -4,6 +4,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { UsersService } from 'src/app/services/server-apis/users/users.service';
 declare var $: any;
 
 export interface ActivityItem {
@@ -173,7 +174,8 @@ export class ActivityModalDialog {
     @Inject(MAT_DIALOG_DATA) public data: ActivityItem,
     public dialog: MatDialog,
     private router: Router,
-    private activitiesService: ActivitiesService
+    private activitiesService: ActivitiesService,
+    private usersService: UsersService
   ) {
 
     this.activity = this.data.activity;
@@ -185,12 +187,12 @@ export class ActivityModalDialog {
     this.activity_location = this.activity.activity_location;
     this.activity_price = this.activity.activity_price;
 
-    // Override to allow admin user full control over marketplace posts
-    if (this.router.url == "/admin-control") {
-      this.adminOverride = true;
-    }
+    this.usersService.checkHasAdminPrivileges(localStorage.getItem('user')).then(result => {
+      this.user_owns_posting = this.activity.poster_user_id == localStorage.getItem("user") || result.hasPrivileges;
+    }).catch(err => {
+      console.log(err);
 
-    this.user_owns_posting = this.activity.poster_user_id == localStorage.getItem("user") || this.adminOverride;
+    });
   }
 
   closeModal(): void {
