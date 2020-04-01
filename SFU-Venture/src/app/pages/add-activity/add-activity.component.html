@@ -29,10 +29,9 @@
                     <input [owlDateTime]="dt" [owlDateTimeTrigger]="dt" placeholder="Activity Date & Time" id="dateTime">
                     <owl-date-time #dt></owl-date-time>
 
-                    <input type="text" placeholder="Location" id="location" />
+                    <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text" />
 
-                    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDIxWPCm_L0nWdhlQeJoGXn4Insp2FC3E&libraries=places"></script>
-                    <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text" /> -->
+                    <!-- <input type="text" placeholder="Room Number" id="roomNumber" /> -->
 
                 </div>
             </div>
