@@ -57,24 +57,22 @@ export class ActivityFinderDisplayComponent implements OnInit {
 
         this.textbooksService.getDept().then(result => {
           this.faculties = result;
-          this.facultiesDom = result
+          this.facultiesDom = result;
+
+          var groups = new Set(this.activitesDOM.map(item => item.activity_timestamp))
+          this.result = [];
+          groups.forEach(g =>
+            this.result.push({
+              name: g, 
+              values: this.activitesDOM.filter(i => i.activity_timestamp === g)
+            }
+          ));
+
+          this.sortDates();
+          this.resultBackup = JSON.parse(JSON.stringify(this.result));
           this.contentLoaded = true;
         });
       });
-
-      var groups = new Set(this.activitesDOM.map(item => item.activity_timestamp))
-      this.result = [];
-      groups.forEach(g =>
-        this.result.push({
-          name: g, 
-          values: this.activitesDOM.filter(i => i.activity_timestamp === g)
-        }
-      ));
-
-      this.resultBackup = JSON.parse(JSON.stringify(this.result));
-
-      // console.log(this.result)
-      groups.forEach(g => console.log(g))
     }).catch(err => {
       console.log(err);
     });
@@ -106,6 +104,34 @@ export class ActivityFinderDisplayComponent implements OnInit {
     }
 
     this.sortDept(listToUse);
+  }
+
+  sortDates() {
+    this.result.sort((a, b) => {
+      let a_date_split = a.name.split(' ');
+      let b_date_split = b.name.split(' ');
+
+      // Remove the st, nd, rd, and th suffix from the day
+      if (a_date_split[1].length == 3) {
+        a_date_split[1] = a_date_split[1].substring(0,1);
+      } else {
+        a_date_split[1] = a_date_split[1].substring(0,2);
+      }
+
+      if (b_date_split[1].length == 3) {
+        b_date_split[1] = b_date_split[1].substring(0,1);
+      } else {
+        b_date_split[1] = b_date_split[1].substring(0,2);
+      }
+
+      let a_dateString = `${a_date_split[0]} ${a_date_split[1]} ${a_date_split[2]}`;
+      let b_dateString = `${b_date_split[0]} ${b_date_split[1]} ${b_date_split[2]}`;
+
+      let a_datetime = new Date(a_dateString).getTime();
+      let b_datetime = new Date(b_dateString).getTime();
+
+      return a_datetime - b_datetime;
+    });
   }
 
   sortByDate(startDateString) {
