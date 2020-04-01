@@ -22,6 +22,9 @@ export class AddActivityComponent implements OnInit {
 
   courses: any;
   faculties: any;
+  placeSearch: any;
+  autocomplete: any;
+  // navigator: any;
 
   ngOnInit() {
     $(() => {
@@ -29,6 +32,8 @@ export class AddActivityComponent implements OnInit {
         event.preventDefault();
       });
     });
+
+    this.initAutocomplete();
 
     this.textbooksService
     .getDept()
@@ -39,51 +44,40 @@ export class AddActivityComponent implements OnInit {
     .catch(err => {
       console.log(err);
     });
-
-    
-
-    // Maps
-    $("#autocomplete").focus(function() {
-      this.geolocate();
-    });
   }
 
-  ///////////////////////////////////////////////////////////
-  placeSearch: any;
-  autocomplete: any;
-  navigator: any;
-
+  // Places API from Google
   initAutocomplete() {
-    this.autocomplete = new google.maps.places.Autocomplete(
-      (document.getElementById('autocomplete')), {
-        types: ['geocode']
-      });
+    this.autocomplete = new google.maps.places.Autocomplete((document.getElementById('location')), {});
+    this.autocomplete.setComponentRestrictions({
+      'country': ['ca']
+    });
 
     this.autocomplete.addListener('place_changed');
   }
 
   geolocate() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var geolocation = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-        var circle = new google.maps.Circle({
-          center: geolocation,
-          radius: position.coords.accuracy
-        });
-        this.autocomplete.setBounds(circle.getBounds());
-      });
+      this.autocomplete.setBounds(
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var geolocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          var circle = new google.maps.Circle({
+            center: geolocation,
+            radius: position.coords.accuracy
+          });
+          return circle.getBounds();
+        })
+      );
     }
   }
 
-  ///////////////////////////////////////////////////////////
-
+  // Normal Add Activity API
   createActivity() {
     console.log("createActivity called");
 
-    // id
     let poster_user_id = localStorage.getItem('user');
     let corresponding_department = $("#filterDept")[0].value;
     let activity_title = $("#activityTitle")[0].value;

@@ -29,7 +29,7 @@
                     <input [owlDateTime]="dt" [owlDateTimeTrigger]="dt" placeholder="Activity Date & Time" id="dateTime">
                     <owl-date-time #dt></owl-date-time>
 
-                    <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text" />
+                    <input id="location" placeholder="Enter your address" (focus)="geolocate()" type="text" />
 
                     <!-- <input type="text" placeholder="Room Number" id="roomNumber" /> -->
 
