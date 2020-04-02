@@ -10,6 +10,8 @@ import { LoginGuard } from '../app/services/login-guard/login.guard';
 import { ForgotPasswordComponent } from '../app/pages/forgot-password/forgot-password.component';
 import { ChangeForgottenPasswordComponent } from '../app/pages/change-forgotten-password/change-forgotten-password.component';
 import { AddPostComponent } from './pages/add-post/add-post.component';
+import { ActivityFinderDisplayComponent } from './pages/activity-finder-display/activity-finder-display.component';
+import { AddActivityComponent } from './pages/add-activity/add-activity.component';
 import { AccountPageComponent } from './pages/account-page/account-page.component';
 import { ChangeAccountPasswordPageComponent } from './pages/change-account-password-page/change-account-password-page.component';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
@@ -63,6 +65,18 @@ const routes: Routes = [
       path: 'change-forgotten-password/:token',
       pathMatch: 'full',
       component: ChangeForgottenPasswordComponent
+    },
+    {
+      path: 'activity-finder',
+      pathMatch: 'full',
+      component: ActivityFinderDisplayComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'add-activity',
+      pathMatch: 'full',
+      component: AddActivityComponent,
+      canActivate: [AuthGuard]
     },
     {
       path: 'account',

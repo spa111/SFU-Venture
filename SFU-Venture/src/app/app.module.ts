@@ -17,6 +17,8 @@ import { VerifyEmailPageComponent } from './pages/verify-page/verify-email-page/
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ChangeForgottenPasswordComponent } from './pages/change-forgotten-password/change-forgotten-password.component';
 import { AddPostComponent } from './pages/add-post/add-post.component';
+import { ActivityFinderDisplayComponent, ActivityModalDialog } from './pages/activity-finder-display/activity-finder-display.component';
+import { AddActivityComponent } from './pages/add-activity/add-activity.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { AccountPageComponent, AccountDeleteConfirmationDialog, ViewMarketPostsDialog } from './pages/account-page/account-page.component';
@@ -27,6 +29,7 @@ import { MatTableModule } from '@angular/material';
 import { MatRippleModule } from '@angular/material/core';
 import { AdminPageComponent, ProcessPrivilegesDialog } from './pages/admin-page/admin-page.component';
 import { AdminGuard } from './services/admin-guard/admin.guard';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -44,6 +47,8 @@ export function tokenGetter() {
     ForgotPasswordComponent,
     ChangeForgottenPasswordComponent,
     AddPostComponent,
+    ActivityFinderDisplayComponent,
+    AddActivityComponent,
     MainMarketBookInfoDialog,
     PostingDeleteConfirmationDialog,
     ContactSellerDialog,
@@ -52,7 +57,8 @@ export function tokenGetter() {
     ChangeAccountPasswordPageComponent,
     ViewMarketPostsDialog,
     AdminPageComponent,
-    ProcessPrivilegesDialog
+    ProcessPrivilegesDialog,
+    ActivityModalDialog
   ],
   imports: [
     BrowserModule,
@@ -65,6 +71,8 @@ export function tokenGetter() {
     MatInputModule,
     MatTableModule,
     MatRippleModule,
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -87,7 +95,8 @@ export function tokenGetter() {
     ContactSellerDialog,
     AccountDeleteConfirmationDialog,
     ViewMarketPostsDialog,
-    ProcessPrivilegesDialog
+    ProcessPrivilegesDialog,
+    ActivityModalDialog
   ]
 })
 export class AppModule { }

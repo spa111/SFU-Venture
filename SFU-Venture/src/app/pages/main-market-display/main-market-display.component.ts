@@ -1,19 +1,9 @@
-import {
-  Component,
-  OnInit,
-  HostListener,
-  AfterViewInit,
-  Inject
-} from "@angular/core";
+import { Component, OnInit, HostListener, AfterViewInit, Inject } from "@angular/core";
 import { AuthService } from "../../services/auth/auth.service";
 import { Router } from "@angular/router";
 import { TextbooksService } from "../../services/server-apis/textbooks/textbooks.service";
 import { UsersService } from "../../services/server-apis/users/users.service";
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogRef
-} from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 declare var $: any;
 

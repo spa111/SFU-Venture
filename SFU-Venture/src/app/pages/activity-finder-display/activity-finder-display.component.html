@@ -1,0 +1,72 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="wrapper-container">
+    <div class="sideBar">
+        <div class="addPost">
+            <button routerLink="/add-activity" class="animatedBtn addPostBtn">Add Activity</button>
+        </div>
+
+        <div class="filter">
+            <h2 class="filter-title">Filter</h2>
+            <div class="fliter-items ">
+                <div class="filter-price">
+                    <div class="filter-date-input">
+                        From:
+                        <br/>
+                        <input class="datepicker" type="date" id="startDatePicker" name="startDate">
+                    </div>
+                </div>
+
+                <br />
+                <div class="filter-dept">
+                    Dept:
+                    <select id="filterDept" class="custom-select" style="text-transform: uppercase;">
+                        <option selected value="All">All</option>
+                        <option *ngFor="let dept of facultiesDom; let i = index" ngValue="dept.value"
+                            style="text-transform: uppercase;">{{dept.value}}</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="search">
+                <button class="btn btn-primary" style="margin-right: 5%;" (click)="reset()">Reset</button>
+                <button class="btn btn-primary" style="margin-left: 5%;" (click)="sort()">Search</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="display" *ngIf="contentLoaded">
+        <div class="activity-board">
+            <h2 class='activity-title'>Activities</h2>
+            <table class="activity-table">
+                <tr>
+                    <th>Date</th>
+                    <th>Activity Title</th>
+                    <!-- <th>Description</th> -->
+                    <!-- <th>Location</th> -->
+                    <!-- <th>Price</th> -->
+                </tr>
+                <tr class="activity-row" *ngFor="let activity of result;">
+                    <td *ngIf="activity.values.length" rowspan="activity.values.length">{{activity.name}}</td>
+
+                    <div class="activity-value-div" *ngFor="let item of activity.values" (click)="openModal(item)">
+                        <tr class="activity-value-row">
+                            <td> <span class="colored-dot"></span> </td>
+                            <td>{{item.activity_title}}</td>
+                        </tr>
+                        <!-- <td>{{item.activity_description}}</td> -->
+                    </div>
+                </tr>
+                    <!-- <td>{{activity.activity_timestamp.substring(11,16)}}</td> -->
+                    <!-- <td><a href="#">{{activity.activity_title}}</a></td> -->
+                    <!-- <td>{{activity.activity_description.substring(0, 30)}}...</td> -->
+                    <!-- <td>{{activity.activity_location}}</td> -->
+                    <!-- <td>{{activity.activity_price}}</td> -->
+            </table>
+
+
+        </div>
+
+
+
+    </div>
+</div>
