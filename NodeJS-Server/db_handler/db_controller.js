@@ -5,10 +5,10 @@ const jwt = require('jsonwebtoken');
 
 const TOKEN_STRING = 'sfuventure_jwt_token_string';
 
-const isProduction = false;
+const isProduction = true;
 
 const URL_DEV = "http://localhost:8080";
-const URL_SERVER = "http://34.82.223.192";
+const URL_SERVER = "http://35.199.189.130";
 const URL = isProduction ? URL_SERVER : URL_DEV;
 
 const database = new Pool({
@@ -32,32 +32,31 @@ const validPassword = function(input_password, database_password) {
 const createDefaultAdmin = function() {
     let hashed_password = generatePasswordHash("sfuventure");
 
-    database.query('select * from users where email = $1', ["sfuventure470@gmail.com"], 
-    (error, results) => {
-        if (error) {
-            console.log("Error pulling default user existance");
-            console.log(error);
-
-        } else {
-            if (results && results.rows && results.rows[0]) {
-                console.log("Default Admin Exists");
+    database.query('select * from users where email = $1', ["sfuventure470@gmail.com"],
+        (error, results) => {
+            if (error) {
+                console.log("Error pulling default user existance");
+                console.log(error);
 
             } else {
+                if (results && results.rows && results.rows[0]) {
+                    console.log("Default Admin Exists");
 
-                database.query(
-                    'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', 
-                    ["SFU Venture", hashed_password, "sfuventure470@gmail.com", "sfuventure470", true, true, false, false, false],
-                    (error, results) => {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            console.log("Default admin added to the database");
+                } else {
+
+                    database.query(
+                        'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', ["SFU Venture", hashed_password, "sfuventure470@gmail.com", "sfuventure470", true, true, false, false, false],
+                        (error, results) => {
+                            if (error) {
+                                console.log(error);
+                            } else {
+                                console.log("Default admin added to the database");
+                            }
                         }
-                    }
-                );
+                    );
+                }
             }
-        }
-    });
+        });
 };
 
 const getUsers = (request, response) => {
@@ -86,7 +85,7 @@ const getUserById = (request, response) => {
 const updatePrivileges = (request, response) => {
     let id = request.params.id;
     let payload = request.body;
-    
+
     let is_admin = false;
     let is_student = false;
     let is_faculty = false;
@@ -110,8 +109,7 @@ const updatePrivileges = (request, response) => {
     }
 
     database.query(
-        'update users set is_admin = $1, is_student = $2, is_faculty = $3, is_faculty_verified = $4 where id = $5', 
-        [is_admin, is_student, is_faculty, is_faculty_verified, id], 
+        'update users set is_admin = $1, is_student = $2, is_faculty = $3, is_faculty_verified = $4 where id = $5', [is_admin, is_student, is_faculty, is_faculty_verified, id],
         (error, results) => {
             if (error) {
                 console.log(error);
@@ -142,8 +140,7 @@ const createUser = (request, response) => {
 
             // Need to add another check in the db to make it so that the admin is the only one who verifies whether a user is faculty or not
             database.query(
-                'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', 
-                [fullname, hashed_password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified],
+                'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', [fullname, hashed_password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified],
                 (error, results) => {
                     if (error) {
                         console.log(error);
@@ -151,7 +148,7 @@ const createUser = (request, response) => {
                     } else {
                         var verification_token = jwt.sign({ userId: results.rows[0].id }, TOKEN_STRING, { expiresIn: '1d' });
                         var url = `${URL}/verify-email/${verification_token}`;
-        
+
                         var mailOptions = {
                             from: 'sfuventure470@gmail.com',
                             to: email,
@@ -161,7 +158,7 @@ const createUser = (request, response) => {
                                 <p>This link will only be valid for 1 day.</p>
                             `
                         };
-        
+
                         sendEmail(mailOptions);
                         response.status(201).send(`Please check your email for instructions to activate your account`);
                     }
@@ -211,7 +208,7 @@ const loginUser = (request, response) => {
                         // Need to add a check for the faculty verification to prevent access unless they have permission from admin)
                         if (user.is_faculty && !user.is_faculty_verified) {
                             if (validPassword(password, user.password)) {
-                               response.status(401).send("Your faculty status has not been verified. Please wait for an admin to process the request");    
+                                response.status(401).send("Your faculty status has not been verified. Please wait for an admin to process the request");
                             } else {
                                 response.status(401).send("Invalid email and password combination");
                             }
@@ -221,14 +218,14 @@ const loginUser = (request, response) => {
                                 var token = jwt.sign({ userID: user.id }, TOKEN_STRING, { expiresIn: '1d' });
                                 console.log("User: " + user.id + ": " + token);
                                 response.status(201).send({ token, user });
-        
+
                             } else {
                                 response.status(401).send("Invalid email and password combination");
                             }
                         }
                     } else {
                         response.status(401).send("Please validate your account using the link that was been sent to your email.");
-    
+
                         // Resend the token to verify the email
                         var verification_token = jwt.sign({ userId: user.id }, TOKEN_STRING, { expiresIn: '1d' });
                         var url = `${URL}/verify-email/${verification_token}`;
@@ -241,10 +238,10 @@ const loginUser = (request, response) => {
                                 <p>This link will only be valid for 1 day.</p>
                             `
                         };
-    
+
                         sendEmail(mailOptions);
                     }
-    
+
                 } else {
                     response.status(401).send("Invalid username and password combination.");
                 }
@@ -261,7 +258,7 @@ const loginUser = (request, response) => {
                         // Need to add a check for the faculty verification to prevent access unless they have permission from admin)
                         if (user.is_faculty && !user.is_faculty_verified) {
                             if (validPassword(password, user.password)) {
-                               response.status(401).send("Your faculty status has not been verified. Please wait for an admin to process the request");    
+                                response.status(401).send("Your faculty status has not been verified. Please wait for an admin to process the request");
                             } else {
                                 response.status(401).send("Invalid username and password combination");
                             }
@@ -271,14 +268,14 @@ const loginUser = (request, response) => {
                                 var token = jwt.sign({ userID: user.id }, TOKEN_STRING, { expiresIn: '1d' });
                                 console.log("User: " + user.id + ": " + token);
                                 response.status(201).send({ token, user });
-        
+
                             } else {
                                 response.status(401).send("Invalid username and password combination");
                             }
                         }
                     } else {
                         response.status(401).send("Please validate your account using the link that was been sent to your email.");
-    
+
                         // Resend the token to verify the email
                         var verification_token = jwt.sign({ userId: user.id }, TOKEN_STRING, { expiresIn: '1d' });
                         var url = `${URL}/verify-email/${verification_token}`;
@@ -291,10 +288,10 @@ const loginUser = (request, response) => {
                                 <p>This link will only be valid for 1 day.</p>
                             `
                         };
-    
+
                         sendEmail(mailOptions);
                     }
-    
+
                 } else {
                     response.status(401).send("Invalid username and password combination.");
                 }
@@ -381,8 +378,8 @@ const updatePassword = (request, response) => {
                         if (err) {
                             console.log(error);
                         }
-            
-                        response.status(200).send({response: 'Password updated'});
+
+                        response.status(200).send({ response: 'Password updated' });
                     }
                 );
 
@@ -403,7 +400,7 @@ const deleteUser = (request, response) => {
             response.status(401).send(error);
         }
 
-        response.status(200).send({response: 'User deleted'});
+        response.status(200).send({ response: 'User deleted' });
     });
 };
 
@@ -414,7 +411,7 @@ const emailBuyerAndSeller = (request, response) => {
     let buyer_email = "";
 
     database.query(
-        'select * from users where id = $1 union all select * from users where id = $2', [sellerId, buyerId], 
+        'select * from users where id = $1 union all select * from users where id = $2', [sellerId, buyerId],
         (error, results) => {
             if (error) {
                 console.log(error);
@@ -459,7 +456,7 @@ const emailBuyerAndSeller = (request, response) => {
 const checkHasAdminPrivileges = (request, response) => {
     var id = request.params.id;
     database.query(
-        'select * from users where id = $1', [id], 
+        'select * from users where id = $1', [id],
         (error, results) => {
             if (error) {
                 console.log(error);
