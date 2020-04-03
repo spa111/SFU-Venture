@@ -3,7 +3,6 @@
   <div class="popup-content">
     
     <div class="textbook-header-image" >
-      <h1 class="popup-title" mat-dialog-title>{{textbook.txt_book_name}} - {{textbook.price}}</h1>
 
       <img class="textbook-image" src='{{textbook.img_url}}'/>
     </div>
@@ -13,7 +12,11 @@
         <span (click)="onCloseClick()" class="close-button topright">&times;</span>
       </header>
      
+      <h5 class="popup-title" mat-dialog-title>{{textbook.txt_book_name}}</h5>
+      <span class="badge">{{textbook.price}}</span>
+      <span class="badge">{{textbook.faculty_name}} {{textbook.course_name}}</span>
       <div class="textbook-info">
+
         {{textbook.description}}
       </div>
     </div>

@@ -38,7 +38,22 @@ user agent stylesheet html {
 }
 
 .popup-title {
+    // padding-left: 20px;
+    // padding-right: 20px;
+    padding-right: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 1.4;
+
+}
+
+.badge {
+    background-color: #FF4B2B;
     padding: 10px;
+    margin-right: 5px;
+    border-radius: 10px;
+    width: fit-content;
+    color: white;
 }
 
 .mat-dialog-content {
@@ -78,16 +93,21 @@ user agent stylesheet html {
     width: 50%;
     height: 100%;
     float: left;
-    padding: 10px;
+    // padding: 10px;
 }
 
 .textbook-info {
+    overflow-y: auto;
     margin-top: 20px;
-    padding: 30px;
+    // padding: 30px;
+    padding-bottom: 20px;
+    height: 150px;
 }
 
+
+
 .textbook-details {
-    padding-top: 20px;
+    padding: 20px;
     width: 50%;
     height: 400px;
     float: right;
@@ -98,9 +118,15 @@ user agent stylesheet html {
     display: block !important;
     margin-left: auto !important;
     margin-right: auto !important;
-    max-width: 50%;
-    max-height: 400px;
+    // max-width: 100%;
+    // max-height: 100%;
+    height: 100%;
+    // width: 100%;
+    object-fit: cover;
 }
+
+
+
 
 .contact-section,
 .delete-section {

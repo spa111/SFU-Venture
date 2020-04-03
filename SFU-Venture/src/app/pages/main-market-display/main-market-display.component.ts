@@ -259,8 +259,9 @@ export class MainMarketDisplayComponent implements OnInit {
   }
 
   openTextbookInfo(clicked_textbook) {
+    console.log(clicked_textbook)
     const dialogRef = this.dialog.open(MainMarketBookInfoDialog, {
-      width: "50%",
+      width: "600px",
       height: "400px",
       data: {
         textbook: clicked_textbook
