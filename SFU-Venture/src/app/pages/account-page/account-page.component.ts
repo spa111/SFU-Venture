@@ -28,7 +28,7 @@ export class AccountPageComponent implements OnInit {
     private usersService: UsersService, 
     private router: Router, 
     public dialog: MatDialog,
-    @Inject(DOCUMENT) private _document: Document
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.pullUserAccount();    
   }
@@ -163,7 +163,7 @@ export class AccountPageComponent implements OnInit {
 })
 
 export class AccountDeleteConfirmationDialog {
-  constructor(public dialogRef: MatDialogRef<AccountDeleteConfirmationDialog>, @Inject(DOCUMENT) private _document: Document) { }
+  constructor(public dialogRef: MatDialogRef<AccountDeleteConfirmationDialog>, @Inject(DOCUMENT) private document: Document) { }
 
   cancelDeletion() {
     this.dialogRef.close({
@@ -192,7 +192,7 @@ export class ViewMarketPostsDialog {
 
   constructor(public dialogRef: MatDialogRef<ViewMarketPostsDialog>, public dialog: MatDialog, 
     private textbooksService: TextbooksService, 
-    @Inject(DOCUMENT) private _document: Document
+    @Inject(DOCUMENT) private document: Document
   ) { 
     this.textbooksService.getUsersTextbooks(localStorage.getItem('user')).then(results => {
       this.textbooks = JSON.parse(JSON.stringify(results));

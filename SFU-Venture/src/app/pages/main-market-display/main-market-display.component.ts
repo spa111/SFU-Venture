@@ -429,7 +429,7 @@ export class MainMarketBookInfoDialog {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialog: MatDialog,
     private router: Router,
-    @Inject(DOCUMENT) private _document: Document
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.textbook = Object.assign({}, this.data.textbook);
     this.textbook.description =
@@ -509,7 +509,7 @@ export class ContactSellerDialog {
     @Inject(MAT_DIALOG_DATA) public data: ContactSellerData,
     public dialog: MatDialog,
     private usersService: UsersService,
-    @Inject(DOCUMENT) private _document: Document
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.data.messageSent = false;
   }
@@ -565,7 +565,7 @@ export class PostingDeleteConfirmationDialog {
     @Inject(MAT_DIALOG_DATA) public data: BookDeleteData,
     private textbooksService: TextbooksService,
     private router: Router,
-    @Inject(DOCUMENT) private _document: Document
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.textbook = Object.assign({}, this.data.textbook);
   }

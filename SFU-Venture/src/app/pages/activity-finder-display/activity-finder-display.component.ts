@@ -204,7 +204,7 @@ export class ActivityModalDialog {
     private router: Router,
     private activitiesService: ActivitiesService,
     private usersService: UsersService,
-    @Inject(DOCUMENT) private _document: Document
+    @Inject(DOCUMENT) private document: Document
   ) {
 
     this.activity = this.data.activity;

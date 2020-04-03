@@ -254,7 +254,7 @@ export class ProcessPrivilegesDialog {
     public dialogRef: MatDialogRef<ProcessPrivilegesDialog>, 
     public dialog: MatDialog,
     private usersService: UsersService,
-    @Inject(DOCUMENT) private _document: Document
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.user = JSON.parse(localStorage.getItem('admin-processing-user'));
   }
