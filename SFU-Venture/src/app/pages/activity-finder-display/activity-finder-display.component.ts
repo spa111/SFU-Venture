@@ -5,6 +5,8 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { UsersService } from 'src/app/services/server-apis/users/users.service';
+import { DOCUMENT } from '@angular/common';
+
 declare var $: any;
 
 export interface ActivityItem {
@@ -201,7 +203,8 @@ export class ActivityModalDialog {
     public dialog: MatDialog,
     private router: Router,
     private activitiesService: ActivitiesService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    @Inject(DOCUMENT) private _document: Document
   ) {
 
     this.activity = this.data.activity;

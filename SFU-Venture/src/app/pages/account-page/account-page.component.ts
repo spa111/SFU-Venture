@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { UsersService } from '../../services/server-apis/users/users.service';
 import { Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MainMarketBookInfoDialog } from '../main-market-display/main-market-display.component';
 import { TextbooksService } from '../../services/server-apis/textbooks/textbooks.service';
 import { ProcessPrivilegesDialog } from '../admin-page/admin-page.component';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-account-page',
@@ -26,7 +27,8 @@ export class AccountPageComponent implements OnInit {
   constructor(
     private usersService: UsersService, 
     private router: Router, 
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    @Inject(DOCUMENT) private _document: Document
   ) {
     this.pullUserAccount();    
   }
@@ -161,7 +163,7 @@ export class AccountPageComponent implements OnInit {
 })
 
 export class AccountDeleteConfirmationDialog {
-  constructor(public dialogRef: MatDialogRef<AccountDeleteConfirmationDialog>) { }
+  constructor(public dialogRef: MatDialogRef<AccountDeleteConfirmationDialog>, @Inject(DOCUMENT) private _document: Document) { }
 
   cancelDeletion() {
     this.dialogRef.close({
@@ -188,7 +190,10 @@ export class ViewMarketPostsDialog {
   textbookFields: Array<any> = ["textbookName", "facultyName", "courseNumber", "price", "postDate"];
   textbooksFilterableArray: any;
 
-  constructor(public dialogRef: MatDialogRef<ViewMarketPostsDialog>, public dialog: MatDialog, private textbooksService: TextbooksService) { 
+  constructor(public dialogRef: MatDialogRef<ViewMarketPostsDialog>, public dialog: MatDialog, 
+    private textbooksService: TextbooksService, 
+    @Inject(DOCUMENT) private _document: Document
+  ) { 
     this.textbooksService.getUsersTextbooks(localStorage.getItem('user')).then(results => {
       this.textbooks = JSON.parse(JSON.stringify(results));
       this.textbooks.forEach(textbook => {

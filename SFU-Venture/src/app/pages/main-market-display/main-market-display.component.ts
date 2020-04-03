@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { TextbooksService } from "../../services/server-apis/textbooks/textbooks.service";
 import { UsersService } from "../../services/server-apis/users/users.service";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { DOCUMENT } from '@angular/common';
 
 declare var $: any;
 
@@ -427,7 +428,8 @@ export class MainMarketBookInfoDialog {
     public dialogRef: MatDialogRef<MainMarketBookInfoDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    @Inject(DOCUMENT) private _document: Document
   ) {
     this.textbook = Object.assign({}, this.data.textbook);
     this.textbook.description =
@@ -506,7 +508,8 @@ export class ContactSellerDialog {
     public dialogRef: MatDialogRef<ContactSellerDialog>,
     @Inject(MAT_DIALOG_DATA) public data: ContactSellerData,
     public dialog: MatDialog,
-    private usersService: UsersService
+    private usersService: UsersService,
+    @Inject(DOCUMENT) private _document: Document
   ) {
     this.data.messageSent = false;
   }
@@ -561,7 +564,8 @@ export class PostingDeleteConfirmationDialog {
     public dialogRef: MatDialogRef<PostingDeleteConfirmationDialog>,
     @Inject(MAT_DIALOG_DATA) public data: BookDeleteData,
     private textbooksService: TextbooksService,
-    private router: Router
+    private router: Router,
+    @Inject(DOCUMENT) private _document: Document
   ) {
     this.textbook = Object.assign({}, this.data.textbook);
   }
