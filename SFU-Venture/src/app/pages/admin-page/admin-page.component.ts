@@ -7,7 +7,6 @@ import { AccountPageComponent, AccountDeleteConfirmationDialog } from '../accoun
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivityModalDialog } from '../activity-finder-display/activity-finder-display.component';
 import { ActivitiesService } from 'src/app/services/server-apis/activities/activities.service';
-import { DOCUMENT } from '@angular/common';
 
 import * as moment from 'moment';
 
@@ -253,8 +252,7 @@ export class ProcessPrivilegesDialog {
   constructor(
     public dialogRef: MatDialogRef<ProcessPrivilegesDialog>, 
     public dialog: MatDialog,
-    private usersService: UsersService,
-    @Inject(DOCUMENT) private document: Document
+    private usersService: UsersService
   ) {
     this.user = JSON.parse(localStorage.getItem('admin-processing-user'));
   }

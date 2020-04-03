@@ -5,7 +5,6 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { MainMarketBookInfoDialog } from '../main-market-display/main-market-display.component';
 import { TextbooksService } from '../../services/server-apis/textbooks/textbooks.service';
 import { ProcessPrivilegesDialog } from '../admin-page/admin-page.component';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-account-page',
@@ -27,8 +26,7 @@ export class AccountPageComponent implements OnInit {
   constructor(
     private usersService: UsersService, 
     private router: Router, 
-    public dialog: MatDialog,
-    @Inject(DOCUMENT) private document: Document
+    public dialog: MatDialog
   ) {
     this.pullUserAccount();    
   }
@@ -163,7 +161,7 @@ export class AccountPageComponent implements OnInit {
 })
 
 export class AccountDeleteConfirmationDialog {
-  constructor(public dialogRef: MatDialogRef<AccountDeleteConfirmationDialog>, @Inject(DOCUMENT) private document: Document) { }
+  constructor(public dialogRef: MatDialogRef<AccountDeleteConfirmationDialog>) { }
 
   cancelDeletion() {
     this.dialogRef.close({
@@ -191,8 +189,7 @@ export class ViewMarketPostsDialog {
   textbooksFilterableArray: any;
 
   constructor(public dialogRef: MatDialogRef<ViewMarketPostsDialog>, public dialog: MatDialog, 
-    private textbooksService: TextbooksService, 
-    @Inject(DOCUMENT) private document: Document
+    private textbooksService: TextbooksService
   ) { 
     this.textbooksService.getUsersTextbooks(localStorage.getItem('user')).then(results => {
       this.textbooks = JSON.parse(JSON.stringify(results));
