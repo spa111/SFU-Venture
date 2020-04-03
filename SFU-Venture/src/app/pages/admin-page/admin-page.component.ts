@@ -83,7 +83,7 @@ export class AdminPageComponent implements OnInit {
       this.allFaculyFilterableList = JSON.parse(JSON.stringify(this.allFacultyNeedingVerification));
 
       // Get all the textbooks that are up on the market
-      this.textbooksService.getUsersTextbooks(localStorage.getItem('user')).then(results => {
+      this.textbooksService.getAll().then(results => {
         this.textbooks = JSON.parse(JSON.stringify(results));
         this.textbooks.forEach(textbook => {
           textbook.post_date = textbook.post_date.split('T')[0];
@@ -175,7 +175,7 @@ export class AdminPageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
 
-      this.textbooksService.getUsersTextbooks(localStorage.getItem('user')).then(results => {
+      this.textbooksService.getAll().then(results => {
         this.textbooks = JSON.parse(JSON.stringify(results));
         this.textbooks.forEach(textbook => {
           textbook.post_date = textbook.post_date.split('T')[0];
@@ -303,7 +303,7 @@ export class ProcessPrivilegesDialog {
         this.usersService.delete(this.user.id).then(results => {
 
           this.dialogRef.close({
-            "status": "handled"
+            "status": "deleted"
           });
 
         }).catch(err => {

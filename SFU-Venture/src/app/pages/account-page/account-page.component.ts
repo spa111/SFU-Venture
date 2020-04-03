@@ -107,9 +107,14 @@ export class AccountPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       localStorage.removeItem('admin-processing-user');
 
-      if (result && result.status == "handled") {
-        this.pullUserAccount();
+      if (this.router.url == "/admin-control" && result && result.status == "deleted") {
+        document.dispatchEvent(this.forceCloseModal);
+      } else {
+        if (result && result.status == "handled") {
+          this.pullUserAccount();
+        }
       }
+
     });
     
   }
