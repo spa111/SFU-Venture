@@ -55,9 +55,11 @@
                         <span>{{post.price}}</span>
                     </div>
                     <div class="marketItemImg" style=" background-repeat: no-repeat;">
-                        <div class="marketItemImg " [ngStyle]="{'background-image': 'url(' + post.img_url + ')'}" style="background-repeat: no-repeat; background-size:contain;">
+                        <div class="marketItemImg " [ngStyle]="{'background-image': 'url(' + post.img_url + ')'}" style="background-repeat: no-repeat; background-size:cover;">
                         </div>
-                        <h5 class="marketItemName">{{post.txt_book_name}}
+                        <h5 class="marketItemName">
+                            <!-- test -->
+                            {{post.txt_book_name}}
                         </h5>
                     </div>
 
