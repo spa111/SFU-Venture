@@ -146,6 +146,7 @@ export class AddPostComponent implements OnInit {
           console.log(err.error);
         });
     } else {
+      alert("Please fill out all fields")
       console.log("form not fully filled out");
     }
   }
