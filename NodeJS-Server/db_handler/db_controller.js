@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const TOKEN_STRING = 'sfuventure_jwt_token_string';
 
-const isProduction = true;
+const isProduction = false;
 
 const URL_DEV = "http://localhost:8080";
 const URL_SERVER = "http://35.199.189.130";
