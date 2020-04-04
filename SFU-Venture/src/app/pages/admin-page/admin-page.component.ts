@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { UsersService } from '../../services/server-apis/users/users.service';
 import { MainMarketBookInfoDialog } from '../main-market-display/main-market-display.component';
 import { TextbooksService } from '../../services/server-apis/textbooks/textbooks.service';
@@ -7,6 +7,7 @@ import { AccountPageComponent, AccountDeleteConfirmationDialog } from '../accoun
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivityModalDialog } from '../activity-finder-display/activity-finder-display.component';
 import { ActivitiesService } from 'src/app/services/server-apis/activities/activities.service';
+
 import * as moment from 'moment';
 
 @Component({

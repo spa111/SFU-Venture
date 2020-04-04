@@ -506,8 +506,7 @@ export class ContactSellerDialog {
     public dialogRef: MatDialogRef<ContactSellerDialog>,
     @Inject(MAT_DIALOG_DATA) public data: ContactSellerData,
     public dialog: MatDialog,
-    private usersService: UsersService
-  ) {
+    private usersService: UsersService) {
     this.data.messageSent = false;
   }
 

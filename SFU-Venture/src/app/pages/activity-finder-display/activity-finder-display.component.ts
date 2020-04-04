@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { UsersService } from 'src/app/services/server-apis/users/users.service';
+
 declare var $: any;
 
 export interface ActivityItem {
