@@ -105,8 +105,6 @@ user agent stylesheet html {
     height: 150px;
 }
 
-
-
 .textbook-details {
     padding: 20px;
     width: 50%;
@@ -125,9 +123,6 @@ user agent stylesheet html {
     // width: 100%;
     object-fit: cover;
 }
-
-
-
 
 .contact-section,
 .delete-section {
@@ -408,6 +403,24 @@ h5 {
     &:hover {
         background-color: darken($color: rgb(202, 201, 201), $amount: 15);
     }
+}
+
+.hvr-float {
+    display: inline-block;
+    vertical-align: middle;
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    transition-duration: 0.3s;
+    transition-property: transform;
+    transition-timing-function: ease-out;
+}
+
+.hvr-float:hover,
+.hvr-float:focus,
+.hvr-float:active {
+    transform: translateY(-8px);
 }
 
 .spacer {

@@ -50,7 +50,7 @@
             <div id="department" class="section-splitter"> {{dept.value}} </div>
 
             <div class="marketItemsArea book-wrapper">
-                <div class="marketItem rcorners" *ngFor="let post of dept.textbooks; let i = index" (click)="openTextbookInfo(post)">
+                <div class="marketItem rcorners  hvr-float" *ngFor="let post of dept.textbooks; let i = index" (click)="openTextbookInfo(post)">
                     <div class="marketItemLabel">
                         <span>{{post.price}}</span>
                     </div>
