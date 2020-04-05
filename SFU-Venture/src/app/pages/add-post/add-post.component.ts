@@ -64,7 +64,7 @@ export class AddPostComponent implements OnInit {
             tmp.innerHTML = details;
             
             let textbookDetails = tmp.textContent || tmp.innerText;
-            textbook.details = textbookDetails.replace(/(\r\n|\n|\r)/gm, "");
+            textbook.details = textbookDetails.replace(/(\r\n|\n|\r)/gm, "").trim();
           });
         }).catch(err => {
           this.books = [];

@@ -54,7 +54,10 @@ export class ActivityFinderDisplayComponent implements OnInit {
         element.activity_timestamp = formattedDate;
         element.time = time.format("h:mm a");
         element.color =  (Math.floor(Math.random() * (7 - 1) + 1));
-        //  (Math.floor(Math.random() * 7) + 1);
+
+        if (element.activity_price == "$0.00") {
+          element.activity_price = "Free";
+        }
 
         this.textbooksService.getDept().then(result => {
           this.faculties = result;
@@ -208,6 +211,10 @@ export class ActivityModalDialog {
 
     this.activity = this.data.activity;
 
+    if (this.router.url == "/admin-control") {
+      this.adminOverride = true;
+    }
+
     this.activity_title = this.activity.activity_title;
     this.activity_description = this.activity.activity_description;
     this.activity_timestamp = this.activity.activity_timestamp;
@@ -215,12 +222,7 @@ export class ActivityModalDialog {
     this.activity_location = this.activity.activity_location;
     this.activity_price = this.activity.activity_price == "$0.00" ? "Free" : this.activity.activity_price;
 
-    this.usersService.checkHasAdminPrivileges(localStorage.getItem('user')).then(result => {
-      this.user_owns_posting = this.activity.poster_user_id == localStorage.getItem("user") || result.hasPrivileges;
-    }).catch(err => {
-      console.log(err);
-
-    });
+    this.user_owns_posting = this.activity.poster_user_id == localStorage.getItem("user") || this.adminOverride;
   }
 
   closeModal(): void {
