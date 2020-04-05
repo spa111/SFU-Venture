@@ -16,10 +16,34 @@ export class ChangeAccountPasswordPageComponent implements OnInit {
 
   constructor(private router: Router, private usersService: UsersService) { }
   
-  ngOnInit() { }
+  ngOnInit() { 
+    $(".login-alert")[0].style.display = "none";
+  }
 
   cancelChanges() {
     this.router.navigate(['account']);
+  }
+
+  checkForErrors() {
+    let errorString = "";
+
+    if (this.oldPassword == "") {
+      errorString += "<p>Error please enter in your old password</p>";
+    }
+
+    if (this.newPassword == "") {
+      errorString += "<p>Error please enter in a new password</p>";
+    }
+
+    if (this.confirmPassword == "") {
+      errorString += "<p>Error please confirm your new password<p>";
+    }
+
+    if (this.newPassword != this.confirmPassword) {
+      errorString += "<p>Error new and confirm passwords need to be the same<p>";
+    }
+
+    return errorString;
   }
 
   checkChangePassword() {
@@ -27,7 +51,9 @@ export class ChangeAccountPasswordPageComponent implements OnInit {
     this.newPassword = $("#newPassword")[0].value;
     this.confirmPassword = $("#confirmPassword")[0].value;
 
-    if (this.oldPassword != "") {
+    let errorString = this.checkForErrors();
+
+    if (errorString == "") {
       if (this.newPassword === this.confirmPassword && this.newPassword != "") {
         let payload = {
           "id": localStorage.getItem('user'),
@@ -39,9 +65,13 @@ export class ChangeAccountPasswordPageComponent implements OnInit {
           this.router.navigate(['logout']);
         }).catch(err => {
           console.log(err);
-        })
-        
+          $(".login-alert")[0].style.display = "";
+          $(".login-alert .message")[0].innerHTML = "Error old password doesn't match stored records";
+        }); 
       }
+    } else {
+      $(".login-alert")[0].style.display = "";
+      $(".login-alert .message")[0].innerHTML = errorString;
     }
   }
 

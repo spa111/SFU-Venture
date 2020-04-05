@@ -393,7 +393,6 @@ const updatePassword = (request, response) => {
             console.log(error);
         } else {
             let user = JSON.parse(JSON.stringify(results.rows[0]));
-            console.log(user);
 
             // Update the password if it was valid
             if (validPassword(oldPassword, user.password)) {
