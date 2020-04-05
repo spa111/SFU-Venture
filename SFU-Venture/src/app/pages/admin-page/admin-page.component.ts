@@ -167,7 +167,7 @@ export class AdminPageComponent implements OnInit {
 
   getTextbook(textbook: any) {
     const dialogRef = this.dialog.open(MainMarketBookInfoDialog, {
-      width: '50%',
+      width: '600px',
       height: '400px',
       data: {
         textbook: textbook
