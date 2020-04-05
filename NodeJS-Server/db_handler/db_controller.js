@@ -135,17 +135,14 @@ const createUser = (request, response) => {
             console.log(error);
         } else {
             if (results && results.rows && results.rows[0]) {
-                username += ("" + results.rows.length);
-            }
+                // Check if the email is already in the database
+                if (results.rows[0].email == email) {
 
-            // Need to add another check in the db to make it so that the admin is the only one who verifies whether a user is faculty or not
-            database.query(
-                'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', [fullname, hashed_password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified],
-                (error, results) => {
-                    if (error) {
-                        console.log(error);
+                    // If the email is verified already, display and error
+                    if (results.rows[0].is_email_verified) {
                         response.status(401).send(`Error, email is currently in use`);
                     } else {
+                        // Person just created a new account and accidently clicked the button twice
                         var verification_token = jwt.sign({ userId: results.rows[0].id }, TOKEN_STRING, { expiresIn: '1d' });
                         var url = `${URL}/verify-email/${verification_token}`;
 
@@ -162,8 +159,38 @@ const createUser = (request, response) => {
                         sendEmail(mailOptions);
                         response.status(201).send(`Please check your email for instructions to activate your account`);
                     }
+                } else {
+                    // Person has an email whose pre-@ portion is the same as already stored in the database
+                    username += ("" + results.rows.length);
                 }
-            );
+            } else {
+                // New user
+                database.query(
+                    'insert into users (fullname, password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', [fullname, hashed_password, email, username, is_email_verified, is_admin, is_student, is_faculty, is_faculty_verified],
+                    (error, results) => {
+                        if (error) {
+                            console.log(error);
+                            response.status(401).send(`Error, email is currently in use`);
+                        } else {
+                            var verification_token = jwt.sign({ userId: results.rows[0].id }, TOKEN_STRING, { expiresIn: '1d' });
+                            var url = `${URL}/verify-email/${verification_token}`;
+
+                            var mailOptions = {
+                                from: 'sfuventure470@gmail.com',
+                                to: email,
+                                subject: 'Please confirm your email',
+                                html: `
+                                    <h4>Please click this link to confirm to verify your email: <a href="${url}">${url}</a></h4>
+                                    <p>This link will only be valid for 1 day.</p>
+                                `
+                            };
+
+                            sendEmail(mailOptions);
+                            response.status(201).send(`Please check your email for instructions to activate your account`);
+                        }
+                    }
+                );
+            }
         }
     });
 
