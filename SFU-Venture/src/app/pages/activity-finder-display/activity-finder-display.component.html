@@ -50,7 +50,7 @@
 
                         <div class="activity-value-div" *ngFor="let item of activity.values" (click)="openModal(item)">
                             <tr class="activity-value-row">
-                                <td> <span class="colored-dot"></span> </td>
+                                <td> <span class="colored-dot dotColor{{item.color}}"></span> </td>
                                 <td>{{item.activity_title}}</td>
                             </tr>
                         </div>
