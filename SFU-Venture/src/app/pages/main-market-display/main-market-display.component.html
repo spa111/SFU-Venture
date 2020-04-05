@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="wrapper textbookSelector">Textbooks from
-        <div class="list"><span class="placeholder" id="department" (click)="selector()" (keypress)="onKeydown($event)">{{ Selector }} </span>
+        <div class="list"><span class="placeholder" id="department" (click)="selector()">{{ Selector }} </span>
 
             <ul class="list__ul">
                 <li (click)="selected($event)"><a name="All">ALL </a></li>
@@ -33,7 +33,7 @@
             </ul>
         </div>
 
-        <div class="list"><span class="placeholderCourse" id="course" (click)="selectorCourse()" (keypress)="onKeydown($event)">{{ Course }} </span>
+        <div class="list"><span class="placeholderCourse" id="course" (click)="selectorCourse()">{{ Course }} </span>
 
             <ul class="list__ul_course">
                 <li (click)="selectedCourse($event)">
@@ -50,7 +50,7 @@
             <div id="department" class="section-splitter"> {{dept.value}} </div>
 
             <div class="marketItemsArea book-wrapper">
-                <div class="marketItem rcorners" *ngFor="let post of dept.textbooks; let i = index" (click)="openTextbookInfo(post)">
+                <div class="marketItem rcorners  hvr-float" *ngFor="let post of dept.textbooks; let i = index" (click)="openTextbookInfo(post)">
                     <div class="marketItemLabel">
                         <span>{{post.price}}</span>
                     </div>

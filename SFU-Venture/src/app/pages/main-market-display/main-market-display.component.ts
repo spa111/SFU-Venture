@@ -386,7 +386,7 @@ export class MainMarketDisplayComponent implements OnInit {
   //-------------END Section for UI Factuly and course chooser//
   //section for modification of row sections
   extendSection(event: any) {
-    if (event.target.innerHTML.includes("add")) {
+    if (event.target.innerHTML.includes("add") && this.Selector !== "ALL") {
       event.target.innerHTML =
         "<i _ngcontent-jvv-c2='' class='material-icons'> remove </i>";
     } else if (event.target.innerHTML.includes("remove")) {
@@ -399,17 +399,17 @@ export class MainMarketDisplayComponent implements OnInit {
     }
     if(this.Selector !== "ALL"){
 
-        // event.target.parentNode.parentNode.classList.toggle("is-active-row");
-      }else{
-    this.Selector = $(`#${node} #department`)[0].innerText;
-    this.selected(null);
-    $("#loader").one("transitionend", () => {
-      this.filter();
+      event.target.parentNode.parentNode.classList.toggle("is-active-row");
+    } else {
+      this.Selector = $(`#${node} #department`)[0].innerText;
+      this.selected(null);
+      $("#loader").one("transitionend", () => {
+        this.filter();
+        document.getElementById("loader").classList.toggle("loaderisactive");
+      });
       document.getElementById("loader").classList.toggle("loaderisactive");
-    });
-    document.getElementById("loader").classList.toggle("loaderisactive");
+    }
   }
-}
 }
 
 // The textbook details Modal Dialog
@@ -506,8 +506,7 @@ export class ContactSellerDialog {
     public dialogRef: MatDialogRef<ContactSellerDialog>,
     @Inject(MAT_DIALOG_DATA) public data: ContactSellerData,
     public dialog: MatDialog,
-    private usersService: UsersService
-  ) {
+    private usersService: UsersService) {
     this.data.messageSent = false;
   }
 
