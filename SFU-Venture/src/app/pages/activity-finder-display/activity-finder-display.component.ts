@@ -58,6 +58,11 @@ export class ActivityFinderDisplayComponent implements OnInit {
         if (element.activity_price == "$0.00") {
           element.activity_price = "Free";
         }
+        if (element.corresponding_department === "choose"){
+          element.corresponding_department = "- - -";
+        }else{
+          element.corresponding_department = element.corresponding_department.toUpperCase();
+        }
 
         this.textbooksService.getDept().then(result => {
           this.faculties = result;
