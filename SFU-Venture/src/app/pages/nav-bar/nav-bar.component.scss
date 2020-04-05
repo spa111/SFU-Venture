@@ -1,7 +1,6 @@
 .btn-primary {
-    background-color: #FF4B2B; 
+    background-color: #FF4B2B;
     border: none;
- 
     &:before {
         content: "";
         z-index: -1;
@@ -18,5 +17,8 @@
 .btn-primary:hover {
     background-color: darken(#FF4B2B, 15%);
     transition: all 0.5s;
+}
 
+.navbar {
+    z-index: 1000 !important;
 }
