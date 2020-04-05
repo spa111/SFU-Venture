@@ -42,7 +42,6 @@ export class ActivityFinderDisplayComponent implements OnInit {
   ngOnInit() {
     this.generateActivities();
   }
-
   generateActivities() {
     this.activitiesService.getAll().then(result => {
 
@@ -239,4 +238,6 @@ export class ActivityModalDialog {
       console.log(err);
     });
   }
+  
 }
+
