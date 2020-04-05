@@ -362,9 +362,36 @@ h5 {
 .colored-dot {
     height: 10px;
     width: 10px;
-    background-color: #FF4B2B;
     border-radius: 50%;
     display: inline-block;
+}
+
+.dotColor1 {
+    background-color: #6600ff;
+}
+
+.dotColor2 {
+    background-color: #00ff00;
+}
+
+.dotColor3 {
+    background-color: #ff0000;
+}
+
+.dotColor4 {
+    background-color: #666699;
+}
+
+.dotColor5 {
+    background-color: #ff6600;
+}
+
+.dotColor6 {
+    background-color: #ff33cc;
+}
+
+.dotColor7 {
+    background-color: #0000ff;
 }
 
 .activity-table th {

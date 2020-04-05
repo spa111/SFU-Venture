@@ -45,7 +45,6 @@ export class ActivityFinderDisplayComponent implements OnInit {
 
   generateActivities() {
     this.activitiesService.getAll().then(result => {
-
       this.activities = result;
       this.activitesDOM = JSON.parse(JSON.stringify(this.activities))
       this.activitesDOM.forEach(element => {
@@ -55,6 +54,8 @@ export class ActivityFinderDisplayComponent implements OnInit {
         let formattedDate = date.format("MMM Do YYYY");
         element.activity_timestamp = formattedDate;
         element.time = time.format("h:mm a");
+        element.color =  (Math.floor(Math.random() * (7 - 1) + 1));
+        //  (Math.floor(Math.random() * 7) + 1);
 
         this.textbooksService.getDept().then(result => {
           this.faculties = result;
@@ -68,6 +69,7 @@ export class ActivityFinderDisplayComponent implements OnInit {
               values: this.activitesDOM.filter(i => i.activity_timestamp === g)
             }
           ));
+
 
           this.sortDates();
           this.resultBackup = JSON.parse(JSON.stringify(this.result));

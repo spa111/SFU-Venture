@@ -50,17 +50,17 @@
 
                     <div class="activity-value-div" *ngFor="let item of activity.values" (click)="openModal(item)">
                         <tr class="activity-value-row">
-                            <td> <span class="colored-dot"></span> </td>
+                            <td> <span class="colored-dot dotColor{{item.color}}"></span> </td>
                             <td>{{item.activity_title}}</td>
                         </tr>
                         <!-- <td>{{item.activity_description}}</td> -->
                     </div>
                 </tr>
-                    <!-- <td>{{activity.activity_timestamp.substring(11,16)}}</td> -->
-                    <!-- <td><a href="#">{{activity.activity_title}}</a></td> -->
-                    <!-- <td>{{activity.activity_description.substring(0, 30)}}...</td> -->
-                    <!-- <td>{{activity.activity_location}}</td> -->
-                    <!-- <td>{{activity.activity_price}}</td> -->
+                <!-- <td>{{activity.activity_timestamp.substring(11,16)}}</td> -->
+                <!-- <td><a href="#">{{activity.activity_title}}</a></td> -->
+                <!-- <td>{{activity.activity_description.substring(0, 30)}}...</td> -->
+                <!-- <td>{{activity.activity_location}}</td> -->
+                <!-- <td>{{activity.activity_price}}</td> -->
             </table>
 
 
