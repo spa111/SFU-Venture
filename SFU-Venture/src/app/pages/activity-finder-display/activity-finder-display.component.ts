@@ -54,7 +54,10 @@ export class ActivityFinderDisplayComponent implements OnInit {
         element.activity_timestamp = formattedDate;
         element.time = time.format("h:mm a");
         element.color =  (Math.floor(Math.random() * (7 - 1) + 1));
-        //  (Math.floor(Math.random() * 7) + 1);
+
+        if (element.activity_price == "$0.00") {
+          element.activity_price = "Free";
+        }
 
         this.textbooksService.getDept().then(result => {
           this.faculties = result;
