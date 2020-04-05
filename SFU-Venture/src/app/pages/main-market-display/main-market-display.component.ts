@@ -393,15 +393,21 @@ export class MainMarketDisplayComponent implements OnInit {
       event.target.innerHTML =
         "<i _ngcontent-isr-c2='' class='material-icons'> add </i>";
     }
-    let node = event.target.parentNode.parentNode.id;
-    if (node === "") {
-      node = event.target.parentNode.parentNode.parentNode.id;
-    }
-    if(this.Selector !== "ALL"){
+    // let node = event.target.parentNode.parentNode.id;
+    // let clickedPlusMinusButton = false;
 
-      event.target.parentNode.parentNode.classList.toggle("is-active-row");
+    // if (node === "") {
+    //   clickedPlusMinusButton = true;
+    //   node = event.target.parentNode.parentNode.parentNode.id;
+    // }
+
+    let node = event.target.closest(".row");
+
+    if(this.Selector !== "ALL"){
+      node.classList.toggle("is-active-row");
+      // event.target.parentNode.parentNode.classList.toggle("is-active-row");
     } else {
-      this.Selector = $(`#${node} #department`)[0].innerText;
+      this.Selector = $(`#${node.id} #department`)[0].innerText;
       this.selected(null);
       $("#loader").one("transitionend", () => {
         this.filter();
