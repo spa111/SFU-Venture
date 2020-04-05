@@ -46,8 +46,7 @@
                 <tr class="activity-row" *ngFor="let activity of result;">
                     <td *ngIf="activity.values.length" rowspan="activity.values.length">{{activity.name}}</td>
 
-                    <td>
-
+                    <td *ngIf="activity.values.length">
                         <div class="activity-value-div" *ngFor="let item of activity.values" (click)="openModal(item)">
                             <tr class="activity-value-row">
                                 <td> <span class="colored-dot dotColor{{item.color}}"></span> </td>
@@ -55,9 +54,8 @@
                             </tr>
                         </div>
                     </td>
-                    <td>
+                    <td *ngIf="activity.values.length">
                         <div class="activity-value-div" *ngFor="let item of activity.values" (click)="openModal(item)">
-
                             <tr class="activity-value-row">
                                 <td>{{item.activity_price}}</td>
                             </tr>
