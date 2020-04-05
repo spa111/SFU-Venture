@@ -82,7 +82,7 @@ export class AddActivityComponent implements OnInit {
     let corresponding_department = $("#filterDept")[0].value;
     let activity_title = $("#activityTitle")[0].value;
     let activity_description = $("#description")[0].value;
-    let activity_price = $("#entryFee")[0].value; // TODO (- CHANGE TO _ IN PG)
+    let activity_price = $("#entryFee")[0].value || 0;
     let activity_location = $("#location")[0].value;
     let activity_timestamp = $("#dateTime")[0].value;
     
@@ -97,7 +97,7 @@ export class AddActivityComponent implements OnInit {
       "activity_timestamp": activity_timestamp,
     };
 
-    if (poster_user_id && corresponding_department && activity_title && activity_description && activity_price && activity_location) {
+    if (poster_user_id && corresponding_department && activity_title && activity_description && activity_location) {
       this.activitiesService.createActivity(details).then(result => {
         console.log(result.response);
         this.router.navigate(['activity-finder']);

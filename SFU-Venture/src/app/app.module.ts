@@ -21,7 +21,7 @@ import { ActivityFinderDisplayComponent, ActivityModalDialog } from './pages/act
 import { AddActivityComponent } from './pages/add-activity/add-activity.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { AccountPageComponent, AccountDeleteConfirmationDialog, ViewMarketPostsDialog } from './pages/account-page/account-page.component';
+import { AccountPageComponent, AccountDeleteConfirmationDialog, ViewMarketPostsDialog, ViewActivityPosts } from './pages/account-page/account-page.component';
 import { MatListModule } from '@angular/material/list';
 import { ChangeAccountPasswordPageComponent } from './pages/change-account-password-page/change-account-password-page.component';
 import { MatInputModule } from '@angular/material/input';
@@ -58,7 +58,8 @@ export function tokenGetter() {
     ViewMarketPostsDialog,
     AdminPageComponent,
     ProcessPrivilegesDialog,
-    ActivityModalDialog
+    ActivityModalDialog,
+    ViewActivityPosts
   ],
   imports: [
     BrowserModule,
@@ -96,7 +97,8 @@ export function tokenGetter() {
     AccountDeleteConfirmationDialog,
     ViewMarketPostsDialog,
     ProcessPrivilegesDialog,
-    ActivityModalDialog
+    ActivityModalDialog,
+    ViewActivityPosts
   ]
 })
 export class AppModule { }

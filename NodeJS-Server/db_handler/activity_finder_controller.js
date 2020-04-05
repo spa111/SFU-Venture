@@ -31,9 +31,6 @@ const getActivityAround = (request, response) => {
     });
 };
 
-
-
-
 // Queries
 const getAllActivities = (request, response) => {
     database.query('select * from activities order by ID ASC', (error, results) => {
@@ -45,10 +42,10 @@ const getAllActivities = (request, response) => {
     });
 };
 
-const getActivityById = (request, response) => {
+const getUserActivities = (request, response) => {
     const id = parseInt(request.params.id);
 
-    database.query('select * from activities where id = $1', [id], (error, results) => {
+    database.query('select * from activities where poster_user_id = $1', [id], (error, results) => {
         if (error) {
             console.log(error);
         } else {
@@ -65,7 +62,7 @@ const deleteActivityById = (request, response) => {
             console.log(error);
         }
 
-        response.status(200).send( {response: "Activity deleted"} );
+        response.status(200).send({ response: "Activity deleted" });
     });
 };
 
@@ -100,6 +97,6 @@ module.exports = {
     getActivityAround,
     createActivity,
     deleteActivityById,
-    getActivityById,
+    getUserActivities,
     getAllActivities
 }
