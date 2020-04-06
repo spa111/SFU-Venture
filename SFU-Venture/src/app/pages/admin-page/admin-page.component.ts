@@ -110,7 +110,7 @@ export class AdminPageComponent implements OnInit {
 
         }).catch(err => {
           console.log(err);
-        })
+        });
 
       }).catch(err => {
         console.log(err);

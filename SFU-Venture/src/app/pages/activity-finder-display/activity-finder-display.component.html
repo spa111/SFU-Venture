@@ -35,14 +35,15 @@
     </div>
 
     <div class="display" *ngIf="contentLoaded">
+        <h2 class='activity-title'>Activities</h2>
         <div class="activity-board">
-            <h2 class='activity-title'>Activities</h2>
             <table class="activity-table">
-                <tr>
+                <thead>
                     <th>Date</th>
                     <th>Activity Title</th>
-                    <th>Price (Optional) </th>
-                </tr>
+                    <th>Price</th>
+                    <th>Department</th>
+                </thead>
                 <tr class="activity-row" *ngFor="let activity of result;">
                     <td *ngIf="activity.values.length" rowspan="activity.values.length">{{activity.name}}</td>
 
@@ -58,6 +59,13 @@
                         <div class="activity-value-div" *ngFor="let item of activity.values" (click)="openModal(item)">
                             <tr class="activity-value-row">
                                 <td>{{item.activity_price}}</td>
+                            </tr>
+                        </div>
+                    </td>
+                    <td *ngIf="activity.values.length">
+                        <div class="activity-value-div" *ngFor="let item of activity.values" (click)="openModal(item)">
+                            <tr class="activity-value-row">
+                                <td>{{item.corresponding_department}}</td>
                             </tr>
                         </div>
                     </td>

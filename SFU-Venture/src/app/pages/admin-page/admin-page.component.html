@@ -1,40 +1,42 @@
 <div *ngIf="contentLoaded" id="content-container">
     <h1>Admin Settings</h1>
-    
+
     <h3>Manage All Users</h3>
     <mat-form-field>
         <input matInput (keyup)="userFilter($event)" placeholder="Filter by username, full name, email, or accessLevel">
     </mat-form-field>
 
-    <table mat-table [dataSource]="allUsers" class="mat-elevation-z8">
-        <ng-container matColumnDef="userId">
-            <mat-header-cell *matHeaderCellDef> User Id </mat-header-cell>
-            <mat-cell *matCellDef="let user"> {{user.id}} </mat-cell>
-        </ng-container>
-        
-        <ng-container matColumnDef="username">
-            <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
-            <mat-cell *matCellDef="let user"> {{user.username}} </mat-cell>
-        </ng-container>
-        
-        <ng-container matColumnDef="fullname">
-            <mat-header-cell *matHeaderCellDef> Full Name </mat-header-cell>
-            <mat-cell *matCellDef="let user"> {{user.fullname}} </mat-cell>
-        </ng-container>
-        
-        <ng-container matColumnDef="email">
-            <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-            <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
-        </ng-container>
-        
-        <ng-container matColumnDef="accessLevel">
-            <mat-header-cell *matHeaderCellDef> Access Level </mat-header-cell>
-            <mat-cell *matCellDef="let user"> {{user.accessLevel}} </mat-cell>
-        </ng-container>
-        
-        <mat-header-row *matHeaderRowDef="userColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: userColumns;" matRipple (click)="getUser(row)"></mat-row>
-    </table>
+    <div class="example-container mat-elevation-z8">
+        <mat-table #table [dataSource]="allUsers">
+            <ng-container matColumnDef="userId">
+                <mat-header-cell *matHeaderCellDef> User Id </mat-header-cell>
+                <mat-cell *matCellDef="let user"> {{user.id}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="username">
+                <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+                <mat-cell *matCellDef="let user"> {{user.username}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="fullname">
+                <mat-header-cell *matHeaderCellDef> Full Name </mat-header-cell>
+                <mat-cell *matCellDef="let user"> {{user.fullname}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+                <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="accessLevel">
+                <mat-header-cell *matHeaderCellDef> Access Level </mat-header-cell>
+                <mat-cell *matCellDef="let user"> {{user.accessLevel}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="userColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: userColumns;" matRipple (click)="getUser(row)"></mat-row>
+        </mat-table>
+    </div>
     <br><br>
 
     <h3>Manage Faculty Signup Applications</h3>
@@ -42,118 +44,122 @@
         <input matInput (keyup)="facultyFilter($event)" placeholder="Filter by username, full name, or email">
     </mat-form-field>
 
-    <table mat-table [dataSource]="allFacultyNeedingVerification" class="mat-elevation-z8">
-        <ng-container matColumnDef="userId">
-            <mat-header-cell *matHeaderCellDef> User Id </mat-header-cell>
-            <mat-cell *matCellDef="let user"> {{user.id}} </mat-cell>
-        </ng-container>
-        
-        <ng-container matColumnDef="username">
-            <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
-            <mat-cell *matCellDef="let user"> {{user.username}} </mat-cell>
-        </ng-container>
-        
-        <ng-container matColumnDef="fullname">
-            <mat-header-cell *matHeaderCellDef> Full Name </mat-header-cell>
-            <mat-cell *matCellDef="let user"> {{user.fullname}} </mat-cell>
-        </ng-container>
-        
-        <ng-container matColumnDef="email">
-            <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-            <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
-        </ng-container>
-        
-        <ng-container matColumnDef="accessLevel">
-            <mat-header-cell *matHeaderCellDef> Access Level </mat-header-cell>
-            <mat-cell *matCellDef="let user"> {{user.accessLevel}} </mat-cell>
-        </ng-container>
-        
-        <mat-header-row *matHeaderRowDef="userColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: userColumns;" matRipple (click)="processUser(row)"></mat-row>
-    </table>
+    <div class="example-container mat-elevation-z8">
+        <mat-table #table [dataSource]="allFacultyNeedingVerification">
+            <ng-container matColumnDef="userId">
+                <mat-header-cell *matHeaderCellDef> User Id </mat-header-cell>
+                <mat-cell *matCellDef="let user"> {{user.id}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="username">
+                <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+                <mat-cell *matCellDef="let user"> {{user.username}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="fullname">
+                <mat-header-cell *matHeaderCellDef> Full Name </mat-header-cell>
+                <mat-cell *matCellDef="let user"> {{user.fullname}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+                <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="accessLevel">
+                <mat-header-cell *matHeaderCellDef> Access Level </mat-header-cell>
+                <mat-cell *matCellDef="let user"> {{user.accessLevel}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="userColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: userColumns;" matRipple (click)="processUser(row)"></mat-row>
+        </mat-table>
+    </div>
     <br><br>
-    
+
     <h3>All Market Posts</h3>
     <mat-form-field>
         <input matInput (keyup)="textbookFilter($event)" placeholder="Filter by textbook name, faculty name, or course number">
     </mat-form-field>
 
-    <mat-table [dataSource]="textbooks" class="mat-elevation-z8">
-        <ng-container matColumnDef="posterId">
-            <mat-header-cell *matHeaderCellDef> Posting Users's Id </mat-header-cell>
-            <mat-cell *matCellDef="let textbook"> {{textbook.posting_user_id}} </mat-cell>
-        </ng-container>
+    <div class="example-container mat-elevation-z8">
+        <mat-table #table [dataSource]="textbooks">
+            <ng-container matColumnDef="posterId">
+                <mat-header-cell *matHeaderCellDef> Posting Users's Id </mat-header-cell>
+                <mat-cell *matCellDef="let textbook"> {{textbook.posting_user_id}} </mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="textbookName">
-            <mat-header-cell *matHeaderCellDef> Textbook Name </mat-header-cell>
-            <mat-cell *matCellDef="let textbook"> {{textbook.txt_book_name}} </mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="textbookName">
+                <mat-header-cell *matHeaderCellDef> Textbook Name </mat-header-cell>
+                <mat-cell *matCellDef="let textbook"> {{textbook.txt_book_name}} </mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="facultyName">
-            <mat-header-cell *matHeaderCellDef> Faculty </mat-header-cell>
-            <mat-cell *matCellDef="let textbook"> {{textbook.faculty_name}} </mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="facultyName">
+                <mat-header-cell *matHeaderCellDef> Faculty </mat-header-cell>
+                <mat-cell *matCellDef="let textbook"> {{textbook.faculty_name}} </mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="courseNumber">
-            <mat-header-cell *matHeaderCellDef> Course Number </mat-header-cell>
-            <mat-cell *matCellDef="let textbook"> {{textbook.course_name}} </mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="courseNumber">
+                <mat-header-cell *matHeaderCellDef> Course Number </mat-header-cell>
+                <mat-cell *matCellDef="let textbook"> {{textbook.course_name}} </mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="price">
-            <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
-            <mat-cell *matCellDef="let textbook"> {{textbook.price}} </mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="price">
+                <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+                <mat-cell *matCellDef="let textbook"> {{textbook.price}} </mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="postDate">
-            <mat-header-cell *matHeaderCellDef> Posting Date </mat-header-cell>
-            <mat-cell *matCellDef="let textbook"> {{textbook.post_date}} </mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="postDate">
+                <mat-header-cell *matHeaderCellDef> Posting Date </mat-header-cell>
+                <mat-cell *matCellDef="let textbook"> {{textbook.post_date}} </mat-cell>
+            </ng-container>
 
-        <mat-header-row *matHeaderRowDef="textbookFields"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: textbookFields;" matRipple (click)="getTextbook(row)"></mat-row>
-    </mat-table>
+            <mat-header-row *matHeaderRowDef="textbookFields; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: textbookFields;" matRipple (click)="getTextbook(row)"></mat-row>
+        </mat-table>
+    </div>
     <br><br>
 
-
-    <!-- ['activity_title', 'activity_description', 'activity_timestamp', 'activity_location', 'activity_price']; -->
     <h3>All Activities</h3>
     <mat-form-field>
         <input matInput (keyup)="activitiesFilter($event)" placeholder="Filter by id, title, location, date, time, or price">
     </mat-form-field>
 
-    <mat-table [dataSource]="activities" class="mat-elevation-z8">
-        <ng-container matColumnDef="posterId">
-            <mat-header-cell *matHeaderCellDef> Posting Users's Id </mat-header-cell>
-            <mat-cell *matCellDef="let activity"> {{activity.poster_user_id}} </mat-cell>
-        </ng-container>
+    <div class="example-container mat-elevation-z8">
+        <mat-table #table [dataSource]="activities">
+            <ng-container matColumnDef="posterId">
+                <mat-header-cell *matHeaderCellDef> Posting Users's Id </mat-header-cell>
+                <mat-cell *matCellDef="let activity"> {{activity.poster_user_id}} </mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="activity_title">
-            <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
-            <mat-cell *matCellDef="let activity"> {{activity.activity_title}} </mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="activity_title">
+                <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+                <mat-cell *matCellDef="let activity"> {{activity.activity_title}} </mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="activity_location">
-            <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
-            <mat-cell *matCellDef="let activity"> {{activity.activity_location}} </mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="activity_location">
+                <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+                <mat-cell *matCellDef="let activity"> {{activity.activity_location}} </mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="activity_timestamp">
-            <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
-            <mat-cell *matCellDef="let activity"> {{activity.activity_timestamp}} </mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="activity_timestamp">
+                <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                <mat-cell *matCellDef="let activity"> {{activity.activity_timestamp}} </mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="time">
-            <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
-            <mat-cell *matCellDef="let activity"> {{activity.time}} </mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="time">
+                <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
+                <mat-cell *matCellDef="let activity"> {{activity.time}} </mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="activity_price">
-            <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
-            <mat-cell *matCellDef="let activity"> {{activity.activity_price}} </mat-cell>
-        </ng-container>
+            <ng-container matColumnDef="activity_price">
+                <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+                <mat-cell *matCellDef="let activity"> {{activity.activity_price}} </mat-cell>
+            </ng-container>
 
-        <mat-header-row *matHeaderRowDef="activityColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: activityColumns;" matRipple (click)="getActivity(row)"></mat-row>
-    </mat-table>
+            <mat-header-row *matHeaderRowDef="activityColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: activityColumns;" matRipple (click)="getActivity(row)"></mat-row>
+        </mat-table>
+    </div>
     <br><br>
 </div>
